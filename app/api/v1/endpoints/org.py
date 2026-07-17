@@ -16,7 +16,8 @@ from app.schemas.org import (
     VeterinaryUnitUpdate,
 )
 from app.services import org_service
-from app.db.models.org import County, Province, VeterinaryUnit
+from app.db.models.org import County, Province
+from app.db.models.veterinary_unit import VeterinaryUnit
 
 
 router = APIRouter()

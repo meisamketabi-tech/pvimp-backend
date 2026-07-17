@@ -3,7 +3,9 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from app.core.security import get_password_hash, verify_password
-from app.db.models.user import Role, User, UserRole
+from app.db.models.user import User
+from app.db.models.role import Role
+from app.db.models.assignment import UserAssignment
 from app.schemas.user import (
     RoleCreate,
     RoleRead,

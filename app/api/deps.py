@@ -1,4 +1,3 @@
-app/api/deps.py
 from typing import Generator, List
 
 from fastapi import Depends, HTTPException, status

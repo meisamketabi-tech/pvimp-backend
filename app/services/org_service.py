@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 
-from app.db.models.org import Province, County, VeterinaryUnit
+from app.db.models.org import Province, County
+from app.db.models.veterinary_unit import VeterinaryUnit
+
 from app.schemas.org import (
     ProvinceCreate,
     ProvinceUpdate,
