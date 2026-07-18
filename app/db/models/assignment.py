@@ -1,18 +1,14 @@
-from sqlalchemy import (
-    Boolean,
-    Column,
-    Date,
-    ForeignKey,
-    Integer,
-)
-
+﻿from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 from app.db.base_class import Base
 
 
 class UserAssignment(Base):
+
     __tablename__ = "user_assignments"
+
 
     id = Column(
         Integer,
@@ -20,11 +16,13 @@ class UserAssignment(Base):
         index=True,
     )
 
+
     user_id = Column(
         Integer,
         ForeignKey("user_account.id"),
         nullable=False,
     )
+
 
     organization_unit_id = Column(
         Integer,
@@ -32,21 +30,20 @@ class UserAssignment(Base):
         nullable=False,
     )
 
+
     role_id = Column(
         Integer,
         ForeignKey("roles.id"),
         nullable=False,
     )
 
-    start_date = Column(
-        Date,
-        nullable=True,
+
+    is_primary = Column(
+        Boolean,
+        nullable=False,
+        default=False,
     )
 
-    end_date = Column(
-        Date,
-        nullable=True,
-    )
 
     is_active = Column(
         Boolean,
@@ -54,15 +51,31 @@ class UserAssignment(Base):
         default=True,
     )
 
+
+    start_date = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.utcnow,
+    )
+
+
+    end_date = Column(
+        DateTime,
+        nullable=True,
+    )
+
+
     user = relationship(
         "User",
         back_populates="assignments",
     )
 
+
     organization_unit = relationship(
         "OrganizationUnit",
         back_populates="assignments",
     )
+
 
     role = relationship(
         "Role",

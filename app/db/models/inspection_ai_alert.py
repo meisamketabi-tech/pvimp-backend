@@ -1,0 +1,31 @@
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+
+from app.db.base_class import Base
+
+
+class InspectionAIAlert(Base):
+
+    __tablename__ = "inspection_ai_alerts"
+
+
+    id = Column(
+        Integer,
+        primary_key=True
+    )
+
+
+    title = Column(
+        String(300)
+    )
+
+
+    confidence = Column(
+        Integer
+    )
+
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow
+    )

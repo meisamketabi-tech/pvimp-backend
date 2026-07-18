@@ -1,15 +1,23 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
+﻿from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
 
 class OrganizationUnit(Base):
+
     __tablename__ = "organization_units"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True,
+    )
 
-    name = Column(String(150), nullable=False)
+    name = Column(
+        String(150),
+        nullable=False,
+    )
 
     code = Column(
         String(200),
@@ -41,7 +49,10 @@ class OrganizationUnit(Base):
         nullable=True,
     )
 
-    description = Column(Text, nullable=True)
+    description = Column(
+        Text,
+        nullable=True,
+    )
 
     is_active = Column(
         Boolean,
@@ -49,26 +60,33 @@ class OrganizationUnit(Base):
         default=True,
     )
 
+
     parent = relationship(
         "OrganizationUnit",
         remote_side=[id],
         back_populates="children",
     )
 
+
     children = relationship(
         "OrganizationUnit",
         back_populates="parent",
+        cascade="all, delete-orphan",
     )
+
 
     province = relationship(
         "Province",
     )
 
+
     county = relationship(
         "County",
     )
 
+
     assignments = relationship(
         "UserAssignment",
         back_populates="organization_unit",
+        cascade="all, delete-orphan",
     )

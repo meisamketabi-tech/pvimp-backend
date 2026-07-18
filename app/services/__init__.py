@@ -1,1 +1,1 @@
-# services package
+from app.services import inspection_service

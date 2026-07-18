@@ -10,33 +10,38 @@ class VeterinaryUnit(Base):
     id = Column(
         Integer,
         primary_key=True,
-        index=True,
+        index=True
     )
 
     name = Column(
         String(150),
-        nullable=False,
+        nullable=False
     )
 
     code = Column(
         String(50),
         nullable=False,
         unique=True,
-        index=True,
+        index=True
     )
 
     county_id = Column(
         Integer,
         ForeignKey("county.id"),
-        nullable=False,
+        nullable=False
     )
 
     is_active = Column(
         Boolean,
         nullable=False,
-        default=True,
+        default=True
     )
 
     county = relationship(
-        "County",
+        "County"
+    )
+
+    inspections = relationship(
+        "Inspection",
+        back_populates="veterinary_unit"
     )

@@ -1,8 +1,25 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, org, users
+from app.api.v1.endpoints import (
+    inspection,
+    health,
+    inspection_assignment,
+)
+
 
 api_router = APIRouter()
-api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
-api_router.include_router(org.router, prefix="/org", tags=["org"])
-api_router.include_router(users.router, prefix="/users", tags=["users"])
+
+
+api_router.include_router(
+    health.router
+)
+
+
+api_router.include_router(
+    inspection.router
+)
+
+
+api_router.include_router(
+    inspection_assignment.router
+)
