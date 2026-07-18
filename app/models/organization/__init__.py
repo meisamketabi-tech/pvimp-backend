@@ -7,3 +7,10 @@ from app.models.organization.organization_role import OrganizationRole
 from app.models.organization.organization_unit_member import OrganizationUnitMember
 from app.models.organization.organization_region import OrganizationRegion
 from app.models.organization.organization_unit_region import OrganizationUnitRegion
+from app.models.organization.organization_hierarchy import OrganizationHierarchy
+from app.models.organization.organization_permission import OrganizationPermission
+from app.models.organization.organization_role_permission import OrganizationRolePermission
+from app.models.organization.organization_document import OrganizationDocument
+from app.models.organization.organization_unit_document import OrganizationUnitDocument
+from app.models.organization.organization_workflow import OrganizationWorkflow
+from app.models.organization.organization_unit_workflow import OrganizationUnitWorkflow

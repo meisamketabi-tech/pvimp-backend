@@ -1,34 +1,29 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime
+﻿from sqlalchemy import Column, Integer, ForeignKey, String, DateTime
 from datetime import datetime
 
 from app.db.base_class import Base
 
 
-class OrganizationPermission(Base):
-    __tablename__ = "organization_permissions"
+class OrganizationUnitDocument(Base):
+    __tablename__ = "organization_unit_documents"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    code = Column(
-        String(100),
-        unique=True,
+    organization_unit_id = Column(
+        Integer,
+        ForeignKey("organization_units.id"),
         nullable=False
     )
 
-    title = Column(
-        String(200),
+    document_id = Column(
+        Integer,
+        ForeignKey("organization_documents.id"),
         nullable=False
     )
 
     description = Column(
         String(500),
         nullable=True
-    )
-
-    is_active = Column(
-        Boolean,
-        default=True,
-        nullable=False
     )
 
     created_at = Column(

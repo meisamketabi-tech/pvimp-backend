@@ -4,25 +4,24 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationPermission(Base):
-    __tablename__ = "organization_permissions"
+class OrganizationDocument(Base):
+    __tablename__ = "organization_documents"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    code = Column(
-        String(100),
-        unique=True,
-        nullable=False
-    )
-
     title = Column(
-        String(200),
+        String(300),
         nullable=False
     )
 
-    description = Column(
+    document_type = Column(
+        String(100),
+        nullable=False
+    )
+
+    file_path = Column(
         String(500),
-        nullable=True
+        nullable=False
     )
 
     is_active = Column(

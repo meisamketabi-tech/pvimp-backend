@@ -11,7 +11,7 @@ class OrganizationRolePermission(Base):
 
     role_id = Column(
         Integer,
-        ForeignKey("roles.id"),
+        ForeignKey("organization_roles.id"),
         nullable=False
     )
 
@@ -21,7 +21,7 @@ class OrganizationRolePermission(Base):
         nullable=False
     )
 
-    is_allowed = Column(
+    is_active = Column(
         Boolean,
         default=True,
         nullable=False

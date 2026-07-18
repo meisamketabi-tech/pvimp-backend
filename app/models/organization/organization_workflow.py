@@ -4,8 +4,8 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationPermission(Base):
-    __tablename__ = "organization_permissions"
+class OrganizationWorkflow(Base):
+    __tablename__ = "organization_workflows"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -15,7 +15,7 @@ class OrganizationPermission(Base):
         nullable=False
     )
 
-    title = Column(
+    name = Column(
         String(200),
         nullable=False
     )
