@@ -27,3 +27,7 @@ from app.db.models.assignment import UserAssignment
 from app.db.models.organization_unit_type import OrganizationUnitType
 
 from app.db.models.organization_position import OrganizationPosition
+
+from app.db.models.organization_level import OrganizationLevel
+
+from app.db.models.organization_role import OrganizationRole
