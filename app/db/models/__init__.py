@@ -21,3 +21,5 @@ from app.db.models.inspection import (
 )
 
 from app.db.models.organization_unit_type import OrganizationUnitType
+
+from app.db.models.organization_position import OrganizationPosition
