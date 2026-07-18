@@ -1,4 +1,5 @@
 ﻿from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
+
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
@@ -8,16 +9,19 @@ class OrganizationUnit(Base):
 
     __tablename__ = "organization_units"
 
+
     id = Column(
         Integer,
         primary_key=True,
         index=True,
     )
 
+
     name = Column(
         String(150),
         nullable=False,
     )
+
 
     code = Column(
         String(200),
@@ -26,10 +30,28 @@ class OrganizationUnit(Base):
         index=True,
     )
 
+
     unit_type = Column(
         String(200),
         nullable=False,
     )
+
+
+    type_id = Column(
+        Integer,
+        ForeignKey("organization_unit_types.id"),
+        nullable=True,
+        index=True,
+    )
+
+
+    level_id = Column(
+        Integer,
+        ForeignKey("organization_levels.id"),
+        nullable=True,
+        index=True,
+    )
+
 
     parent_id = Column(
         Integer,
@@ -37,11 +59,13 @@ class OrganizationUnit(Base):
         nullable=True,
     )
 
+
     province_id = Column(
         Integer,
         ForeignKey("province.id"),
         nullable=True,
     )
+
 
     county_id = Column(
         Integer,
@@ -49,10 +73,12 @@ class OrganizationUnit(Base):
         nullable=True,
     )
 
+
     description = Column(
         Text,
         nullable=True,
     )
+
 
     is_active = Column(
         Boolean,
@@ -72,6 +98,16 @@ class OrganizationUnit(Base):
         "OrganizationUnit",
         back_populates="parent",
         cascade="all, delete-orphan",
+    )
+
+
+    organization_unit_type = relationship(
+        "OrganizationUnitType",
+    )
+
+
+    organization_level = relationship(
+        "OrganizationLevel",
     )
 
 
