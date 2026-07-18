@@ -1,1 +1,2 @@
 ﻿from app.models.organization.organization_unit import OrganizationUnit
+from app.models.organization.organization_unit_type import OrganizationUnitType
