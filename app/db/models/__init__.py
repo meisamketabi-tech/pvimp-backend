@@ -19,3 +19,5 @@ from app.db.models.inspection import (
     ChecklistItem,
     InspectionItemResult,
 )
+
+from app.db.models.organization_unit_type import OrganizationUnitType

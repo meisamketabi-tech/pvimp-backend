@@ -1,5 +1,1 @@
-﻿from app.models.organization.organization_unit import OrganizationUnit
-
-__all__ = [
-    "OrganizationUnit",
-]
+﻿from app.db.models.organization import OrganizationUnit
