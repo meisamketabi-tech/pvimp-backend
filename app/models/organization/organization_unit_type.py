@@ -1,5 +1,6 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean
+﻿from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 from app.db.base_class import Base
 
@@ -7,11 +8,7 @@ from app.db.base_class import Base
 class OrganizationUnitType(Base):
     __tablename__ = "organization_unit_types"
 
-    id = Column(
-        Integer,
-        primary_key=True,
-        index=True
-    )
+    id = Column(Integer, primary_key=True, index=True)
 
     code = Column(
         String(50),
@@ -36,7 +33,13 @@ class OrganizationUnitType(Base):
         nullable=False
     )
 
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
     organization_units = relationship(
         "OrganizationUnit",
-        back_populates="type"
+        backref="type"
     )
