@@ -4,3 +4,4 @@ from app.models.organization.organization_unit_responsibility import Organizatio
 from app.models.organization.functional_domain import FunctionalDomain
 from app.models.organization.organization_unit_domain import OrganizationUnitDomain
 from app.models.organization.organization_position import OrganizationPosition
+from app.models.organization.organization_role import OrganizationRole
