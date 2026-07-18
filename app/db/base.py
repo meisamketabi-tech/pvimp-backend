@@ -33,3 +33,5 @@ from app.db.models.organization_level import OrganizationLevel
 from app.db.models.organization_role import OrganizationRole
 
 from app.db.models.organization_unit_position import OrganizationUnitPosition
+
+from app.db.models.organization_structure_node import OrganizationStructureNode
