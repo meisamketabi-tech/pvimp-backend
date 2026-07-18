@@ -1,5 +1,6 @@
 ﻿from app.db.models.user import User
 from app.db.models.role import Role
+from app.db.models.assignment import UserAssignment
 
 from app.db.models.org import (
     Province,
