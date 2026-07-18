@@ -1,31 +1,27 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime
+﻿from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime
 from datetime import datetime
 
 from app.db.base_class import Base
 
 
-class OrganizationRole(Base):
-    __tablename__ = "organization_roles"
+class OrganizationRolePermission(Base):
+    __tablename__ = "organization_role_permissions"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    code = Column(
-        String(50),
-        unique=True,
+    role_id = Column(
+        Integer,
+        ForeignKey("roles.id"),
         nullable=False
     )
 
-    title = Column(
-        String(200),
+    permission_id = Column(
+        Integer,
+        ForeignKey("organization_permissions.id"),
         nullable=False
     )
 
-    description = Column(
-        String(500),
-        nullable=True
-    )
-
-    is_active = Column(
+    is_allowed = Column(
         Boolean,
         default=True,
         nullable=False

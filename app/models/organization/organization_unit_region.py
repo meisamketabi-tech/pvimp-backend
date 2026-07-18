@@ -1,12 +1,11 @@
 ﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from app.db.base_class import Base
 
 
-class OrganizationPosition(Base):
-    __tablename__ = "organization_positions"
+class OrganizationUnitRegion(Base):
+    __tablename__ = "organization_unit_regions"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -16,26 +15,15 @@ class OrganizationPosition(Base):
         nullable=False
     )
 
-    title = Column(
-        String(200),
+    region_id = Column(
+        Integer,
+        ForeignKey("organization_regions.id"),
         nullable=False
     )
 
-    code = Column(
-        String(50),
-        unique=True,
-        nullable=False
-    )
-
-    is_manager = Column(
+    is_primary = Column(
         Boolean,
         default=False,
-        nullable=False
-    )
-
-    is_active = Column(
-        Boolean,
-        default=True,
         nullable=False
     )
 
@@ -43,9 +31,4 @@ class OrganizationPosition(Base):
         DateTime,
         default=datetime.utcnow,
         nullable=False
-    )
-
-    organization_unit = relationship(
-        "OrganizationUnit",
-        backref="positions"
     )

@@ -1,34 +1,28 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime
+﻿from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
 
 from app.db.base_class import Base
 
 
-class OrganizationRole(Base):
-    __tablename__ = "organization_roles"
+class OrganizationUnitHistory(Base):
+    __tablename__ = "organization_unit_histories"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    code = Column(
-        String(50),
-        unique=True,
+    organization_unit_id = Column(
+        Integer,
+        ForeignKey("organization_units.id"),
         nullable=False
     )
 
-    title = Column(
-        String(200),
+    action = Column(
+        String(100),
         nullable=False
     )
 
     description = Column(
         String(500),
         nullable=True
-    )
-
-    is_active = Column(
-        Boolean,
-        default=True,
-        nullable=False
     )
 
     created_at = Column(

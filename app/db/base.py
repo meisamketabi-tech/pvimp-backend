@@ -1,3 +1,3 @@
-from app.db.base_class import Base
+﻿from app.db.base_class import Base
 
-import app.db.models.__all_models
+from app.models.organization.organization_unit import OrganizationUnit

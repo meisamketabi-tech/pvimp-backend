@@ -5,8 +5,8 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationPosition(Base):
-    __tablename__ = "organization_positions"
+class OrganizationUnitMember(Base):
+    __tablename__ = "organization_unit_members"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -16,21 +16,27 @@ class OrganizationPosition(Base):
         nullable=False
     )
 
-    title = Column(
-        String(200),
+    user_id = Column(
+        Integer,
+        ForeignKey("user_account.id"),
         nullable=False
     )
 
-    code = Column(
-        String(50),
-        unique=True,
+    role_id = Column(
+        Integer,
+        ForeignKey("organization_roles.id"),
         nullable=False
     )
 
-    is_manager = Column(
-        Boolean,
-        default=False,
+    start_date = Column(
+        DateTime,
+        default=datetime.utcnow,
         nullable=False
+    )
+
+    end_date = Column(
+        DateTime,
+        nullable=True
     )
 
     is_active = Column(
@@ -39,13 +45,7 @@ class OrganizationPosition(Base):
         nullable=False
     )
 
-    created_at = Column(
-        DateTime,
-        default=datetime.utcnow,
-        nullable=False
-    )
-
     organization_unit = relationship(
         "OrganizationUnit",
-        backref="positions"
+        backref="members"
     )

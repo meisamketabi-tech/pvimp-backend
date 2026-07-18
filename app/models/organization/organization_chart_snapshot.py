@@ -4,17 +4,10 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationUnitType(Base):
-    __tablename__ = "organization_unit_types"
+class OrganizationChartSnapshot(Base):
+    __tablename__ = "organization_chart_snapshots"
 
     id = Column(Integer, primary_key=True, index=True)
-
-    code = Column(
-        String(50),
-        unique=True,
-        nullable=False,
-        index=True
-    )
 
     title = Column(
         String(200),
@@ -26,9 +19,9 @@ class OrganizationUnitType(Base):
         nullable=True
     )
 
-    is_active = Column(
+    is_current = Column(
         Boolean,
-        default=True,
+        default=False,
         nullable=False
     )
 

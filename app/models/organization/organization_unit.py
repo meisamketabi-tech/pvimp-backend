@@ -8,22 +8,12 @@ from app.db.base_class import Base
 class OrganizationUnit(Base):
     __tablename__ = "organization_units"
 
-    id = Column(
-        Integer,
-        primary_key=True,
-        index=True
-    )
+    id = Column(Integer, primary_key=True, index=True)
 
     parent_id = Column(
         Integer,
         ForeignKey("organization_units.id"),
         nullable=True
-    )
-
-    type_id = Column(
-        Integer,
-        ForeignKey("organization_unit_types.id"),
-        nullable=False
     )
 
     code = Column(
@@ -35,6 +25,11 @@ class OrganizationUnit(Base):
 
     name = Column(
         String(200),
+        nullable=False
+    )
+
+    unit_type = Column(
+        String(50),
         nullable=False
     )
 
@@ -54,9 +49,4 @@ class OrganizationUnit(Base):
         "OrganizationUnit",
         remote_side=[id],
         backref="children"
-    )
-
-    type = relationship(
-        "OrganizationUnitType",
-        back_populates="organization_units"
     )

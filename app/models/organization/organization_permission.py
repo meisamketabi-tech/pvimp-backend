@@ -4,19 +4,18 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationUnitType(Base):
-    __tablename__ = "organization_unit_types"
+class OrganizationPermission(Base):
+    __tablename__ = "organization_permissions"
 
     id = Column(Integer, primary_key=True, index=True)
 
     code = Column(
-        String(50),
+        String(100),
         unique=True,
-        nullable=False,
-        index=True
+        nullable=False
     )
 
-    title = Column(
+    name = Column(
         String(200),
         nullable=False
     )

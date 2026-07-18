@@ -4,26 +4,20 @@ from datetime import datetime
 from app.db.base_class import Base
 
 
-class OrganizationUnitType(Base):
-    __tablename__ = "organization_unit_types"
+class OrganizationRegion(Base):
+    __tablename__ = "organization_regions"
 
     id = Column(Integer, primary_key=True, index=True)
 
     code = Column(
         String(50),
         unique=True,
-        nullable=False,
-        index=True
-    )
-
-    title = Column(
-        String(200),
         nullable=False
     )
 
-    description = Column(
-        String(500),
-        nullable=True
+    name = Column(
+        String(200),
+        nullable=False
     )
 
     is_active = Column(
