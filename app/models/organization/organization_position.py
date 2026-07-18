@@ -1,4 +1,5 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
+﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from app.db.base_class import Base
@@ -11,12 +12,6 @@ class OrganizationPosition(Base):
         Integer,
         primary_key=True,
         index=True
-    )
-
-    organization_unit_id = Column(
-        Integer,
-        ForeignKey("organization_units.id"),
-        nullable=False
     )
 
     code = Column(
@@ -32,13 +27,19 @@ class OrganizationPosition(Base):
     )
 
     position_type = Column(
-        String(100),
+        String(50),
         nullable=False
     )
 
     description = Column(
         String(1000),
         nullable=True
+    )
+
+    is_managerial = Column(
+        Boolean,
+        default=False,
+        nullable=False
     )
 
     is_active = Column(
@@ -51,4 +52,10 @@ class OrganizationPosition(Base):
         DateTime,
         default=datetime.utcnow,
         nullable=False
+    )
+
+
+    roles = relationship(
+        "OrganizationRole",
+        back_populates="position"
     )
