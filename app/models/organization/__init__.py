@@ -1,2 +1,7 @@
 ﻿from app.models.organization.organization_unit import OrganizationUnit
 from app.models.organization.organization_unit_type import OrganizationUnitType
+from app.models.organization.organization_position import OrganizationPosition
+from app.models.organization.organization_role import OrganizationRole
+from app.models.organization.organization_responsibility import OrganizationResponsibility
+from app.models.organization.organization_unit_responsibility import OrganizationUnitResponsibility
+from app.models.organization.organization_unit_contact import OrganizationUnitContact
