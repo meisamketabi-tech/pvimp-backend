@@ -10,6 +10,8 @@ from app.schemas.inspection_assignment import (
     InspectionAssignmentResponse,
 )
 
+from app.db.models.inspection_assignment_history import InspectionAssignmentHistory
+
 from app.services.inspection_assignment_service import (
     create_assignment,
     get_assignments,
@@ -98,3 +100,23 @@ def unassign(
         )
 
     return assignment
+
+
+@router.get(
+    "/history/{inspection_id}"
+)
+def assignment_history(
+    inspection_id: int,
+    db: Session = Depends(get_db)
+):
+
+    return (
+        db.query(InspectionAssignmentHistory)
+        .filter(
+            InspectionAssignmentHistory.inspection_id == inspection_id
+        )
+        .order_by(
+            InspectionAssignmentHistory.id.desc()
+        )
+        .all()
+    )
