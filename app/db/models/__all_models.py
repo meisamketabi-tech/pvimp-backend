@@ -27,3 +27,5 @@ from app.db.models.inspection import (
     InspectionItemResult,
 )
 from app.db.models.inspection_status_history import InspectionStatusHistory
+
+from app.db.models.inspection_assignment_history import InspectionAssignmentHistory

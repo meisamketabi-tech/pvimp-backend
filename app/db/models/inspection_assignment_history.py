@@ -30,6 +30,19 @@ class InspectionAssignmentHistory(Base):
     )
 
 
+    changed_by = Column(
+        Integer,
+        nullable=True
+    )
+
+
+    action = Column(
+        String(50),
+        nullable=False,
+        default="ASSIGNED"
+    )
+
+
     created_at = Column(
         DateTime,
         default=datetime.utcnow

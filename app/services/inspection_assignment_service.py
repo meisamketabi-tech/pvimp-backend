@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from app.db.models.inspection_assignment import InspectionAssignment
+from app.db.models.inspection_assignment_history import InspectionAssignmentHistory
 from app.db.models.inspection import Inspection
 
 
@@ -33,7 +34,11 @@ def create_assignment(
         .first()
     )
 
+    previous_inspector = None
+
     if active_assignment:
+        previous_inspector = active_assignment.inspector_id
+
         active_assignment.is_active = False
         active_assignment.unassigned_at = datetime.utcnow()
 
@@ -48,6 +53,18 @@ def create_assignment(
 
 
     db.add(assignment)
+
+    db.flush()
+
+    history = InspectionAssignmentHistory(
+        inspection_id=data.inspection_id,
+        assigned_from=previous_inspector,
+        assigned_to=data.inspector_id,
+        changed_by=assigned_by,
+        action="ASSIGNED"
+    )
+
+    db.add(history)
 
     db.commit()
 
@@ -109,6 +126,15 @@ def unassign_inspection(
     assignment.is_active = False
     assignment.unassigned_at = datetime.utcnow()
 
+    history = InspectionAssignmentHistory(
+        inspection_id=assignment.inspection_id,
+        assigned_from=assignment.inspector_id,
+        assigned_to=None,
+        changed_by=None,
+        action="UNASSIGNED",
+    )
+
+    db.add(history)
 
     db.commit()
 
