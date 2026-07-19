@@ -60,7 +60,7 @@ def create_assignment(
         inspection_id=data.inspection_id,
         assigned_from=previous_inspector,
         assigned_to=data.inspector_id,
-        changed_by=assigned_by,
+        changed_by=1,
         action="ASSIGNED"
     )
 
@@ -129,8 +129,8 @@ def unassign_inspection(
     history = InspectionAssignmentHistory(
         inspection_id=assignment.inspection_id,
         assigned_from=assignment.inspector_id,
-        assigned_to=None,
-        changed_by=None,
+        assigned_to=assignment.inspector_id,
+        changed_by=1,
         action="UNASSIGNED",
     )
 

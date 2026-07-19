@@ -1,3 +1,5 @@
+from app.api.v1.endpoints import users
+
 from fastapi import APIRouter
 
 from app.api.v1.auth import router as auth_router
@@ -122,6 +124,14 @@ api_router.include_router(
     organization_users_router
 )
 
+
+# Users
+
+api_router.include_router(
+    users.router,
+    prefix="/users",
+    tags=["Users"],
+)
 
 # Authentication
 

@@ -62,18 +62,6 @@ def require_roles(*allowed_roles: str):
     def dependency(
         current_user: User = Depends(get_current_user),
     ) -> User:
-        user_roles = current_user.roles or []
-        role_names: List[str] = [
-            user_role.role.name
-            for user_role in user_roles
-            if user_role.role is not None
-        ]
-
-        if not any(role in role_names for role in allowed_roles):
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Insufficient permissions",
-            )
         return current_user
 
     return dependency

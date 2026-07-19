@@ -51,6 +51,18 @@ def list_users(
 
 
 @router.get(
+    "/roles",
+    response_model=List[RoleRead],
+    dependencies=[Depends(require_roles("admin"))],
+)
+def list_roles(
+    db: Session = Depends(get_db),
+) -> List[RoleRead]:
+    service = UserService(db)
+    return service.list_roles()
+
+
+@router.get(
     "/{user_id}",
     response_model=UserRead,
 )
@@ -99,18 +111,6 @@ def create_role(
 ) -> RoleRead:
     service = UserService(db)
     return service.create_role(payload)
-
-
-@router.get(
-    "/roles",
-    response_model=List[RoleRead],
-    dependencies=[Depends(require_roles("admin"))],
-)
-def list_roles(
-    db: Session = Depends(get_db),
-) -> List[RoleRead]:
-    service = UserService(db)
-    return service.list_roles()
 
 
 @router.get(
