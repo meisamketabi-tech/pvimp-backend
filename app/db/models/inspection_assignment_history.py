@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
 
 from app.db.base_class import Base
@@ -16,17 +16,21 @@ class InspectionAssignmentHistory(Base):
 
 
     inspection_id = Column(
-        Integer
+        Integer,
+        ForeignKey("inspections.id"),
+        nullable=False
     )
 
 
     assigned_from = Column(
-        Integer
+        Integer,
+        nullable=True
     )
 
 
     assigned_to = Column(
-        Integer
+        Integer,
+        nullable=True
     )
 
 
