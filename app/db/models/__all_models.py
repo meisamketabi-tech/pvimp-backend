@@ -26,3 +26,4 @@ from app.db.models.inspection import (
     ChecklistItem,
     InspectionItemResult,
 )
+from app.db.models.inspection_status_history import InspectionStatusHistory

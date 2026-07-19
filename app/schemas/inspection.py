@@ -1,4 +1,4 @@
-from datetime import datetime
+﻿from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -95,6 +95,7 @@ class InspectionItemResultCreate(BaseModel):
 
 
 class InspectionItemResultResponse(BaseModel):
+
     id: int
     checklist_item_id: int
     is_compliant: bool
@@ -134,6 +135,8 @@ class InspectionUpdate(BaseModel):
 class InspectionStatusUpdate(BaseModel):
 
     status: InspectionStatusEnum
+    note: Optional[str] = None
+    note: Optional[str] = None
 
 
 class InspectionResponse(InspectionBase):
@@ -151,6 +154,30 @@ class InspectionResponse(InspectionBase):
     updated_at: datetime
 
     items_result: List[InspectionItemResultResponse] = []
+
+    class Config:
+        from_attributes = True
+
+
+# -------------------------
+# Inspection Status History
+# -------------------------
+
+class InspectionStatusHistoryResponse(BaseModel):
+
+    id: int
+
+    inspection_id: int
+
+    old_status: Optional[InspectionStatusEnum] = None
+
+    new_status: InspectionStatusEnum
+
+    changed_by: int
+
+    changed_at: datetime
+
+    note: Optional[str] = None
 
     class Config:
         from_attributes = True

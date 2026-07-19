@@ -42,3 +42,4 @@ from app.db.models.organization_unit_position import OrganizationUnitPosition
 from app.db.models.organization_structure_node import OrganizationStructureNode
 
 from app.db.models.inspection_assignment import InspectionAssignment
+from app.db.models.inspection_status_history import InspectionStatusHistory

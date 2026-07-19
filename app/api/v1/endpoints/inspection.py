@@ -14,6 +14,7 @@ from app.schemas.inspection import (
     InspectionTypeResponse,
     ChecklistCreate,
     ChecklistResponse,
+    InspectionStatusHistoryResponse,
 )
 
 from app.services import inspection_service
@@ -98,7 +99,7 @@ def update_inspection(
 
 
 @router.patch(
-    "/{inspection_id}/status",
+    '/{inspection_id}/status',
     response_model=InspectionResponse
 )
 def update_inspection_status(
@@ -110,13 +111,32 @@ def update_inspection_status(
     inspection = inspection_service.update_inspection_status(
         db,
         inspection_id,
-        data.status
+        data.status,
+        changed_by=1,
+        note=getattr(data, 'note', None)
     )
 
     if not inspection:
         raise HTTPException(
             status_code=404,
-            detail="Inspection not found"
+            detail='Inspection not found'
         )
 
     return inspection
+
+
+@router.get(
+    "/{inspection_id}/status-history",
+    response_model=list[InspectionStatusHistoryResponse]
+)
+def get_inspection_status_history(
+    inspection_id: int,
+    db: Session = Depends(get_db)
+):
+
+    history = inspection_service.get_inspection_status_history(
+        db,
+        inspection_id
+    )
+
+    return history
