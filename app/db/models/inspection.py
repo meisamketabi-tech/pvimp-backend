@@ -151,10 +151,17 @@ class Inspection(Base):
     )
 
     assignments = relationship(
-    "InspectionAssignment",
-    back_populates="inspection",
-    cascade="all, delete-orphan",
-)
+        "InspectionAssignment",
+        back_populates="inspection",
+        cascade="all, delete-orphan",
+    )
+
+    status_history = relationship(
+        "InspectionStatusHistory",
+        back_populates="inspection",
+        cascade="all, delete-orphan",
+    )
+
 
 
 class Checklist(Base):
