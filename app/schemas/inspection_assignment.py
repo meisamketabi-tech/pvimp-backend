@@ -21,9 +21,15 @@ class InspectionAssignmentResponse(BaseModel):
 
     inspector_id: int
 
+    assigned_by: Optional[int] = None
+
     assigned_at: datetime
 
+    unassigned_at: Optional[datetime] = None
+
     is_active: bool
+
+    note: Optional[str] = None
 
     class Config:
         from_attributes = True
