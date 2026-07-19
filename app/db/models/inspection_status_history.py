@@ -59,7 +59,8 @@ class InspectionStatusHistory(Base):
     )
 
     inspection = relationship(
-        "Inspection"
+        "Inspection",
+        back_populates="status_history",
     )
 
     user = relationship(
