@@ -1,5 +1,4 @@
 ﻿from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer
-
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
@@ -60,4 +59,10 @@ class OrganizationUnitPosition(Base):
     parent_assignment = relationship(
         "OrganizationUnitPosition",
         remote_side=[id],
+    )
+
+
+    assignments = relationship(
+        "UserAssignment",
+        back_populates="organization_unit_position",
     )

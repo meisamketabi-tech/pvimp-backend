@@ -5,6 +5,7 @@ from app.core.config import settings
 
 from app.api.routes.organization import router as organization_router
 from app.api.routes.organization_crud import router as organization_crud_router
+from app.api.routes.position import router as position_router
 
 
 app = FastAPI(
@@ -25,6 +26,10 @@ app.include_router(
 
 app.include_router(
     organization_crud_router
+)
+
+app.include_router(
+    position_router
 )
 
 

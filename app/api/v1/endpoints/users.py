@@ -1,4 +1,4 @@
-from typing import List
+﻿from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -10,11 +10,14 @@ from app.schemas.user import (
     RoleUpdate,
     UserCreate,
     UserRead,
-    UserRoleCreate,
-    UserRoleRead,
+    AssignmentCreate,
+    AssignmentRead,
     UserUpdate,
 )
+
 from app.services.user_service import UserService
+from app.db.models.user import User
+from app.db.models.assignment import UserAssignment
 
 
 router = APIRouter()
@@ -28,15 +31,9 @@ router = APIRouter()
 def create_user(
     payload: UserCreate,
     db: Session = Depends(get_db),
-) -> UserRead:
+):
     service = UserService(db)
-    try:
-        return service.create_user(payload)
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(exc),
-        )
+    return service.create_user(payload)
 
 
 @router.get(
@@ -45,9 +42,8 @@ def create_user(
 )
 def list_users(
     db: Session = Depends(get_db),
-) -> List[UserRead]:
-    service = UserService(db)
-    return service.list_users()
+):
+    return UserService(db).list_users()
 
 
 @router.get(
@@ -57,46 +53,8 @@ def list_users(
 )
 def list_roles(
     db: Session = Depends(get_db),
-) -> List[RoleRead]:
-    service = UserService(db)
-    return service.list_roles()
-
-
-@router.get(
-    "/{user_id}",
-    response_model=UserRead,
-)
-def get_user(
-    user_id: int,
-    db: Session = Depends(get_db),
-) -> UserRead:
-    service = UserService(db)
-    user = service.get_user(user_id)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
-        )
-    return user
-
-
-@router.put(
-    "/{user_id}",
-    response_model=UserRead,
-)
-def update_user(
-    user_id: int,
-    payload: UserUpdate,
-    db: Session = Depends(get_db),
-) -> UserRead:
-    service = UserService(db)
-    user = service.update_user(user_id, payload)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
-        )
-    return user
+):
+    return UserService(db).list_roles()
 
 
 @router.post(
@@ -108,9 +66,8 @@ def update_user(
 def create_role(
     payload: RoleCreate,
     db: Session = Depends(get_db),
-) -> RoleRead:
-    service = UserService(db)
-    return service.create_role(payload)
+):
+    return UserService(db).create_role(payload)
 
 
 @router.get(
@@ -121,14 +78,10 @@ def create_role(
 def get_role(
     role_id: int,
     db: Session = Depends(get_db),
-) -> RoleRead:
-    service = UserService(db)
-    role = service.get_role(role_id)
+):
+    role = UserService(db).get_role(role_id)
     if not role:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Role not found",
-        )
+        raise HTTPException(404, "Role not found")
     return role
 
 
@@ -141,39 +94,133 @@ def update_role(
     role_id: int,
     payload: RoleUpdate,
     db: Session = Depends(get_db),
-) -> RoleRead:
-    service = UserService(db)
-    role = service.update_role(role_id, payload)
+):
+    role = UserService(db).update_role(role_id, payload)
     if not role:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Role not found",
-        )
+        raise HTTPException(404, "Role not found")
     return role
 
 
 @router.post(
-    "/roles/assign",
-    response_model=UserRoleRead,
+    "/assignments",
+    response_model=AssignmentRead,
     status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(require_roles("admin"))],
 )
-def assign_role(
-    payload: UserRoleCreate,
+def create_assignment(
+    payload: AssignmentCreate,
     db: Session = Depends(get_db),
-) -> UserRoleRead:
-    service = UserService(db)
-    return service.assign_role(payload)
+):
+    return UserService(db).assign_role(payload)
 
 
 @router.get(
-    "/{user_id}/roles",
-    response_model=List[UserRoleRead],
+    "/{user_id}/assignments",
+    response_model=List[AssignmentRead],
     dependencies=[Depends(require_roles("admin"))],
 )
-def list_user_roles(
+def list_assignments(
     user_id: int,
     db: Session = Depends(get_db),
-) -> List[UserRoleRead]:
-    service = UserService(db)
-    return service.list_user_roles(user_id)
+):
+    return UserService(db).list_user_roles(user_id)
+
+
+@router.get(
+    "/{user_id}",
+    response_model=UserRead,
+)
+def get_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+):
+    user = UserService(db).get_user(user_id)
+    if not user:
+        raise HTTPException(404, "User not found")
+    return user
+
+
+@router.put(
+    "/{user_id}",
+    response_model=UserRead,
+)
+def update_user(
+    user_id: int,
+    payload: UserUpdate,
+    db: Session = Depends(get_db),
+):
+    user = UserService(db).update_user(user_id, payload)
+    if not user:
+        raise HTTPException(404, "User not found")
+    return user
+
+
+
+
+@router.get(
+    "/{user_id}/details",
+)
+def user_details(
+    user_id: int,
+    db: Session = Depends(get_db),
+):
+    user = (
+        db.query(User)
+        .filter(User.id == user_id)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found",
+        )
+
+    assignments = (
+        db.query(UserAssignment)
+        .filter(
+            UserAssignment.user_id == user_id,
+            UserAssignment.is_active == True,
+        )
+        .all()
+    )
+
+    return {
+        "id": user.id,
+        "username": user.username,
+        "full_name": user.full_name,
+        "email": user.email,
+        "mobile": user.mobile,
+        "is_active": user.is_active,
+        "assignments": [
+            {
+                "id": a.id,
+
+                "organization_unit": {
+                    "id": a.organization_unit.id,
+                    "name": a.organization_unit.name,
+                    "code": a.organization_unit.code,
+                },
+
+                "position": (
+                    {
+                        "id": a.organization_unit_position.organization_position.id,
+                        "code": a.organization_unit_position.organization_position.code,
+                        "title": a.organization_unit_position.organization_position.title,
+                    }
+                    if a.organization_unit_position
+                    else None
+                ),
+
+                "role": {
+                    "id": a.role.id,
+                    "name": a.role.name,
+                },
+
+                "is_primary": a.is_primary,
+                "start_date": a.start_date,
+                "end_date": a.end_date,
+            }
+            for a in assignments
+        ],
+    }

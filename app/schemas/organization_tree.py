@@ -1,20 +1,22 @@
 ﻿from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
-class OrganizationPositionNode(BaseModel):
-
-    id: int
-    name: str
-
-
-class OrganizationUserNode(BaseModel):
+class OrganizationPositionTree(BaseModel):
 
     id: int
-    username: str
-    full_name: str
-    role: str
+    position_id: int
+    position_code: str
+    position_title: str
+
+    user_id: Optional[int] = None
+    username: Optional[str] = None
+    full_name: Optional[str] = None
+
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
 class OrganizationTreeNode(BaseModel):
@@ -22,15 +24,17 @@ class OrganizationTreeNode(BaseModel):
     id: int
     name: str
     code: str
+    unit_type: str
 
-    type_id: Optional[int] = None
-    level_id: Optional[int] = None
+    parent_id: Optional[int] = None
 
-    positions: List[OrganizationPositionNode] = []
-
-    users: List[OrganizationUserNode] = []
+    positions: List[OrganizationPositionTree] = []
 
     children: List["OrganizationTreeNode"] = []
+
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
 OrganizationTreeNode.model_rebuild()

@@ -1,8 +1,12 @@
-from app.api.v1.endpoints import users
-
+﻿from app.api.v1.organization_unit_detail import router as organization_unit_detail_router
 from fastapi import APIRouter
+from app.api.v1.organization_dashboard import router as organization_dashboard_router
+from app.api.v1.endpoints import users
+from app.api.v1.endpoints import assignment
 
 from app.api.v1.auth import router as auth_router
+
+from app.api.v1.organization_tree import router as organization_tree_router
 
 from app.api.v1.organization_positions import (
     router as organization_positions_router
@@ -36,26 +40,17 @@ from app.api.v1.endpoints import (
 api_router = APIRouter()
 
 
-# Health
-
 api_router.include_router(
     health.router
 )
-
-
-# Core Inspection
 
 api_router.include_router(
     inspection.router
 )
 
-
 api_router.include_router(
     inspection_assignment.router
 )
-
-
-# Inspection Modules
 
 api_router.include_router(
     inspection_attachment.router
@@ -114,8 +109,6 @@ api_router.include_router(
 )
 
 
-# Organization
-
 api_router.include_router(
     organization_positions_router
 )
@@ -125,7 +118,15 @@ api_router.include_router(
 )
 
 
-# Users
+api_router.include_router(
+    organization_tree_router
+)
+
+
+api_router.include_router(
+    assignment.router
+)
+
 
 api_router.include_router(
     users.router,
@@ -133,8 +134,17 @@ api_router.include_router(
     tags=["Users"],
 )
 
-# Authentication
 
 api_router.include_router(
     auth_router.router
+)
+
+
+api_router.include_router(
+    organization_dashboard_router
+)
+
+
+api_router.include_router(
+    organization_unit_detail_router
 )

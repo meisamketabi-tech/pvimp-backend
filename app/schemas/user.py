@@ -1,4 +1,4 @@
-from typing import Optional
+﻿from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr
 
@@ -69,5 +69,26 @@ class UserRoleCreate(UserRoleBase):
 
 class UserRoleRead(UserRoleBase):
     id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class AssignmentCreate(BaseModel):
+    user_id: int
+    role_id: int
+    organization_unit_id: int
+    organization_unit_position_id: int | None = None
+    is_primary: bool = False
+
+
+class AssignmentRead(BaseModel):
+    id: int
+    user_id: int
+    role_id: int
+    organization_unit_id: int
+    organization_unit_position_id: int | None = None
+    is_primary: bool
+    is_active: bool
+    organization_unit_position_id: int | None = None
 
     model_config = ConfigDict(from_attributes=True)
