@@ -1,4 +1,11 @@
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, Boolean
+﻿from sqlalchemy import (
+    Column,
+    Integer,
+    ForeignKey,
+    DateTime,
+    Boolean,
+    Text,
+)
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -31,6 +38,13 @@ class InspectionAssignment(Base):
     )
 
 
+    assigned_by = Column(
+        Integer,
+        ForeignKey("user_account.id"),
+        nullable=True,
+    )
+
+
     assigned_at = Column(
         DateTime,
         nullable=False,
@@ -38,10 +52,22 @@ class InspectionAssignment(Base):
     )
 
 
+    unassigned_at = Column(
+        DateTime,
+        nullable=True,
+    )
+
+
     is_active = Column(
         Boolean,
         nullable=False,
         default=True,
+    )
+
+
+    note = Column(
+        Text,
+        nullable=True,
     )
 
 
@@ -53,4 +79,11 @@ class InspectionAssignment(Base):
 
     inspector = relationship(
         "User",
+        foreign_keys=[inspector_id],
+    )
+
+
+    assigner = relationship(
+        "User",
+        foreign_keys=[assigned_by],
     )
