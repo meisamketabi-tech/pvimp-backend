@@ -1,12 +1,12 @@
-﻿from sqlalchemy import Boolean, Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Boolean, Text
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
 
-class Role(Base):
+class Permission(Base):
 
-    __tablename__ = "roles"
+    __tablename__ = "permissions"
 
 
     id = Column(
@@ -16,11 +16,17 @@ class Role(Base):
     )
 
 
-    name = Column(
-        String(200),
+    code = Column(
+        String(100),
         nullable=False,
         unique=True,
         index=True,
+    )
+
+
+    title = Column(
+        String(200),
+        nullable=False,
     )
 
 
@@ -37,15 +43,8 @@ class Role(Base):
     )
 
 
-    assignments = relationship(
-        "UserAssignment",
-        back_populates="role",
-        cascade="all, delete-orphan",
-    )
-
-
     role_permissions = relationship(
         "RolePermission",
-        back_populates="role",
+        back_populates="permission",
         cascade="all, delete-orphan",
     )

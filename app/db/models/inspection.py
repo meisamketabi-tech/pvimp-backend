@@ -150,6 +150,12 @@ class Inspection(Base):
         cascade="all, delete-orphan"
     )
 
+    assignments = relationship(
+    "InspectionAssignment",
+    back_populates="inspection",
+    cascade="all, delete-orphan",
+)
+
 
 class Checklist(Base):
     __tablename__ = "checklists"
@@ -266,3 +272,5 @@ class InspectionItemResult(Base):
         "ChecklistItem",
         back_populates="results"
     )
+
+

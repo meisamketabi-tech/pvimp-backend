@@ -110,29 +110,44 @@ class InspectionItemResultResponse(BaseModel):
 # -------------------------
 
 class InspectionBase(BaseModel):
+
     inspection_type_id: int
     organization_unit_id: int
+    veterinary_unit_id: int
     inspector_id: int
     inspection_date: datetime
     notes: Optional[str] = None
 
 
 class InspectionCreate(InspectionBase):
+
     items_result: List[InspectionItemResultCreate] = []
 
 
 class InspectionUpdate(BaseModel):
+
     status: Optional[InspectionStatusEnum] = None
     result: Optional[InspectionResultEnum] = None
     notes: Optional[str] = None
 
 
-class InspectionResponse(InspectionBase):
-    id: int
-    inspection_number: str
+class InspectionStatusUpdate(BaseModel):
+
     status: InspectionStatusEnum
+
+
+class InspectionResponse(InspectionBase):
+
+    id: int
+
+    inspection_number: str
+
+    status: InspectionStatusEnum
+
     result: InspectionResultEnum
+
     created_at: datetime
+
     updated_at: datetime
 
     items_result: List[InspectionItemResultResponse] = []

@@ -8,6 +8,7 @@ from app.db.session import get_db
 from app.schemas.inspection import (
     InspectionCreate,
     InspectionUpdate,
+    InspectionStatusUpdate,
     InspectionResponse,
     InspectionTypeCreate,
     InspectionTypeResponse,
@@ -24,74 +25,6 @@ router = APIRouter(
 )
 
 
-# -------------------------
-# Inspection Types
-# -------------------------
-
-@router.post(
-    "/types",
-    response_model=InspectionTypeResponse
-)
-def create_inspection_type(
-    data: InspectionTypeCreate,
-    db: Session = Depends(get_db)
-):
-
-    return inspection_service.create_inspection_type(
-        db,
-        data
-    )
-
-
-@router.get(
-    "/types",
-    response_model=List[InspectionTypeResponse]
-)
-def get_inspection_types(
-    db: Session = Depends(get_db)
-):
-
-    return inspection_service.get_inspection_types(
-        db
-    )
-
-
-# -------------------------
-# Checklists
-# -------------------------
-
-@router.post(
-    "/checklists",
-    response_model=ChecklistResponse
-)
-def create_checklist(
-    data: ChecklistCreate,
-    db: Session = Depends(get_db)
-):
-
-    return inspection_service.create_checklist(
-        db,
-        data
-    )
-
-
-@router.get(
-    "/checklists",
-    response_model=List[ChecklistResponse]
-)
-def get_checklists(
-    db: Session = Depends(get_db)
-):
-
-    return inspection_service.get_checklists(
-        db
-    )
-
-
-# -------------------------
-# Inspections
-# -------------------------
-
 @router.post(
     "",
     response_model=InspectionResponse
@@ -100,7 +33,6 @@ def create_inspection(
     data: InspectionCreate,
     db: Session = Depends(get_db)
 ):
-
     return inspection_service.create_inspection(
         db,
         data
@@ -114,10 +46,7 @@ def create_inspection(
 def get_inspections(
     db: Session = Depends(get_db)
 ):
-
-    return inspection_service.get_inspections(
-        db
-    )
+    return inspection_service.get_inspections(db)
 
 
 @router.get(
@@ -157,6 +86,31 @@ def update_inspection(
         db,
         inspection_id,
         data
+    )
+
+    if not inspection:
+        raise HTTPException(
+            status_code=404,
+            detail="Inspection not found"
+        )
+
+    return inspection
+
+
+@router.patch(
+    "/{inspection_id}/status",
+    response_model=InspectionResponse
+)
+def update_inspection_status(
+    inspection_id: int,
+    data: InspectionStatusUpdate,
+    db: Session = Depends(get_db)
+):
+
+    inspection = inspection_service.update_inspection_status(
+        db,
+        inspection_id,
+        data.status
     )
 
     if not inspection:
