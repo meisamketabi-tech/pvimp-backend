@@ -1,1 +1,1 @@
-﻿from app.db.models.organization import OrganizationUnit
+# legacy models disabled

@@ -1,4 +1,4 @@
-﻿from app.api.v1.organization_unit_detail import router as organization_unit_detail_router
+from app.api.v1.organization_unit_detail import router as organization_unit_detail_router
 from fastapi import APIRouter
 from app.api.v1.organization_dashboard import router as organization_dashboard_router
 from app.api.v1.endpoints import users
@@ -15,6 +15,8 @@ from app.api.v1.organization_positions import (
 from app.api.v1.organization_users import (
     router as organization_users_router
 )
+
+from app.api.v1 import supervision
 
 from app.api.v1.endpoints import (
     health,
@@ -147,4 +149,8 @@ api_router.include_router(
 
 api_router.include_router(
     organization_unit_detail_router
+)
+
+api_router.include_router(
+    supervision.router
 )

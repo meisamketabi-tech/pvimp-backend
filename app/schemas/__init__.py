@@ -1,9 +1,2 @@
-from app.schemas.inspection import (
-    InspectionCreate,
-    InspectionUpdate,
-    InspectionResponse,
-    InspectionTypeCreate,
-    InspectionTypeResponse,
-    ChecklistCreate,
-    ChecklistResponse,
-)
+
+from app.schemas.responsible_health import *
