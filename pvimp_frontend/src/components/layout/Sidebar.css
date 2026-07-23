@@ -1,0 +1,202 @@
+.sidebar{
+    width:270px;
+    position:fixed;
+    right:0;
+    top:0;
+    height:100vh;
+    background:#063b4a;
+    border-left:1px solid #0b5264;
+    direction:rtl;
+    font-family:"Vazirmatn","Tahoma","Arial",sans-serif;
+    color:white;
+    overflow-y:auto;
+    box-shadow:-4px 0 15px rgba(0,0,0,.18);
+    z-index:1000;
+}
+
+
+/* Header */
+
+.sidebar-header{
+    padding:22px 15px;
+    text-align:center;
+    background:#042f3a;
+    border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+
+.sidebar-header h2{
+    margin:0;
+    font-size:17px;
+    font-weight:700;
+    color:white;
+    line-height:1.8;
+}
+
+
+.sidebar-header p{
+    margin:8px 0 0;
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+
+
+/* Main menu */
+
+.tree-menu{
+    padding:12px;
+}
+
+
+.tree-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+    margin-bottom:6px;
+    cursor:pointer;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    color:white;
+    transition:.2s;
+}
+
+
+.tree-title:hover{
+    background:#0b5264;
+}
+
+
+.tree-title span:first-child{
+    width:18px;
+    font-size:18px;
+}
+
+
+
+/* زیرمنو سطح اول */
+
+.tree-children{
+
+    margin-right:8px;
+    padding-right:8px;
+    border-right:none;
+
+}
+
+
+
+/* آیتم های زیر منو */
+
+.tree-child{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:10px 14px;
+
+    margin:5px 0;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    color:#dbeafe;
+
+    background:rgba(255,255,255,.04);
+
+    transition:.2s;
+
+}
+
+
+
+.tree-child:hover{
+
+    background:#0b5264;
+
+    color:white;
+
+}
+
+
+
+/* شهرستان ها */
+
+.county-menu{
+
+    background:#07556a;
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+
+
+.county-menu:hover{
+
+    background:#0d6b82;
+
+}
+
+
+
+/* زیرمنوی داخل شهرستان */
+
+.county-menu + .tree-children{
+
+    background:rgba(0,0,0,.12);
+
+    border-radius:10px;
+
+    padding:8px;
+
+    margin-right:12px;
+
+}
+
+
+
+.county-menu + .tree-children .tree-child{
+
+    background:rgba(255,255,255,.06);
+
+    color:#e0f2fe;
+
+}
+
+
+
+.county-menu + .tree-children .tree-child:hover{
+
+    background:#0b5264;
+
+    color:white;
+
+}
+
+
+
+/* scrollbar */
+
+.sidebar::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+
+.sidebar::-webkit-scrollbar-thumb{
+
+    background:#0b5264;
+
+    border-radius:10px;
+
+}
