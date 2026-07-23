@@ -1,4 +1,4 @@
-# Python cache
+﻿# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
@@ -29,7 +29,8 @@ build/
 Thumbs.db
 
 # Logs
-*.logpvimp_frontend/node_modules/
+*.log
+
+# Frontend
+pvimp_frontend/node_modules/
 pvimp_frontend/dist/
-__pycache__/
-*.pyc
