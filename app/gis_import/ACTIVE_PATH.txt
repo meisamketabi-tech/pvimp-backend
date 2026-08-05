@@ -1,0 +1,26 @@
+PVIMP GIS IMPORT - ACTIVE PATH
+
+DO NOT USE OLD GIS IMPORT SCRIPTS.
+
+ACTIVE ROOT:
+D:\pvimp_backend\app\gis_import\
+
+TEMPLATE WORKFLOW:
+Excel ?????
+    ->
+Excel Structure Audit
+    ->
+DB Target Structure Audit
+    ->
+Excel -> DB Mapping
+    ->
+Mapping Confirmation
+    ->
+Import Service
+    ->
+Replacement / Upsert
+    ->
+Verification
+
+LEGACY ARCHIVE:
+D:\pvimp_backend\_archive\gis_import_legacy\

@@ -39,10 +39,13 @@ technicalManager:"",
 inspectorName:"",
 inspectorRole:"",
 visitDate:today,
-startTime:currentTime
+startTime:currentTime,
+visitReason:"",
+inspectionType:"",
+finalStatus:"",
+description:""
 
 });
-
 
 const [healthItems,setHealthItems]=useState<any[]>([
 

@@ -1302,96 +1302,52 @@ onChange={()=>toggleChecklist(item)}
 
 
 {
-
-specificChecklists[form.activityType] ?
-
+specificChecklists[form.activityType] ? (
 
 <div
-
 style={{
-
 display:"grid",
-
 gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",
-
 gap:"10px"
-
 }}
-
 >
-
-
 {
-
-<input
-
-type="checkbox"
-
-checked={checklist.includes(item)}
-
-onChange={()=>toggleChecklist(item)}
-
-/>
-
+specificChecklists[form.activityType].map((item: string) => (
 <label
-
 key={item}
-
 style={{
-
 border:"1px solid #ddd",
-
 padding:"12px",
-
 borderRadius:"8px",
-
-background:"#fff"
-
+background:"#fff",
+display:"flex",
+alignItems:"center",
+cursor:"pointer"
 }}
-
 >
-
-
 <input
-
 type="checkbox"
-
+checked={checklist.includes(item)}
+onChange={()=>toggleChecklist(item)}
 />
-
 
 <span style={{marginRight:"8px"}}>
-
 {item}
-
 </span>
 
-
 </label>
-
-
-)
-
+))
 }
-
-
-
 </div>
 
-
-
-:
-
+) : (
 
 <p>
-
-پس از انتخاب نوع واحد، چک‌لیست اختصاصی نمایش داده می‌شود.
-
+?? ?? ?????? ??? ????? ??????? ??????? ????? ???? ??????.
 </p>
 
-
+)
 }
-
-
 
 </div>
 

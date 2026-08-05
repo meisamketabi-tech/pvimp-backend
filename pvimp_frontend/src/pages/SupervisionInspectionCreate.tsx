@@ -178,7 +178,7 @@ function selectSlaughterType(value:string){
 
 
 const list=
-slaughterhouses[county]
+(slaughterhouses as Record<string, typeof slaughterhouses[keyof typeof slaughterhouses]>)[county]
 ?.filter(
 (x:any)=>x.type===value
 )
@@ -212,7 +212,7 @@ function selectSlaughter(name:string){
 
 
 const item=
-slaughterhouses[county]
+(slaughterhouses as Record<string, typeof slaughterhouses[keyof typeof slaughterhouses]>)[county]
 ?.find(
 (x:any)=>x.name===name
 );
@@ -256,7 +256,7 @@ navigate(
 
 
 const slaughterList=
-slaughterhouses[county] || [];
+(slaughterhouses as Record<string, typeof slaughterhouses[keyof typeof slaughterhouses]>)[county] || [];
 
 
 

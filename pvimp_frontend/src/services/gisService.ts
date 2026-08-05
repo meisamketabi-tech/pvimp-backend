@@ -1,75 +1,101 @@
-export interface GISCenter {
+﻿import api from "./api";
 
 
-id:number;
+export interface GISUnit {
 
-name:string;
+    id: number;
 
-type:string;
+    unit_name: string;
 
-lat:number;
+    unit_code: string;
 
-lng:number;
+    unit_type_id: number;
 
-risk:string;
+    province_id: number | null;
 
-lastVisit:string;
+    county_id: number | null;
 
+    latitude: number | null;
 
-}
+    longitude: number | null;
 
+    cattle_count: number;
 
+    sheep_count: number;
 
-export async function getGISCenters(countyId:string){
+    goat_count: number;
 
+    horse_count: number;
 
-const data:GISCenter[]=[
+    dog_count: number;
 
+    camel_count: number;
 
-{
+    buffalo_count: number;
 
-id:1,
-
-name:"فروشگاه مواد خام دامی الف",
-
-type:"عرضه فرآورده خام دامی",
-
-lat:36.55,
-
-lng:48.25,
-
-risk:"high",
-
-lastVisit:"1405/04/10"
-
-},
-
-
-
-{
-
-id:2,
-
-name:"کشتارگاه شهرستان",
-
-type:"کشتارگاه",
-
-lat:36.56,
-
-lng:48.26,
-
-risk:"medium",
-
-lastVisit:"1405/04/15"
+    is_active: boolean;
 
 }
 
 
 
-];
+export const gisService = {
 
 
-return data;
+    getUnits() {
+
+        return api.get<GISUnit[]>(
+            "/gis/epidemiology-units/"
+        );
+
+    },
 
 
-}
+
+    createUnit(data: any) {
+
+        return api.post(
+            "/gis/epidemiology-units/",
+            data
+        );
+
+    },
+
+
+
+    updateUnit(
+        id: number,
+        data: any
+    ) {
+
+        return api.put(
+            `/gis/epidemiology-units/${id}`,
+            data
+        );
+
+    },
+
+
+
+    deleteUnit(
+        id: number
+    ) {
+
+        return api.delete(
+            `/gis/epidemiology-units/${id}`
+        );
+
+    },
+
+
+
+    getUploadedFiles() {
+
+        return api.get(
+            "/gis/import/disease-control/files"
+        );
+
+    }
+
+
+};

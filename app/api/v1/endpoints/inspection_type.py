@@ -17,13 +17,13 @@ from app.services.inspection_service import (
 
 
 router = APIRouter(
-    prefix="/inspection-types",
+    prefix="/inspections",
     tags=["Inspection Types"]
 )
 
 
 @router.post(
-    "",
+    "/types",
     response_model=InspectionTypeResponse
 )
 def create(
@@ -38,7 +38,7 @@ def create(
 
 
 @router.get(
-    "",
+    "/types",
     response_model=List[InspectionTypeResponse]
 )
 def list_all(

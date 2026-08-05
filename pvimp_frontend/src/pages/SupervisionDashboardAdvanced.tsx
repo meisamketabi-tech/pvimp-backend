@@ -44,7 +44,7 @@ return(
 <h3>??????? ??????</h3>
 <strong>
 {
-data.filter(x=>x.nonComplianceCount>2).length
+data.filter(x=>(x.nonComplianceCount || 0)>2).length
 }
 </strong>
 </div>

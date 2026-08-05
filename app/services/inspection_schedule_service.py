@@ -1,40 +1,27 @@
 from sqlalchemy.orm import Session
 
-from app.db.models.inspection_schedule import (
-    InspectionSchedule
-)
+from app.db.models.inspection_schedule import InspectionSchedule
 
 
 def create_schedule(
     db: Session,
-    data
+    data,
 ):
-
-    schedule = InspectionSchedule(
+    obj = InspectionSchedule(
         **data.model_dump()
     )
 
-    db.add(
-        schedule
-    )
-
+    db.add(obj)
     db.commit()
+    db.refresh(obj)
 
-    db.refresh(
-        schedule
-    )
-
-    return schedule
-
+    return obj
 
 
 def get_schedules(
-    db: Session
+    db: Session,
 ):
-
     return (
-        db.query(
-            InspectionSchedule
-        )
+        db.query(InspectionSchedule)
         .all()
     )

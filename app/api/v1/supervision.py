@@ -7,38 +7,20 @@ from app.db.models.organization import OrganizationUnit
 from app.db.models.user import User
 from app.db.models.inspection import InspectionItemResult
 
-
-router = APIRouter(
-    prefix="/supervision",
-    tags=["Supervision"]
-)
+router = APIRouter(prefix="/supervision", tags=["Supervision"])
 
 
 @router.get("/inspections")
-def get_supervision_dashboard(
-    db: Session = Depends(get_db)
-):
-
-    print('SUPERVISION START')
-
+def get_supervision_dashboard(db: Session = Depends(get_db)):
 
     try:
 
-        inspections = (
-        db.query(Inspection)
-        .order_by(
-            Inspection.created_at.desc()
-        )
-        .all()
-        )
-
+        inspections = db.query(Inspection).order_by(Inspection.created_at.desc()).all()
 
     except Exception as e:
         raise
 
-
     result = []
-
 
     for item in inspections:
 
@@ -49,36 +31,21 @@ def get_supervision_dashboard(
 
             unit = (
                 db.query(OrganizationUnit)
-                .filter(
-                    OrganizationUnit.id == item.organization_unit_id
-                )
+                .filter(OrganizationUnit.id == item.organization_unit_id)
                 .first()
             )
 
             if unit:
                 unit_name = unit.name
 
-
-
         inspector_name = "-"
 
         if item.inspector_id:
 
-            user = (
-                db.query(User)
-                .filter(
-                    User.id == item.inspector_id
-                )
-                .first()
-            )
+            user = db.query(User).filter(User.id == item.inspector_id).first()
 
             if user:
-                inspector_name = (
-                    user.full_name
-                    or user.username
-                )
-
-
+                inspector_name = user.full_name or user.username
 
         result.append(
             {
@@ -89,31 +56,22 @@ def get_supervision_dashboard(
                 "unitType": unit.unit_type if unit else "-",
                 "inspectorName": inspector_name,
                 "inspectionStatus": (
-                    item.status.value
-                    if hasattr(item.status,"value")
-                    else item.status
+                    item.status.value if hasattr(item.status, "value") else item.status
                 ),
-                 "nonComplianceCount": (
+                "nonComplianceCount": (
                     db.query(InspectionItemResult)
                     .filter(
                         InspectionItemResult.inspection_id == item.id,
-                        InspectionItemResult.is_compliant == False
+                        InspectionItemResult.is_compliant == False,
                     )
                     .count()
                 ),
-                 "judicialReferral": any(
-                    getattr(v,"action_type",None) == "judicial"
-                    for v in getattr(item,"violations",[])
+                "judicialReferral": any(
+                    getattr(v, "action_type", None) == "judicial"
+                    for v in getattr(item, "violations", [])
                 ),
-                 "sampling": bool(
-                    getattr(item,"samples",[])
-                )
+                "sampling": bool(getattr(item, "samples", [])),
             }
         )
-
-
-        print('SUPERVISION RESULT', result)
-
-    print(result[0]["unitName"].encode("utf-8"))
 
     return result

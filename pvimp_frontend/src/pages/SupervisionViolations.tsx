@@ -40,7 +40,7 @@ setItems(result);
 
 const violations =
 items.filter(
-item=>item.violations.length>0
+item=>(item.violations || []).length>0
 );
 
 
@@ -115,7 +115,7 @@ violations.map(item=>(
 <td>
 
 {
-item.violations.join(" - ")
+(item.violations || []).join(" - ")
 }
 
 </td>

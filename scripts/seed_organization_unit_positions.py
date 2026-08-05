@@ -5,6 +5,51 @@ from app.db.models.organization_position import OrganizationPosition
 from app.db.models.organization_unit_position import OrganizationUnitPosition
 
 
+def add_position(db, unit_code, position_code):
+
+    unit = (
+        db.query(OrganizationUnit)
+        .filter(
+            OrganizationUnit.code == unit_code
+        )
+        .first()
+    )
+
+    position = (
+        db.query(OrganizationPosition)
+        .filter(
+            OrganizationPosition.code == position_code
+        )
+        .first()
+    )
+
+
+    if not unit or not position:
+        return
+
+
+    exists = (
+        db.query(OrganizationUnitPosition)
+        .filter(
+            OrganizationUnitPosition.organization_unit_id == unit.id,
+            OrganizationUnitPosition.organization_position_id == position.id
+        )
+        .first()
+    )
+
+
+    if not exists:
+
+        db.add(
+            OrganizationUnitPosition(
+                organization_unit_id=unit.id,
+                organization_position_id=position.id,
+                is_active=True
+            )
+        )
+
+
+
 def seed():
 
     db = SessionLocal()
@@ -13,109 +58,42 @@ def seed():
 
         mappings = [
 
-            (
-                "ZANJAN_VETERINARY_GENERAL_DIRECTORATE",
-                "GENERAL_DIRECTOR"
-            ),
+            ("GENERAL_DIRECTORATE","GENERAL_DIRECTOR"),
 
-            (
-                "HEALTH_DEPUTY",
-                "HEALTH_DEPUTY_MANAGER"
-            ),
+            ("HEALTH_DEPUTY","HEALTH_DEPUTY_MANAGER"),
 
-            (
-                "DEVELOPMENT_DEPUTY",
-                "DEVELOPMENT_DEPUTY_MANAGER"
-            ),
+            ("RESOURCE_DEPUTY","DEVELOPMENT_DEPUTY_MANAGER"),
 
-            (
-                "ANIMAL_HEALTH_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("ANIMAL_HEALTH_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "POULTRY_HEALTH_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("POULTRY_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "PUBLIC_HEALTH_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("PUBLIC_HEALTH_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "QUARANTINE_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("DIAGNOSIS_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "ADMIN_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("SUPPORT_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "FINANCE_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("FINANCE_DEPARTMENT","OFFICE_HEAD"),
 
-            (
-                "IT_DEPARTMENT",
-                "OFFICE_HEAD"
-            ),
+            ("IT_DEPARTMENT","OFFICE_HEAD"),
 
         ]
 
 
         for unit_code, position_code in mappings:
 
-            unit = (
-                db.query(OrganizationUnit)
-                .filter(
-                    OrganizationUnit.code == unit_code
-                )
-                .first()
+            add_position(
+                db,
+                unit_code,
+                position_code
             )
 
 
-            position = (
-                db.query(OrganizationPosition)
-                .filter(
-                    OrganizationPosition.code == position_code
-                )
-                .first()
-            )
-
-
-            if not unit or not position:
-                continue
-
-
-            exists = (
-                db.query(OrganizationUnitPosition)
-                .filter(
-                    OrganizationUnitPosition.organization_unit_id == unit.id,
-                    OrganizationUnitPosition.organization_position_id == position.id,
-                )
-                .first()
-            )
-
-
-            if not exists:
-
-                db.add(
-                    OrganizationUnitPosition(
-                        organization_unit_id=unit.id,
-                        organization_position_id=position.id,
-                        is_active=True,
-                    )
-                )
-
-
-
-        county_units = (
+        counties = (
             db.query(OrganizationUnit)
             .filter(
-                OrganizationUnit.unit_type == "COUNTY_OFFICE"
+                OrganizationUnit.unit_type=="COUNTY_OFFICE"
             )
             .all()
         )
@@ -124,7 +102,7 @@ def seed():
         county_position = (
             db.query(OrganizationPosition)
             .filter(
-                OrganizationPosition.code == "COUNTY_VETERINARY_HEAD"
+                OrganizationPosition.code=="COUNTY_VETERINARY_HEAD"
             )
             .first()
         )
@@ -132,13 +110,13 @@ def seed():
 
         if county_position:
 
-            for county in county_units:
+            for county in counties:
 
                 exists = (
                     db.query(OrganizationUnitPosition)
                     .filter(
-                        OrganizationUnitPosition.organization_unit_id == county.id,
-                        OrganizationUnitPosition.organization_position_id == county_position.id,
+                        OrganizationUnitPosition.organization_unit_id==county.id,
+                        OrganizationUnitPosition.organization_position_id==county_position.id
                     )
                     .first()
                 )
@@ -150,7 +128,7 @@ def seed():
                         OrganizationUnitPosition(
                             organization_unit_id=county.id,
                             organization_position_id=county_position.id,
-                            is_active=True,
+                            is_active=True
                         )
                     )
 
@@ -165,6 +143,6 @@ def seed():
         db.close()
 
 
-if __name__ == "__main__":
-    seed()
 
+if __name__=="__main__":
+    seed()

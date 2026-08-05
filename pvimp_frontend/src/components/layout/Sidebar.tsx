@@ -2,481 +2,356 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
-
-const experts = [
-
-{
-title:"کارشناس بهداشت و مدیریت بیماری‌های دامی",
-route:"disease"
-},
-
-{
-title:"کارشناس قرنطینه و امنیت زیستی",
-route:"quarantine"
-},
-
-{
-title:"کارشناس نظارت بر بهداشت عمومی و مواد غذایی",
-route:"supervision",
-children:[
-{
-title:"ثبت بازرسی جدید",
-path:"/create"
-},
-{
-title:"بارگذاری فایل GIS",
-path:"/import"
-}
-]
-},
-
-{
-title:"کارشناس طیور و آبزیان",
-route:"poultry"
-},
-
-{
-title:"کارشناس تشخیص و درمان",
-route:"diagnosis"
-},
-
-{
-title:"کارشناس آزمایشگاه",
-route:"laboratory"
-}
-
+const countyList = [
+    { title: "اداره دامپزشکی شهرستان ابهر", path: "/county/ابهر" },
+    { title: "اداره دامپزشکی شهرستان ایجرود", path: "/county/ایجرود" },
+    { title: "اداره دامپزشکی شهرستان طارم", path: "/county/طارم" },
+    { title: "اداره دامپزشکی شهرستان زنجان", path: "/county/زنجان" },
+    { title: "اداره دامپزشکی شهرستان خرمدره", path: "/county/خرمدره" },
+    { title: "اداره دامپزشکی شهرستان خدابنده", path: "/county/خدابنده" },
+    { title: "اداره دامپزشکی شهرستان سلطانیه", path: "/county/سلطانیه" },
+    { title: "اداره دامپزشکی شهرستان ماهنشان", path: "/county/ماهنشان" }
 ];
-
-
 
 const menu = [
+    {
+        title: "حوزه مدیرکل",
+        items: [
+            ["دفتر مدیرکل", "/"],
+            ["نماینده ولی فقیه", "/"],
+            ["حراست", "/"],
+            ["امور حقوقی", "/"],
+            ["روابط عمومی", "/"],
+            ["پدافند غیرعامل و مدیریت بحران", "/"]
+        ]
+    },
 
-{
-title:"حوزه مدیرکل",
-items:[
+    {
+        title: "معاونت سلامت",
+        items: [
+            {
+                title: "مدیریت GIS استان",
+                submenu: [
+                    ["داشبورد GIS استان", "/gis"],
 
-["دفتر مدیرکل","/"],
-["نماینده ولی فقیه","/"],
-["حراست","/"],
-["امور حقوقی","/"],
-["روابط عمومی","/"],
-["پدافند غیرعامل و مدیریت بحران","/"]
+                    {
+                        title: "بارگذاری گزارش GIS",
+                        submenu: [
+                            [
+                                "بهداشت و مدیریت بیماری‌های دامی",
+                                "/gis/upload/disease-control"
+                            ],
+                            [
+                                "قرنطینه و امنیت زیستی",
+                                "/gis/upload/quarantine"
+                            ],
+                            [
+                                "نظارت بهداشت عمومی و مواد غذایی",
+                                "/gis/upload/supervision"
+                            ],
+                            [
+                                "طیور و آبزیان",
+                                "/gis/upload/poultry"
+                            ],
+                            [
+                                "تشخیص و درمان",
+                                "/gis/upload/diagnosis"
+                            ],
+                            [
+                                "آزمایشگاه",
+                                "/gis/upload/laboratory"
+                            ]
+                        ]
+                    },
 
-]
+                    ["ورود اطلاعات GIS", "/gis/import"]
+                ]
+            },
 
-},
+            [
+                "اداره بهداشت و مدیریت بیماری‌های دامی",
+                "/disease-control"
+            ],
 
+            {
+                title: "اداره نظارت بر بهداشت عمومی و مواد غذایی",
+                submenu: [
+                    ["داشبورد نظارت", "/supervision"],
+                    ["ثبت فرم بازرسی جدید", "/supervision/create"],
+                    ["لیست بازرسی‌ها", "/supervision/list"],
+                    ["گزارشات", "/supervision/reports"],
+                    ["GIS", "/gis/departments"],
+                    ["تخلفات", "/supervision/violations"],
+                    ["نمونه‌برداری", "/supervision/samples"],
+                    ["امور حقوقی", "/supervision/legal"],
+                    ["تنظیمات", "/supervision/settings"]
+                ]
+            },
 
+            ["قرنطینه و امنیت زیستی", "/quarantine"],
 
-{
-title:"معاونت سلامت",
-items:[
+            [
+                "اداره بهداشت طیور، زنبورعسل، کرم ابریشم و آبزیان",
+                "/poultry"
+            ],
 
-["معاون سلامت","/health-deputy"],
-["اداره بهداشت و مدیریت بیماری‌های دامی","/disease-control"],
-["واحد قرنطینه و امنیت زیستی","/quarantine"],
-["اداره طیور، زنبور عسل، کرم ابریشم و آبزیان","/poultry"],
-["اداره نظارت بر بهداشت عمومی و مواد غذایی","/supervision"],
-["اداره تشخیص و درمان","/diagnosis"]
+            {
+                title: "اداره تشخیص و درمان",
+                submenu: [
+                    ["آزمایشگاه", "/laboratory"]
+                ]
+            }
+        ]
+    },
 
-]
-
-},
-
-
-
-{
-title:"معاونت توسعه و مدیریت منابع",
-items:[
-
-["معاون توسعه و مدیریت منابع","/"],
-["اداره امور پشتیبانی و رفاه","/"],
-["اداره امور مالی","/"],
-["اداره فناوری اطلاعات، ارتباطات و تحول اداری","/"],
-["اداره طرح، برنامه و بودجه","/"]
-
-]
-
-},
-
-
-
-{
-title:"ادارات شهرستان",
-
-counties:[
-
-["اداره دامپزشکی شهرستان ابهر","/county/0"],
-["اداره دامپزشکی شهرستان ایجرود","/county/1"],
-["اداره دامپزشکی شهرستان طارم","/county/2"],
-["اداره دامپزشکی شهرستان زنجان","/county/3"],
-["اداره دامپزشکی شهرستان خرمدره","/county/4"],
-["اداره دامپزشکی شهرستان خدابنده","/county/5"],
-["اداره دامپزشکی شهرستان سلطانیه","/county/6"],
-["اداره دامپزشکی شهرستان ماهنشان","/county/7"]
-
-]
-
-}
-
+    {
+        title: "معاونت توسعه و مدیریت منابع",
+        items: [
+            ["امور پشتیبانی و رفاه", "/"],
+            ["امور مالی", "/"],
+            ["فناوری اطلاعات و تحول اداری", "/"],
+            ["طرح، برنامه و بودجه", "/"]
+        ]
+    }
 ];
 
-
-
-
-export default function Sidebar(){
-
-
-const navigate = useNavigate();
-
-
-const [openMain,setOpenMain] = useState<number|null>(null);
-
-const [openCounty,setOpenCounty] = useState<string|null>(null);
-
-const [openExpert,setOpenExpert] = useState<string|null>(null);
-
-
-
-return (
-
-<aside className="sidebar" dir="rtl">
-
-
-<div className="sidebar-header">
-
-<h2>
-سامانه مدیریت یکپارچه دامپزشکی
-</h2>
-
-<p>
-استان زنجان
-</p>
-
-</div>
-
-
-
-
-<div className="tree-menu">
-
-
-{
-
-menu.map((group,index)=>(
-
-
-<div key={index}>
-
-
-<div
-
-className="tree-title"
-
-onClick={()=>setOpenMain(
-openMain===index ? null : index
-)}
-
->
-
-<span>
-{
-openMain===index ? "−" : "+"
-}
-</span>
-
-{group.title}
-
-</div>
-
-
-
-
-
-{
-
-openMain===index &&
-
-<div>
-
-
-
-{
-group.items &&
-group.items.map((item,i)=>(
-
-<div
-
-key={i}
-
-className="tree-child"
-
-onClick={()=>navigate(item[1])}
-
->
-
-{item[0]}
-
-</div>
-
-))
-
+interface SidebarProps {
+    mobileOpen?: boolean;
+    onMobileClose?: () => void;
 }
 
+export default function Sidebar({
+    mobileOpen = false,
+    onMobileClose
+}: SidebarProps) {
 
+    const navigate = useNavigate();
 
+    const [openMain, setOpenMain] = useState<number | null>(null);
+    const [openSub, setOpenSub] = useState<string[]>([]);
+    const [openCounty, setOpenCounty] = useState<string | null>(null);
 
+    function handleNavigate(path: string) {
+        navigate(path);
+
+        if (window.innerWidth <= 900 && onMobileClose) {
+            onMobileClose();
+        }
+    }
+
+    function renderSubmenu(items: any[]) {
 
-{
-group.counties &&
-group.counties.map((county,i)=>{
+        return items.map((item: any, index: number) => {
 
+            if (Array.isArray(item)) {
 
-const countyPath = county[1];
+                return (
+                    <div
+                        key={index}
+                        className="tree-child"
+                        onClick={() => handleNavigate(item[1])}
+                    >
+                        {item[0]}
+                    </div>
+                );
+            }
 
+            return (
+                <div key={index}>
 
-return (
+                    <div
+                        className="tree-title"
+                        onClick={() => {
+
+                            setOpenSub(prev =>
+                                prev.includes(item.title)
+                                    ? prev.filter(x => x !== item.title)
+                                    : [...prev, item.title]
+                            );
 
-<div key={i}>
+                        }}
+                    >
 
+                        <span>
+                            {openSub.includes(item.title) ? "−" : "+"}
+                        </span>
 
-<div
+                        {item.title}
 
-className="tree-title county-menu"
+                    </div>
 
-onClick={()=>setOpenCounty(
-openCounty===countyPath
-?
-null
-:
-countyPath
-)}
+                    {openSub.includes(item.title) && item.submenu && (
+                        <div className="tree-children">
+                            {renderSubmenu(item.submenu)}
+                        </div>
+                    )}
 
->
+                </div>
+            );
+        });
+    }
 
-<span>
+    return (
 
-{
-openCounty===countyPath
-?
-"−"
-:
-"+"
-}
+        <aside
+            className={`sidebar ${mobileOpen ? "sidebar-mobile-open" : ""}`}
+            dir="rtl"
+        >
 
-</span>
+            <div className="sidebar-header">
 
-{county[0]}
+                <button
+                    className="sidebar-mobile-close"
+                    onClick={onMobileClose}
+                    aria-label="بستن منو"
+                >
+                    ×
+                </button>
 
-</div>
+                <h2>
+                    سامانه مدیریت یکپارچه دامپزشکی
+                </h2>
 
+                <p>
+                    استان زنجان
+                </p>
 
+            </div>
 
+            <div className="tree-menu">
 
+                {menu.map((group, index) => (
+
+                    <div key={index}>
+
+                        <div
+                            className="tree-title"
+                            onClick={() =>
+                                setOpenMain(
+                                    openMain === index
+                                        ? null
+                                        : index
+                                )
+                            }
+                        >
+
+                            <span>
+                                {openMain === index ? "−" : "+"}
+                            </span>
+
+                            {group.title}
+
+                        </div>
+
+                        {openMain === index && (
+                            <div className="tree-children">
+                                {renderSubmenu(group.items)}
+                            </div>
+                        )}
+
+                    </div>
+
+                ))}
 
-{
-
-openCounty===countyPath &&
-
-<div>
-
-
-
-<div
-
-className="tree-child"
-
-onClick={()=>navigate(
-countyPath+"/manager"
-)}
-
->
-
-رئیس اداره
-
-</div>
-
-
-
-
-
-<div
-
-className="tree-child"
-
-onClick={()=>navigate(
-countyPath+"/deputy"
-)}
-
->
-
-معاون اداره
-
-</div>
-
-
-
-
-
-
-{
-
-experts.map((expert,e)=>{
-
-
-const expertKey =
-countyPath+"/"+expert.route;
-
-
-
-return (
-
-<div key={e}>
-
-
-<div
-
-className="tree-child"
-
-onClick={()=>{
-
-
-if(expert.children){
-
-setOpenExpert(
-openExpert===expertKey
-?
-null
-:
-expertKey
-);
-
-}
-
-else{
-
-navigate(
-countyPath+
-"/expert/"+
-expert.route
-);
-
-}
-
-
-}}
-
->
-
-
-{
-expert.children &&
-(
-openExpert===expertKey
-?
-"− "
-:
-"+ "
-)
-}
-
-
-{expert.title}
-
-
-</div>
-
-
-
-
-
-
-{
-
-expert.children &&
-openExpert===expertKey &&
-
-expert.children.map((child,c)=>(
-
-
-<div
-
-key={c}
-
-className="tree-child"
-
-style={{
-paddingRight:"45px"
-}}
-
-onClick={()=>navigate(
-
-countyPath+
-"/expert/"+
-expert.route+
-child.path
-
-)}
-
->
-
-{child.title}
-
-</div>
-
-
-))
-
-}
-
-
-
-</div>
-
-)
-
-})
-
-}
-
-
-
-</div>
-
-}
-
-
-</div>
-
-)
-
-
-})
-
-}
-
-
-
-</div>
-
-}
-
-
-
-</div>
-
-
-))
-
-}
-
-
-
-</div>
-
-
-</aside>
-
-)
-
+                <div
+                    className="tree-title"
+                    onClick={() =>
+                        setOpenMain(
+                            openMain === 99
+                                ? null
+                                : 99
+                        )
+                    }
+                >
+
+                    <span>
+                        {openMain === 99 ? "−" : "+"}
+                    </span>
+
+                    ادارات شهرستان
+
+                </div>
+
+                {openMain === 99 && (
+
+                    <div className="tree-children">
+
+                        {countyList.map((county, index) => (
+
+                            <div key={index}>
+
+                                <div
+                                    className="tree-title county-menu"
+                                    onClick={() =>
+                                        setOpenCounty(
+                                            openCounty === county.path
+                                                ? null
+                                                : county.path
+                                        )
+                                    }
+                                >
+
+                                    <span>
+                                        {openCounty === county.path
+                                            ? "−"
+                                            : "+"}
+                                    </span>
+
+                                    {county.title}
+
+                                </div>
+
+                                {openCounty === county.path && (
+
+                                    <div className="tree-children">
+
+                                        <div
+                                            className="tree-child"
+                                            onClick={() =>
+                                                handleNavigate(county.path)
+                                            }
+                                        >
+                                            داشبورد مدیریتی شهرستان
+                                        </div>
+
+                                        <div
+                                            className="tree-child"
+                                            onClick={() =>
+                                                handleNavigate(
+                                                    county.path +
+                                                    "/expert/supervision"
+                                                )
+                                            }
+                                        >
+                                            کارشناس نظارت و بازرسی
+                                        </div>
+
+                                        <div
+                                            className="tree-child"
+                                            onClick={() =>
+                                                handleNavigate(
+                                                    county.path +
+                                                    "/expert/disease"
+                                                )
+                                            }
+                                        >
+                                            کارشناس مدیریت بیماری‌ها
+                                        </div>
+
+                                    </div>
+
+                                )}
+
+                            </div>
+
+                        ))}
+
+                    </div>
+
+                )}
+
+            </div>
+
+        </aside>
+    );
 }

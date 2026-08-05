@@ -1,0 +1,229 @@
+.pv-alert {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    border: 1px solid transparent;
+
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-family);
+
+    line-height: 1.7;
+
+}
+
+.pv-alert-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+}
+
+.pv-alert-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+.pv-alert-title {
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    font-size: var(--font-sm);
+
+}
+
+.pv-alert-message {
+
+    font-size: var(--font-sm);
+
+}
+
+.pv-alert-close {
+
+    width: 30px;
+
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-right: auto;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: inherit;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: .7;
+
+}
+
+.pv-alert-close:hover {
+
+    opacity: 1;
+
+    background: rgba(255,255,255,.08);
+
+}
+
+
+/* INFO */
+
+.pv-alert-info {
+
+    background: rgba(39, 211, 207, .07);
+
+    border-color: rgba(39, 211, 207, .22);
+
+    color: var(--color-text);
+
+}
+
+.pv-alert-info .pv-alert-icon {
+
+    background: rgba(39, 211, 207, .12);
+
+    color: var(--color-primary);
+
+}
+
+
+/* SUCCESS */
+
+.pv-alert-success {
+
+    background: rgba(39, 211, 145, .07);
+
+    border-color: rgba(39, 211, 145, .22);
+
+    color: var(--color-text);
+
+}
+
+.pv-alert-success .pv-alert-icon {
+
+    background: rgba(39, 211, 145, .12);
+
+    color: var(--color-success);
+
+}
+
+
+/* WARNING */
+
+.pv-alert-warning {
+
+    background: rgba(245, 180, 70, .07);
+
+    border-color: rgba(245, 180, 70, .22);
+
+    color: var(--color-text);
+
+}
+
+.pv-alert-warning .pv-alert-icon {
+
+    background: rgba(245, 180, 70, .12);
+
+    color: var(--color-warning);
+
+}
+
+
+/* DANGER */
+
+.pv-alert-danger {
+
+    background: rgba(255, 95, 122, .07);
+
+    border-color: rgba(255, 95, 122, .22);
+
+    color: var(--color-text);
+
+}
+
+.pv-alert-danger .pv-alert-icon {
+
+    background: rgba(255, 95, 122, .12);
+
+    color: var(--color-danger);
+
+}
+
+
+@media(max-width:600px) {
+
+    .pv-alert {
+
+        padding: 12px;
+
+        gap: 9px;
+
+    }
+
+    .pv-alert-icon {
+
+        width: 28px;
+
+        height: 28px;
+
+        font-size: 15px;
+
+    }
+
+    .pv-alert-message,
+    .pv-alert-title {
+
+        font-size: 13px;
+
+    }
+
+}

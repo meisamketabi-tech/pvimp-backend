@@ -1,25 +1,33 @@
 from sqlalchemy.orm import Session
 
-from app.db.models.inspection_notification import (
-    InspectionNotification
-)
+from app.db.models.inspection_notification import InspectionNotification
 
 
 def create_notification(
     db: Session,
     inspection_id: int,
-    message: str
+    message: str,
 ):
-
-    notification = InspectionNotification(
+    obj = InspectionNotification(
         inspection_id=inspection_id,
-        message=message
+        message=message,
     )
 
-    db.add(notification)
-
+    db.add(obj)
     db.commit()
+    db.refresh(obj)
 
-    db.refresh(notification)
+    return obj
 
-    return notification
+
+def get_notifications(
+    db: Session,
+    inspection_id: int,
+):
+    return (
+        db.query(InspectionNotification)
+        .filter(
+            InspectionNotification.inspection_id == inspection_id
+        )
+        .all()
+    )

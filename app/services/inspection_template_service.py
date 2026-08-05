@@ -1,34 +1,27 @@
 from sqlalchemy.orm import Session
 
-from app.db.models.inspection_template import (
-    InspectionTemplate
-)
+from app.db.models.inspection_template import InspectionTemplate
 
 
 def create_template(
     db: Session,
-    data
+    data,
 ):
-
-    template = InspectionTemplate(
+    obj = InspectionTemplate(
         **data.model_dump()
     )
 
-    db.add(template)
+    db.add(obj)
     db.commit()
-    db.refresh(template)
+    db.refresh(obj)
 
-    return template
-
+    return obj
 
 
 def get_templates(
-    db: Session
+    db: Session,
 ):
-
     return (
-        db.query(
-            InspectionTemplate
-        )
+        db.query(InspectionTemplate)
         .all()
     )

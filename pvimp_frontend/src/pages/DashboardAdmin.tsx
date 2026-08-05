@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserDetails, UserDetails } from "../services/userService";
 
 import {
  ResponsiveContainer,
@@ -25,28 +26,28 @@ const kpis = [
   value:"92%",
   icon:"💉",
   detail:"درصد تحقق برنامه واکسیناسیون استان",
-  path:"/vaccination"
+  path:"/county/1/expert/disease"
  },
  {
   title:"بهداشت عمومی",
   value:"87%",
   icon:"🥩",
   detail:"عملکرد نظارت بر مواد خام دامی",
-  path:"/public-health"
+  path:"/health-deputy"
  },
  {
   title:"گواهی قرنطینه",
   value:"4210",
   icon:"🚧",
   detail:"گواهی صادر شده در سال جاری",
-  path:"/quarantine"
+  path:"/county/1/expert/quarantine"
  },
  {
   title:"نمونه‌های آزمایشگاهی",
   value:"28600",
   icon:"🔬",
   detail:"نمونه بررسی شده توسط آزمایشگاه",
-  path:"/laboratory"
+  path:"/county/1/expert/laboratory"
  },
  {
   title:"عملکرد طیور",
@@ -60,10 +61,9 @@ const kpis = [
   value:"18",
   icon:"⚠️",
   detail:"موارد نیازمند اقدام مدیر",
-  path:"/alerts"
+  path:"/kpi"
  }
 ];
-
 
 const departmentData=[
  {
@@ -154,7 +154,23 @@ const aiItems=[
 export default function DashboardAdmin(){
 
 const navigate=useNavigate();
+const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 
+
+useEffect(() => {
+
+    getUserDetails(1)
+    .then((data)=>{
+        setUserDetails(data);
+    })
+    .catch((error)=>{
+        console.error(
+            "User details error:",
+            error
+        );
+    });
+
+}, []);
 
 return (
 
@@ -170,7 +186,30 @@ return (
 <p>
 داشبورد هوشمند مدیریتی اداره کل دامپزشکی استان زنجان
 </p>
+{
+userDetails && userDetails.assignments.length > 0 && (
 
+<div className="user-org-info">
+
+<p>
+کاربر:
+{userDetails.full_name}
+</p>
+
+<p>
+واحد سازمانی:
+{userDetails.assignments[0].organization_unit?.name}
+</p>
+
+<p>
+سمت:
+{userDetails.assignments[0].role?.name}
+</p>
+
+</div>
+
+)
+}
 </header>
 
 

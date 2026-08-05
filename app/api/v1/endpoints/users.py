@@ -1,9 +1,10 @@
-﻿from typing import List
+from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_db, require_roles
+from app.api.deps import get_db, require_roles, get_current_user
+
 from app.schemas.user import (
     RoleCreate,
     RoleRead,
@@ -19,7 +20,6 @@ from app.services.user_service import UserService
 from app.db.models.user import User
 from app.db.models.assignment import UserAssignment
 
-
 router = APIRouter()
 
 
@@ -32,129 +32,7 @@ def create_user(
     payload: UserCreate,
     db: Session = Depends(get_db),
 ):
-    service = UserService(db)
-    return service.create_user(payload)
-
-
-@router.get(
-    "",
-    response_model=List[UserRead],
-)
-def list_users(
-    db: Session = Depends(get_db),
-):
-    return UserService(db).list_users()
-
-
-@router.get(
-    "/roles",
-    response_model=List[RoleRead],
-    dependencies=[Depends(require_roles("admin"))],
-)
-def list_roles(
-    db: Session = Depends(get_db),
-):
-    return UserService(db).list_roles()
-
-
-@router.post(
-    "/roles",
-    response_model=RoleRead,
-    status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(require_roles("admin"))],
-)
-def create_role(
-    payload: RoleCreate,
-    db: Session = Depends(get_db),
-):
-    return UserService(db).create_role(payload)
-
-
-@router.get(
-    "/roles/{role_id}",
-    response_model=RoleRead,
-    dependencies=[Depends(require_roles("admin"))],
-)
-def get_role(
-    role_id: int,
-    db: Session = Depends(get_db),
-):
-    role = UserService(db).get_role(role_id)
-    if not role:
-        raise HTTPException(404, "Role not found")
-    return role
-
-
-@router.put(
-    "/roles/{role_id}",
-    response_model=RoleRead,
-    dependencies=[Depends(require_roles("admin"))],
-)
-def update_role(
-    role_id: int,
-    payload: RoleUpdate,
-    db: Session = Depends(get_db),
-):
-    role = UserService(db).update_role(role_id, payload)
-    if not role:
-        raise HTTPException(404, "Role not found")
-    return role
-
-
-@router.post(
-    "/assignments",
-    response_model=AssignmentRead,
-    status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(require_roles("admin"))],
-)
-def create_assignment(
-    payload: AssignmentCreate,
-    db: Session = Depends(get_db),
-):
-    return UserService(db).assign_role(payload)
-
-
-@router.get(
-    "/{user_id}/assignments",
-    response_model=List[AssignmentRead],
-    dependencies=[Depends(require_roles("admin"))],
-)
-def list_assignments(
-    user_id: int,
-    db: Session = Depends(get_db),
-):
-    return UserService(db).list_user_roles(user_id)
-
-
-@router.get(
-    "/{user_id}",
-    response_model=UserRead,
-)
-def get_user(
-    user_id: int,
-    db: Session = Depends(get_db),
-):
-    user = UserService(db).get_user(user_id)
-    if not user:
-        raise HTTPException(404, "User not found")
-    return user
-
-
-@router.put(
-    "/{user_id}",
-    response_model=UserRead,
-)
-def update_user(
-    user_id: int,
-    payload: UserUpdate,
-    db: Session = Depends(get_db),
-):
-    user = UserService(db).update_user(user_id, payload)
-    if not user:
-        raise HTTPException(404, "User not found")
-    return user
-
-
+    return UserService(db).create_user(payload)
 
 
 @router.get(
@@ -164,8 +42,18 @@ def user_details(
     user_id: int,
     db: Session = Depends(get_db),
 ):
+
+    from sqlalchemy.orm import joinedload
+
     user = (
         db.query(User)
+        .options(
+            joinedload(User.assignments).joinedload(UserAssignment.organization_unit),
+            joinedload(User.assignments).joinedload(UserAssignment.role),
+            joinedload(User.assignments).joinedload(
+                UserAssignment.organization_unit_position
+            ),
+        )
         .filter(User.id == user_id)
         .first()
     )
@@ -175,15 +63,6 @@ def user_details(
             status_code=404,
             detail="User not found",
         )
-
-    assignments = (
-        db.query(UserAssignment)
-        .filter(
-            UserAssignment.user_id == user_id,
-            UserAssignment.is_active == True,
-        )
-        .all()
-    )
 
     return {
         "id": user.id,
@@ -195,32 +74,36 @@ def user_details(
         "assignments": [
             {
                 "id": a.id,
-
-                "organization_unit": {
-                    "id": a.organization_unit.id,
-                    "name": a.organization_unit.name,
-                    "code": a.organization_unit.code,
-                },
-
+                "organization_unit": (
+                    {
+                        "id": a.organization_unit.id,
+                        "name": a.organization_unit.name,
+                        "code": a.organization_unit.code,
+                    }
+                    if a.organization_unit
+                    else None
+                ),
                 "position": (
                     {
-                        "id": a.organization_unit_position.organization_position.id,
-                        "code": a.organization_unit_position.organization_position.code,
-                        "title": a.organization_unit_position.organization_position.title,
+                        "id": a.organization_unit_position.id,
                     }
                     if a.organization_unit_position
                     else None
                 ),
-
-                "role": {
-                    "id": a.role.id,
-                    "name": a.role.name,
-                },
-
+                "role": (
+                    {
+                        "id": a.role.id,
+                        "name": a.role.name,
+                    }
+                    if a.role
+                    else None
+                ),
                 "is_primary": a.is_primary,
+                "is_active": a.is_active,
                 "start_date": a.start_date,
                 "end_date": a.end_date,
             }
-            for a in assignments
+            for a in user.assignments
+            if a.is_active
         ],
     }

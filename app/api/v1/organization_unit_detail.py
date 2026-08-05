@@ -1,11 +1,12 @@
-﻿from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
+
 from app.db.models.organization import OrganizationUnit
 from app.db.models.assignment import UserAssignment
 from app.db.models.organization_unit_position import OrganizationUnitPosition
-
+from app.db.models.organization_responsibility import OrganizationResponsibility
 
 router = APIRouter(
     prefix="/organization",
@@ -34,7 +35,6 @@ def organization_unit_detail(
             detail="Organization unit not found",
         )
 
-
     assignments = (
         db.query(UserAssignment)
         .filter(
@@ -43,7 +43,6 @@ def organization_unit_detail(
         )
         .all()
     )
-
 
     positions = (
         db.query(OrganizationUnitPosition)
@@ -54,16 +53,21 @@ def organization_unit_detail(
         .all()
     )
 
+    responsibilities = (
+        db.query(OrganizationResponsibility)
+        .filter(
+            OrganizationResponsibility.organization_unit_id == unit_id,
+            OrganizationResponsibility.is_active == True,
+        )
+        .all()
+    )
 
     return {
-
         "id": unit.id,
         "name": unit.name,
         "code": unit.code,
         "unit_type": unit.unit_type,
         "parent_id": unit.parent_id,
-
-
         "users": [
             {
                 "assignment_id": a.id,
@@ -79,22 +83,29 @@ def organization_unit_detail(
             }
             for a in assignments
         ],
-
-
         "positions": [
             {
                 "id": p.id,
                 "position_id": p.organization_position.id,
                 "position_code": p.organization_position.code,
                 "position_title": p.organization_position.title,
-                "assigned_users": len(
-                    p.assignments
-                ),
+                "assigned_users": len(p.assignments),
             }
             for p in positions
         ],
-
-
+        "responsibilities": [
+            {
+                "id": r.id,
+                "title": r.title,
+                "description": r.description,
+                "priority": r.priority,
+                "inspection_type_id": r.inspection_type_id,
+                "inspection_type": (
+                    r.inspection_type.title if r.inspection_type else None
+                ),
+            }
+            for r in responsibilities
+        ],
         "children": [
             {
                 "id": c.id,

@@ -13,7 +13,7 @@ export default function InspectionDashboard(){
     useEffect(()=>{
 
         getInspections()
-            .then(setData)
+            .then(response => setData(response.data))
             .catch(err=>console.error(err));
 
     },[]);

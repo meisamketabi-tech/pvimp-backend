@@ -1,34 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import "./MainLayout.css";
 
+export default function MainLayout() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-export default function MainLayout(){
+    return (
+        <div className="main-layout">
 
-return (
+            <button
+                className="mobile-menu-button"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="??? ???? ???"
+            >
+                ?
+            </button>
 
-<div className="main-layout">
+            {sidebarOpen && (
+                <div
+                    className="mobile-sidebar-overlay"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
 
-<Sidebar />
+            <Sidebar
+                mobileOpen={sidebarOpen}
+                onMobileClose={() => setSidebarOpen(false)}
+            />
 
+            <div className="main-content">
+                <Header />
 
-<div className="main-content">
+                <main className="page-content">
+                    <Outlet />
+                </main>
+            </div>
 
-<Header />
-
-<main className="page-content">
-
-<Outlet />
-
-</main>
-
-</div>
-
-
-</div>
-
-);
-
+        </div>
+    );
 }

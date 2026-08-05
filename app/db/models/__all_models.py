@@ -1,12 +1,11 @@
-﻿from app.db.models.permission import Permission
-
+from app.db.models.permission import Permission
 from app.db.models.role_permission import RolePermission
-
 from app.db.models.user import User
-
 from app.db.models.assignment import UserAssignment
-
 from app.db.models.role import Role
+
+from app.db.models.gis_epidemiology_unit import GISEpidemiologyUnit
+from app.db.models.gis_spraying import GISSpraying
 
 from app.db.models.org import (
     Province,
@@ -19,6 +18,10 @@ from app.db.models.organization import (
     OrganizationUnit,
 )
 
+from app.db.models.organization_responsibility import (
+    OrganizationResponsibility,
+)
+
 from app.db.models.inspection import (
     Inspection,
     InspectionType,
@@ -26,6 +29,6 @@ from app.db.models.inspection import (
     ChecklistItem,
     InspectionItemResult,
 )
-from app.db.models.inspection_status_history import InspectionStatusHistory
 
+from app.db.models.inspection_status_history import InspectionStatusHistory
 from app.db.models.inspection_assignment_history import InspectionAssignmentHistory

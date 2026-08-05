@@ -1,374 +1,314 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getCountyName } from "../utils/counties";
+import React,{useEffect,useState} from "react";
+import {useNavigate,useParams} from "react-router-dom";
+import {getCountyName} from "../utils/counties";
 import "./Dashboard.css";
 
 import {
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid
+ResponsiveContainer,
+BarChart,
+Bar,
+XAxis,
+YAxis,
+Tooltip,
+CartesianGrid
 } from "recharts";
 
 
 export default function DiseaseControlExpertDashboard(){
 
-    const navigate = useNavigate();
 
-    const { id } = useParams();
+const navigate=useNavigate();
 
-    const county = getCountyName(id);
+const {id}=useParams();
 
+const county=getCountyName(id);
 
 
-    const diseaseData = [
-        {name:"تب برفکی",value:85},
-        {name:"شاربن",value:45},
-        {name:"بروسلوز",value:30},
-        {name:"لمپی اسکین",value:70}
-    ];
 
+const [diseaseData,setDiseaseData]=useState<any[]>([]);
+const [vaccination,setVaccination]=useState<any[]>([]);
+const [surveillance,setSurveillance]=useState<any[]>([]);
+const [lastImport,setLastImport]=useState<any[]>([]);
 
 
-    return (
 
-    <div className="dashboard-container" dir="rtl">
+useEffect(()=>{
 
 
-        <div className="expert-header">
+fetch("http://localhost:8000/gis-dashboard/disease-summary")
+.then(r=>r.json())
+.then(setDiseaseData)
+.catch(()=>{});
 
-            <h1>
-                داشبورد کارشناس بهداشت و مدیریت بیماری‌های دامی
-            </h1>
 
-            <p>
-                شهرستان {county} | آخرین بروزرسانی: امروز
-            </p>
 
-        </div>
+fetch("http://localhost:8000/gis-dashboard/vaccination-summary")
+.then(r=>r.json())
+.then(setVaccination)
+.catch(()=>{});
 
 
 
+fetch("http://localhost:8000/gis-dashboard/surveillance-summary")
+.then(r=>r.json())
+.then(setSurveillance)
+.catch(()=>{});
 
-        <div className="cards">
 
 
-            <div className="card county-card">
+fetch("http://localhost:8000/gis-dashboard/last-import")
+.then(r=>r.json())
+.then(setLastImport)
+.catch(()=>{});
 
-                <h3>
-                    شهرستان
-                </h3>
 
-                <strong>
-                    {county}
-                </strong>
+},[]);
 
-            </div>
 
 
 
+return(
 
-            <div className="card">
+<div className="dashboard-container" dir="rtl">
 
-                <h3>
-                    برنامه مراقبت ماه جاری
-                </h3>
 
-                <strong>
-                    120
-                </strong>
+<div className="expert-header">
 
-                <p>
-                    هدف
-                </p>
+<h1>
+داشبورد کارشناس بهداشت و مدیریت بیماری‌های دامی
+</h1>
 
-            </div>
+<p>
+شهرستان {county}
+</p>
 
+</div>
 
 
 
-            <div className="card">
 
-                <h3>
-                    مراقبت انجام شده
-                </h3>
+<div className="cards">
 
-                <strong>
-                    86
-                </strong>
 
-                <p>
-                    ثبت شده
-                </p>
+<div className="card">
 
-            </div>
+<h3>
+آخرین فایل GIS
+</h3>
 
+<strong>
+{
+lastImport.length>0
+?
+lastImport[0].file
+:
+"عدم دریافت"
+}
+</strong>
 
+<p>
+{
+lastImport.length>0
+?
+lastImport[0].date
+:
+""
+}
+</p>
 
+</div>
 
-            <div className="card">
 
-                <h3>
-                    درصد تحقق
-                </h3>
 
-                <strong>
-                    72%
-                </strong>
 
-                <p>
-                    وضعیت برنامه
-                </p>
+<div className="card">
 
-            </div>
+<h3>
+کانون‌های بیماری
+</h3>
 
+<strong>
+{
+diseaseData.reduce(
+(a,b)=>a+b.count,
+0
+)
+}
+</strong>
 
+</div>
 
 
-            <div className="card">
 
-                <h3>
-                    واحدهای پرخطر
-                </h3>
 
-                <strong>
-                    18
-                </strong>
+<div className="card">
 
-                <p>
-                    نیازمند اقدام
-                </p>
+<h3>
+عملیات مراقبت
+</h3>
 
-            </div>
+<strong>
+{
+surveillance.reduce(
+(a,b)=>a+b.count,
+0
+)
+}
+</strong>
 
+</div>
 
-        </div>
 
 
 
+<div className="card">
 
+<h3>
+رکورد واکسیناسیون
+</h3>
 
+<strong>
+{
+vaccination.reduce(
+(a,b)=>a+b.count,
+0
+)
+}
+</strong>
 
-        <div className="dashboard-grid">
+</div>
 
 
+</div>
 
 
 
-            <div className="panel">
 
-                <h2>
-                    عملکرد مراقبت ماهانه
-                </h2>
 
 
-                <div className="performance-box">
+<div className="dashboard-grid">
 
 
-                    <div className="progress-circle">
-                        72%
-                    </div>
 
+<div className="panel chart-panel">
 
+<h2>
+بیماری‌های ثبت شده GIS
+</h2>
 
-                    <div>
 
-                        <h3>
-                            وضعیت عملکرد
-                        </h3>
+<ResponsiveContainer width="100%" height={300}>
 
+<BarChart data={diseaseData}>
 
-                        <p>
-                            34 مورد مراقبت تا تکمیل برنامه باقی مانده است.
-                        </p>
 
+<CartesianGrid strokeDasharray="3 3"/>
 
-                        <p className="warning">
-                            نیاز به افزایش بازدید واحدهای عقب مانده
-                        </p>
+<XAxis dataKey="disease"/>
 
+<YAxis/>
 
-                    </div>
+<Tooltip/>
 
+<Bar
+dataKey="count"
+fill="#008577"
+/>
 
-                </div>
 
+</BarChart>
 
-            </div>
+</ResponsiveContainer>
 
 
+</div>
 
 
 
 
-            <div className="panel action-panel">
 
-                <h2>
-                    اقدامات مورد نیاز امروز
-                </h2>
 
+<div className="panel">
 
-                <ul className="action-list">
 
+<h2>
+آخرین عملیات GIS
+</h2>
 
-                    <li>
-                        بازدید 5 واحد پرخطر شهرستان {county}
-                    </li>
 
+<ul className="action-list">
 
-                    <li>
-                        پیگیری کانون سابقه‌دار شاربن
-                    </li>
+{
 
+lastImport.map(
+(item,index)=>(
 
-                    <li>
-                        تکمیل ثبت مراقبت 12 واحد
-                    </li>
+<li key={index}>
 
+{item.file}
+-
+{item.status}
 
-                </ul>
+</li>
 
+)
 
-            </div>
+)
 
+}
 
 
+</ul>
 
 
+</div>
 
 
 
-            <div className="panel chart-panel">
 
 
-                <h2>
-                    وضعیت بیماری‌های تحت مراقبت
-                </h2>
 
+<div className="panel upload-panel">
 
 
-                <ResponsiveContainer width="100%" height={250}>
+<h2>
+ورود اطلاعات GIS
+</h2>
 
 
-                    <BarChart data={diseaseData}>
+<p>
+آپلود فایل‌های خروجی سامانه GIS توسط کارشناس GIS اداره کل
+</p>
 
 
-                        <CartesianGrid strokeDasharray="3 3"/>
 
+<button
 
-                        <XAxis dataKey="name"/>
+className="upload-btn"
 
+onClick={()=>navigate(
+`/county/${id}/expert/disease/import`
+)}
 
-                        <YAxis/>
+>
 
+مشاهده و دریافت اطلاعات
 
-                        <Tooltip/>
+</button>
 
 
-                        <Bar
-                            dataKey="value"
-                            fill="#008577"
-                        />
+</div>
 
 
-                    </BarChart>
 
 
-                </ResponsiveContainer>
 
+</div>
 
 
-            </div>
 
+</div>
 
-
-
-
-
-
-
-            <div className="panel ai-panel">
-
-
-                <h2>
-                    تحلیل هوشمند AI
-                </h2>
-
-
-
-                <p>
-                    کاهش پوشش مراقبت در برخی مناطق شهرستان {county} شناسایی شد.
-                </p>
-
-
-                <p>
-                    احتمال افزایش ریسک بیماری در واحدهای بدون بازدید وجود دارد.
-                </p>
-
-
-                <p>
-                    وضعیت بیماری‌های گروه یک کنترل شده است.
-                </p>
-
-
-            </div>
-
-
-
-
-
-
-
-
-
-            <div className="panel upload-panel">
-
-
-                <h2>
-                    ورود اطلاعات مراقبت
-                </h2>
-
-
-
-                <p>
-                    ثبت فایل Excel دریافت شده از سامانه GIS
-                </p>
-
-
-
-
-                <button
-
-                    className="upload-btn"
-
-                    onClick={()=>navigate(
-                        `/county/${id}/expert/disease/import`
-                    )}
-
-                >
-
-                    ورود اطلاعات مراقبت
-
-                </button>
-
-
-
-            </div>
-
-
-
-
-
-        </div>
-
-
-
-
-    </div>
-
-    )
+)
 
 }

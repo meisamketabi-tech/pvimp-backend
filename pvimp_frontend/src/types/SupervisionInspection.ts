@@ -1,65 +1,72 @@
 export interface SupervisionInspection {
 
-inspectionDate:string;
+    sampleType: string;
 
-inspectionType:string;
 
-partners:string[];
+    inspectionId?: number;
+    inspectionNumber?: string;
+    inspectionDate: string;
+    inspectionType: string;
+    inspectionStatus?: string;
 
-centerType:string;
+    partners: string[];
 
-unitType:string;
+    centerType: string;
+    unitType: string;
+    slaughterType: string[];
+    selectedSlaughter: string;
 
-slaughterType:string[];
+    unitName: string;
+    ownerName: string;
+    phone: string;
 
-selectedSlaughter:string;
+    province: string;
+    city: string;
+    address: string;
 
-unitName:string;
+    inspectorName: string;
 
-ownerName:string;
+    nonComplianceCount: number;
+    judicialReferral: boolean;
+    sampling: boolean;
 
-phone:string;
 
-province:string;
+sampleCount: number;
 
-city:string;
+    destroyedProductKg: number;
 
-address:string;
+    violations: string[];
+    sealed: boolean;
 
-inspectorName:string;
-
+    description: string;
 }
 
+export const emptyInspection: SupervisionInspection = {
+
+    sampleType: "",
 
 
-export const emptyInspection:SupervisionInspection={
-
-inspectionDate:"",
-
-inspectionType:"",
-
-partners:[],
-
-centerType:"",
-
-unitType:"",
-
-slaughterType:[],
-
-selectedSlaughter:"",
-
-unitName:"",
-
-ownerName:"",
-
-phone:"",
-
-province:"زنجان",
-
-city:"",
-
-address:"",
-
-inspectorName:""
-
+    inspectionDate: "",
+    inspectionType: "",
+    partners: [],
+    centerType: "",
+    unitType: "",
+    slaughterType: [],
+    selectedSlaughter: "",
+    unitName: "",
+    ownerName: "",
+    phone: "",
+    province: "?????",
+    city: "",
+    address: "",
+    inspectorName: "",
+    inspectionStatus: "draft",
+    nonComplianceCount: 0,
+    judicialReferral: false,
+    sampling: false,
+    sampleCount: 0,
+    destroyedProductKg: 0,
+    violations: [],
+    sealed: false,
+    description: ""
 };

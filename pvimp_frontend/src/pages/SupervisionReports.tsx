@@ -44,7 +44,7 @@ data.length;
 
 const violations =
 data.reduce(
-(sum,item)=>sum+item.nonComplianceCount,
+(sum,item)=>sum+(item.nonComplianceCount || 0),
 0
 );
 
@@ -52,7 +52,7 @@ data.reduce(
 
 const samples =
 data.reduce(
-(sum,item)=>sum+item.sampleCount,
+(sum,item)=>sum+(item.sampleCount || 0),
 0
 );
 
@@ -60,7 +60,7 @@ data.reduce(
 
 const destroyed =
 data.reduce(
-(sum,item)=>sum+item.destroyedProductKg,
+(sum,item)=>sum+(item.destroyedProductKg || 0),
 0
 );
 

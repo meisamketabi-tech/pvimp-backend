@@ -5,17 +5,14 @@ from app.db.models.inspection_followup import InspectionFollowUp
 
 def create_followup(
     db: Session,
-    data
+    data,
 ):
-
     obj = InspectionFollowUp(
         **data.model_dump()
     )
 
     db.add(obj)
-
     db.commit()
-
     db.refresh(obj)
 
     return obj
@@ -23,9 +20,8 @@ def create_followup(
 
 def get_followups(
     db: Session,
-    inspection_id: int
+    inspection_id: int,
 ):
-
     return (
         db.query(InspectionFollowUp)
         .filter(

@@ -20,9 +20,9 @@ class InspectionReview(Base):
     )
 
     reviewer_id = Column(
-        Integer,
-        ForeignKey("users.id")
-    )
+    Integer,
+    ForeignKey("user_account.id")
+)
 
     comment = Column(
         String(1000)

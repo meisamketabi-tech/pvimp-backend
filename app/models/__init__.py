@@ -1,1 +1,0 @@
-# legacy models disabled

@@ -79,3 +79,32 @@ def get_checklist_items(
         )
         .all()
     )
+
+from app.db.models.inspection import InspectionType
+
+
+def create_inspection_type(
+    db,
+    data
+):
+    obj = InspectionType(
+        title=data.title,
+        description=data.description,
+        is_active=data.is_active
+    )
+
+    db.add(obj)
+    db.commit()
+    db.refresh(obj)
+
+    return obj
+
+
+
+def get_inspection_types(
+    db
+):
+    return (
+        db.query(InspectionType)
+        .all()
+    )

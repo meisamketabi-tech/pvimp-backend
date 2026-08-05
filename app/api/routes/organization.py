@@ -1,9 +1,7 @@
-﻿from fastapi import APIRouter, Depends, HTTPException
-
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.permissions import require_permission
-
 from app.db.session import get_db
 
 from app.db.models.organization import OrganizationUnit
@@ -21,9 +19,6 @@ router = APIRouter(
 @router.get("/tree")
 def organization_tree(
     db: Session = Depends(get_db),
-    user=Depends(
-        require_permission("VIEW_ORGANIZATION")
-    ),
 ):
 
     from app.services.organization_service import build_tree
@@ -40,52 +35,36 @@ def organization_dashboard(
     ),
 ):
 
-    units_count = (
-        db.query(OrganizationUnit)
-        .filter(
-            OrganizationUnit.is_active == True
-        )
-        .count()
-    )
-
-
-    users_count = (
-        db.query(UserAssignment)
-        .filter(
-            UserAssignment.is_active == True
-        )
-        .count()
-    )
-
-
-    positions_count = (
-        db.query(OrganizationUnitPosition)
-        .filter(
-            OrganizationUnitPosition.is_active == True
-        )
-        .count()
-    )
-
-
-    managers_count = (
-        db.query(UserAssignment)
-        .filter(
-            UserAssignment.is_active == True,
-            UserAssignment.is_primary == True,
-        )
-        .count()
-    )
-
-
     return {
 
-        "organization_units": units_count,
+        "organization_units":
+            db.query(OrganizationUnit)
+            .filter(
+                OrganizationUnit.is_active == True
+            )
+            .count(),
 
-        "active_assignments": users_count,
+        "active_assignments":
+            db.query(UserAssignment)
+            .filter(
+                UserAssignment.is_active == True
+            )
+            .count(),
 
-        "defined_positions": positions_count,
+        "defined_positions":
+            db.query(OrganizationUnitPosition)
+            .filter(
+                OrganizationUnitPosition.is_active == True
+            )
+            .count(),
 
-        "managers": managers_count,
+        "managers":
+            db.query(UserAssignment)
+            .filter(
+                UserAssignment.is_active == True,
+                UserAssignment.is_primary == True,
+            )
+            .count(),
 
     }
 
@@ -95,10 +74,10 @@ def organization_dashboard(
 def organization_detail(
     unit_id: int,
     db: Session = Depends(get_db),
-    user=Depends(
-        require_permission("VIEW_ORGANIZATION")
-    ),
 ):
+
+    from app.db.models.organization_responsibility import OrganizationResponsibility
+
 
     unit = (
         db.query(OrganizationUnit)
@@ -137,24 +116,42 @@ def organization_detail(
     )
 
 
+    responsibilities = (
+        db.query(OrganizationResponsibility)
+        .filter(
+            OrganizationResponsibility.organization_unit_id == unit.id
+        )
+        .all()
+    )
+
+
+    children = (
+        db.query(OrganizationUnit)
+        .filter(
+            OrganizationUnit.parent_id == unit.id,
+            OrganizationUnit.is_active == True,
+        )
+        .all()
+    )
+
+
     return {
 
         "id": unit.id,
-
         "name": unit.name,
-
         "code": unit.code,
-
-        "type_id": unit.type_id,
-
-        "level_id": unit.level_id,
+        "unit_type": unit.unit_type,
+        "parent_id": unit.parent_id,
 
 
         "positions": [
 
             {
-                "id": p.organization_position.id,
-                "title": p.organization_position.title,
+                "id": p.id,
+                "position_id": p.organization_position.id,
+                "position_code": p.organization_position.code,
+                "position_title": p.organization_position.title,
+                "assigned_users": 0,
             }
 
             for p in positions
@@ -165,15 +162,45 @@ def organization_detail(
         "users": [
 
             {
-                "id": u.user.id,
-                "username": u.user.username,
+                "assignment_id": u.id,
+                "user_id": u.user.id,
                 "full_name": u.user.full_name,
-                "role_id": u.role.id,
                 "role": u.role.name,
-                "is_primary": u.is_primary,
             }
 
             for u in users
+
+        ],
+
+
+        "responsibilities": [
+
+            {
+                "id": r.id,
+                "title": r.title,
+                "description": r.description,
+                "priority": r.priority,
+                "inspection_type_id": r.inspection_type_id,
+                "inspection_type":
+                    r.inspection_type.title
+                    if r.inspection_type
+                    else None,
+            }
+
+            for r in responsibilities
+
+        ],
+
+
+        "children": [
+
+            {
+                "id": c.id,
+                "name": c.name,
+                "unit_type": c.unit_type,
+            }
+
+            for c in children
 
         ],
 

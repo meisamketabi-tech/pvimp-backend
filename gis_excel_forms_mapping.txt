@@ -1,0 +1,42 @@
+FORM: epidemiology-animal
+STATUS: NEED MODEL CHECK
+
+
+FORM: spraying
+STATUS: EXISTING MODEL gis_spraying.py
+
+
+FORM: slaughter-disposal
+STATUS: EXISTING MODEL gis_slaughter_disposal.py
+
+
+FORM: laboratory-result
+STATUS: EXISTING MODEL gis_laboratory_result.py
+
+
+FORM: send-sample-detail
+STATUS: EXISTING MODEL gis_send_sample_detail.py
+
+
+FORM: disease-occurrence
+STATUS: EXISTING MODEL gis_disease_occurrence.py
+
+
+FORM: enable-care
+STATUS: EXISTING MODEL gis_enable_care.py
+
+
+FORM: disease-report
+STATUS: EXISTING MODEL gis_disease_report.py
+
+
+FORM: vaccination-performance
+STATUS: EXISTING MODEL gis_vaccination_performance.py
+
+
+FORM: vaccine-distribution
+STATUS: EXISTING MODEL gis_vaccine_distribution.py
+
+
+FORM: vaccine-inventory
+STATUS: EXISTING MODEL gis_vaccine_inventory.py

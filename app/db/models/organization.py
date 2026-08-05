@@ -1,9 +1,10 @@
-﻿from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
 
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
+from app.db.models.organization_unit_area import OrganizationUnitArea
 
 class OrganizationUnit(Base):
 
@@ -120,9 +121,15 @@ class OrganizationUnit(Base):
         "County",
     )
 
-
     assignments = relationship(
         "UserAssignment",
+        back_populates="organization_unit",
+        cascade="all, delete-orphan",
+    )
+
+
+    geographic_areas = relationship(
+        OrganizationUnitArea,
         back_populates="organization_unit",
         cascade="all, delete-orphan",
     )

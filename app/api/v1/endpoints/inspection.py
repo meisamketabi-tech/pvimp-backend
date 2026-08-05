@@ -27,6 +27,29 @@ router = APIRouter(
 
 
 @router.post(
+    "/types",
+    response_model=InspectionTypeResponse
+)
+def create_inspection_type(
+    data: InspectionTypeCreate,
+    db: Session = Depends(get_db)
+):
+    return inspection_service.create_inspection_type(
+        db,
+        data
+    )
+
+
+@router.get(
+    "/types",
+    response_model=list[InspectionTypeResponse]
+)
+def get_inspection_types(
+    db: Session = Depends(get_db)
+):
+    return inspection_service.get_inspection_types(db)
+
+@router.post(
     "",
     response_model=InspectionResponse
 )

@@ -1,2 +1,0 @@
-﻿from app.models.geography.geographic_area import GeographicArea
-from app.models.geography.organization_unit_area import OrganizationUnitArea

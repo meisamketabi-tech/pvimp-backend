@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, UniqueConstraint
+from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, UniqueConstraint
 from sqlalchemy.orm import relationship
 from datetime import datetime
 

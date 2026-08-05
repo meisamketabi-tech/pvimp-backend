@@ -49,6 +49,11 @@ def seed():
                 "parent": "HEALTH_DEPUTY",
             },
 
+	    {
+                "code": "DIAGNOSIS_TREATMENT",
+                "name": "اداره تشخیص و درمان",
+                                 "parent": "HEALTH_DEPUTY",
+            },
             {
                 "code": "QUARANTINE_DEPARTMENT",
                 "name": "اداره قرنطینه و امنیت زیستی",

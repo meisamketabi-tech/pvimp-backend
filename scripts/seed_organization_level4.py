@@ -16,6 +16,7 @@ def seed():
             "ANIMAL_HEALTH_DEPARTMENT",
             "POULTRY_HEALTH_DEPARTMENT",
             "PUBLIC_HEALTH_DEPARTMENT",
+	    "DIAGNOSIS_TREATMENT",
             "QUARANTINE_DEPARTMENT",
             "ADMIN_DEPARTMENT",
             "FINANCE_DEPARTMENT",
@@ -93,6 +94,12 @@ def seed():
                 "name":"واحد قرنطینه مرزی",
                 "parent":"QUARANTINE_DEPARTMENT"
             },
+
+	    {
+	        "code":"LABORATORY",
+	        "name":"آزمایشگاه",
+ 	          "parent":"DIAGNOSIS_TREATMENT"
+	    },
 
             {
                 "code":"TRANSPORT_QUARANTINE_UNIT",

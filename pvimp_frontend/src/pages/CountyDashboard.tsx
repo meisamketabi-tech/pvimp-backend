@@ -1,32 +1,36 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import {useParams} from "react-router-dom";
+
+import {
+ResponsiveContainer,
+BarChart,
+Bar,
+XAxis,
+YAxis,
+Tooltip,
+Legend,
+PieChart,
+Pie,
+Cell
+} from "recharts";
+
 import "./Dashboard.css";
 
 
-const countyNames=[
-
-"ابهر",
-"ایجرود",
-"طارم",
-"زنجان",
-"خرمدره",
-"خدابنده",
-"سلطانیه",
-"ماهنشان"
-
-];
+const API="http://localhost:8000";
 
 
-const experts=[
+function normalize(value:any){
 
-["کارشناس بهداشت و مدیریت بیماری‌های دامی","42","مطلوب"],
-["کارشناس قرنطینه و امنیت زیستی","31","مطلوب"],
-["کارشناس نظارت بهداشت عمومی و مواد غذایی","28","نیازمند پیگیری"],
-["کارشناس طیور و آبزیان","24","مطلوب"],
-["کارشناس تشخیص و درمان","18","مطلوب"],
-["کارشناس آزمایشگاه","15","مطلوب"]
+return String(value || "")
+.replace(/[\u200b-\u200f\u202a-\u202e]/g,"")
+.replace(/\s+/g,"")
+.replace(/ي/g,"ی")
+.replace(/ك/g,"ک")
+.trim();
 
-];
+}
+
 
 
 export default function CountyDashboard(){
@@ -34,28 +38,196 @@ export default function CountyDashboard(){
 
 const {id}=useParams();
 
+const county=normalize(id);
 
-const county =
-countyNames[Number(id)||0] || "نامشخص";
+
+
+const [unit,setUnit]=useState<any>({
+total_units:0,
+active_units:0
+});
+
+
+const [animal,setAnimal]=useState<any>({
+sheep:0,
+cattle:0,
+goat:0,
+horse:0,
+dog:0
+});
+
+
+const [diseases,setDiseases]=useState<any[]>([]);
+
+
+
+
+useEffect(()=>{
+
+
+Promise.all([
+
+fetch(`${API}/gis-county-analysis/units`).then(r=>r.json()),
+
+fetch(`${API}/gis-county-analysis/animals`).then(r=>r.json()),
+
+fetch(`${API}/gis-county-analysis/diseases`).then(r=>r.json())
+
+])
+
+
+.then(([units,animals,disease])=>{
+
+
+const u=units.find(
+(x:any)=>
+normalize(x.county).includes(county)
+);
+
+
+const a=animals.find(
+(x:any)=>
+normalize(x.county).includes(county)
+);
+
+
+const d=disease.filter(
+(x:any)=>
+normalize(x.county).includes(county)
+);
+
+
+
+setUnit(u || {
+total_units:0,
+active_units:0
+});
+
+
+setAnimal(a || {
+sheep:0,
+cattle:0,
+goat:0,
+horse:0,
+dog:0
+});
+
+
+setDiseases(d);
+
+
+
+});
+
+
+},[county]);
+
+
+
+
+
+const totalAnimals =
+
+Number(animal.sheep||0)+
+Number(animal.cattle||0)+
+Number(animal.goat||0)+
+Number(animal.horse||0)+
+Number(animal.dog||0);
+
+
+
+
+const activity=
+
+unit.total_units
+?
+Math.round(
+(unit.active_units/unit.total_units)*100
+)
+:
+0;
+
+
+
+
+const unitChart=[
+
+{
+name:"واحدها",
+کل:unit.total_units,
+فعال:unit.active_units
+}
+
+];
+
+
+
+
+const animalChart=[
+
+{
+name:"گوسفند",
+value:Number(animal.sheep||0)
+},
+
+{
+name:"گاو",
+value:Number(animal.cattle||0)
+},
+
+{
+name:"بز",
+value:Number(animal.goat||0)
+},
+
+{
+name:"اسب",
+value:Number(animal.horse||0)
+},
+
+{
+name:"سگ",
+value:Number(animal.dog||0)
+}
+
+];
+
+
+
+const COLORS=[
+
+"#006064",
+"#008577",
+"#43a047",
+"#ff9800",
+"#8e24aa"
+
+];
+
+
 
 
 
 return(
 
-<div className="dashboard-page" dir="rtl">
+<div className="dashboard-page">
+
 
 
 <div className="dashboard-header">
 
 <h1>
-داشبورد رئیس اداره دامپزشکی شهرستان {county}
+داشبورد مدیریتی شهرستان {id}
 </h1>
 
 <p>
-مدیریت عملکرد، پایش فعالیت‌ها و وضعیت بهداشتی شهرستان
+تحلیل هوشمند وضعیت واحدها، جمعیت دامی و بیماری‌ها
 </p>
 
 </div>
+
+
+
 
 
 
@@ -63,79 +235,88 @@ return(
 
 
 
-<div className="dashboard-box">
+<div className="dashboard-box kpi-card">
 
 <h3>
-واحدهای تحت پوشش
+کل واحدها
 </h3>
 
 <strong>
-1250
+{unit.total_units}
 </strong>
 
-<p>
-واحد اپیدمیولوژیک ثبت شده
-</p>
+<span>
+واحد ثبت شده
+</span>
 
 </div>
 
 
 
-<div className="dashboard-box">
+
+<div className="dashboard-box kpi-card">
 
 <h3>
-مراقبت فعال ماه جاری
+واحد فعال
 </h3>
 
 <strong>
-86
+{unit.active_units}
 </strong>
 
-<p>
-مورد انجام شده
-</p>
+<span>
+واحد فعال شهرستان
+</span>
 
 </div>
 
 
 
-<div className="dashboard-box">
+
+
+<div className="dashboard-box kpi-card">
 
 <h3>
-درصد تحقق برنامه
+نرخ فعالیت
 </h3>
 
 <strong>
-78%
+{activity}%
 </strong>
 
-<p>
-وضعیت برنامه شهرستان
-</p>
+<span>
+شاخص فعالیت
+</span>
 
 </div>
 
 
 
-<div className="dashboard-box">
+
+
+<div className="dashboard-box kpi-card">
 
 <h3>
-موارد مثبت بیماری
+جمعیت دامی
 </h3>
 
 <strong>
-0
+{totalAnimals.toLocaleString()}
 </strong>
 
-<p>
-در مراقبت‌های ثبت شده
-</p>
+<span>
+رأس دام
+</span>
 
 </div>
 
 
 
 </div>
+
+
+
+
 
 
 
@@ -144,27 +325,183 @@ return(
 
 
 <h2>
-عملکرد کارشناسان شهرستان
+وضعیت واحدهای شهرستان
 </h2>
 
 
-<table>
 
+<ResponsiveContainer width="100%" height={350}>
+
+
+<BarChart data={unitChart}>
+
+
+<XAxis dataKey="name"/>
+
+<YAxis/>
+
+<Tooltip/>
+
+<Legend/>
+
+
+<Bar
+dataKey="کل"
+radius={[10,10,0,0]}
+fill="#006064"
+/>
+
+
+<Bar
+dataKey="فعال"
+radius={[10,10,0,0]}
+fill="#43a047"
+/>
+
+
+</BarChart>
+
+
+</ResponsiveContainer>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<section className="dashboard-box">
+
+
+<h2>
+ترکیب جمعیت دامی
+</h2>
+
+
+<ResponsiveContainer width="100%" height={380}>
+
+
+<PieChart>
+
+
+<Pie
+
+data={animalChart}
+
+dataKey="value"
+
+nameKey="name"
+
+cx="50%"
+
+cy="50%"
+
+innerRadius={80}
+
+outerRadius={130}
+
+label
+
+>
+
+
+{
+
+animalChart.map(
+(_,index)=>(
+
+<Cell
+
+key={index}
+
+fill={COLORS[index]}
+
+/>
+
+)
+
+)
+
+}
+
+
+
+</Pie>
+
+
+<Tooltip/>
+
+<Legend/>
+
+
+</PieChart>
+
+
+</ResponsiveContainer>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section className="dashboard-box">
+
+
+<h2>
+کانون‌های بیماری شهرستان
+</h2>
+
+
+
+{
+diseases.length===0
+
+?
+
+<div className="success-box">
+
+بدون گزارش بیماری
+
+</div>
+
+:
+
+<div className="danger-box">
+
+تعداد کانون بیماری:
+<b>
+{diseases.length}
+</b>
+
+
+<table>
 
 <thead>
 
 <tr>
 
 <th>
-واحد تخصصی
+بیماری
 </th>
 
 <th>
-بازدید انجام شده
+کانون
 </th>
 
 <th>
-وضعیت
+تلفات
 </th>
 
 </tr>
@@ -176,21 +513,29 @@ return(
 
 
 {
-
-experts.map((e,i)=>(
+diseases.map(
+(d,i)=>(
 
 <tr key={i}>
 
-<td>{e[0]}</td>
+<td>
+{d.disease}
+</td>
 
-<td>{e[1]}</td>
+<td>
+{d.outbreaks}
+</td>
 
-<td>{e[2]}</td>
+<td>
+{d.dead}
+</td>
+
 
 </tr>
 
-))
+)
 
+)
 }
 
 
@@ -199,8 +544,17 @@ experts.map((e,i)=>(
 
 </table>
 
+</div>
+
+}
+
+
 
 </section>
+
+
+
+
 
 
 
@@ -210,37 +564,42 @@ experts.map((e,i)=>(
 
 
 <h2>
-ساختار مدیریتی اداره
+تحلیل مدیریتی
 </h2>
 
 
-<p>
-+
-رئیس اداره دامپزشکی شهرستان {county}
-</p>
+
+<div className="analysis-card">
+
+وضعیت فعالیت واحدها
+
+<strong>
+{activity}%
+</strong>
+
+</div>
 
 
-<p>
-+
-کارشناسان اداره
-</p>
 
+<div className="analysis-card">
 
-<ul>
+وضعیت بیماری
 
-<li>کارشناس بهداشت و مدیریت بیماری‌های دامی</li>
+<strong>
 
-<li>کارشناس قرنطینه و امنیت زیستی</li>
+{
+diseases.length
+?
+"دارای کانون بیماری"
+:
+"پاک"
 
-<li>کارشناس نظارت بهداشت عمومی و مواد غذایی</li>
+}
 
-<li>کارشناس طیور و آبزیان</li>
+</strong>
 
-<li>کارشناس تشخیص و درمان</li>
+</div>
 
-<li>کارشناس آزمایشگاه</li>
-
-</ul>
 
 
 </section>
@@ -248,35 +607,12 @@ experts.map((e,i)=>(
 
 
 
-<section className="dashboard-box">
-
-
-<h2>
-هشدارهای مدیریتی AI
-</h2>
-
-
-<p>
-⚠️ نیاز به افزایش پوشش مراقبت در واحدهای پرخطر
-</p>
-
-
-<p>
-⚠️ پایش عملکرد کارشناسان شهرستان به صورت مستمر انجام شود
-</p>
-
-
-<p>
-✅ تاکنون مورد مثبت بیماری گروه یک ثبت نشده است
-</p>
-
-
-</section>
 
 
 
 </div>
 
 )
+
 
 }

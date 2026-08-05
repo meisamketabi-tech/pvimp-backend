@@ -1,11 +1,12 @@
-﻿from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.db.models.organization import OrganizationUnit
-from app.db.models.assignment import UserAssignment
-from app.schemas.organization_tree import OrganizationTreeNode
 
+from app.db.models.organization import OrganizationUnit
+from app.db.models.organization_unit_position import OrganizationUnitPosition
+
+from app.schemas.organization_tree import OrganizationTreeNode
 
 router = APIRouter(
     prefix="/organization",
@@ -13,43 +14,32 @@ router = APIRouter(
 )
 
 
-def build_tree(unit):
+def build_tree(unit, db):
 
-    assignments = (
-        unit.assignments
-        if hasattr(unit, "assignments")
-        else []
+    unit_positions = (
+        db.query(OrganizationUnitPosition)
+        .filter(
+            OrganizationUnitPosition.organization_unit_id == unit.id,
+            OrganizationUnitPosition.is_active == True,
+        )
+        .all()
     )
 
     positions = []
 
-    for assignment in assignments:
+    for item in unit_positions:
 
-        if not assignment.is_active:
-            continue
+        if item.organization_position:
 
-        if not assignment.organization_unit_position:
-            continue
-
-        position = assignment.organization_unit_position.organization_position
-
-        user = assignment.user
-
-        item = {
-            "id": assignment.organization_unit_position.id,
-
-            "position_id": position.id,
-            "position_code": position.code,
-            "position_title": position.title,
-
-            "user_id": user.id if user else None,
-            "username": user.username if user else None,
-            "full_name": user.full_name if user else None,
-        }
-
-        if item not in positions:
-            positions.append(item)
-
+            positions.append(
+                {
+                    "id": item.id,
+                    "position_id": item.organization_position.id,
+                    "position_code": item.organization_position.code,
+                    "position_title": item.organization_position.title,
+                    "assigned_users": len(item.assignments),
+                }
+            )
 
     return {
         "id": unit.id,
@@ -57,16 +47,12 @@ def build_tree(unit):
         "code": unit.code,
         "unit_type": unit.unit_type,
         "parent_id": unit.parent_id,
-
         "positions": positions,
-
+        "position_count": len(positions),
         "children": [
-            build_tree(child)
-            for child in unit.children
-            if child.is_active
+            build_tree(child, db) for child in unit.children if child.is_active
         ],
     }
-
 
 
 @router.get(
@@ -86,7 +72,4 @@ def organization_tree(
         .all()
     )
 
-    return [
-        build_tree(root)
-        for root in roots
-    ]
+    return [build_tree(root, db) for root in roots]

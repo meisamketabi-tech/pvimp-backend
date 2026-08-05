@@ -1,19 +1,16 @@
 from sqlalchemy.orm import Session
 
-from app.db.models.inspection_history import (
-    InspectionHistory
-)
+from app.db.models.inspection_history import InspectionHistory
 
 
 def add_history(
     db: Session,
     inspection_id: int,
-    action: str
+    action: str,
 ):
-
     history = InspectionHistory(
         inspection_id=inspection_id,
-        action=action
+        action=action,
     )
 
     db.add(history)
@@ -23,19 +20,14 @@ def add_history(
     return history
 
 
-
 def get_history(
     db: Session,
-    inspection_id: int
+    inspection_id: int,
 ):
-
     return (
-        db.query(
-            InspectionHistory
-        )
+        db.query(InspectionHistory)
         .filter(
-            InspectionHistory.inspection_id ==
-            inspection_id
+            InspectionHistory.inspection_id == inspection_id
         )
         .all()
     )
