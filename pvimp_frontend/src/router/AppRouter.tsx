@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import MainLayout from "../layouts/MainLayout";
 import Dashboard from "../pages/Dashboard";
-
 import GISDashboard from "../pages/GISDashboard";
 import GISDepartmentList from "../pages/GISDepartmentList";
 import GISDepartmentDetail from "../pages/GISDepartmentDetail";
@@ -11,11 +10,16 @@ import GISDepartmentUpload from "../pages/GISDepartmentUpload";
 import GISCountyDashboard from "../pages/GISCountyDashboard";
 import VaccinationVaccineReport from "../pages/VaccinationVaccineReport";
 import GISCountyDetailDashboard from "../pages/GISCountyDetailDashboard";
-
 import CountyDashboard from "../pages/CountyDashboard";
 import DiseaseControlManagementDashboard from "../pages/DiseaseControlManagementDashboard";
 import DiseaseControlCountyDashboard from "../pages/DiseaseControlCountyDashboard";
-
+import HealthDeputyDiseaseControlDashboard from "../pages/HealthDeputyDiseaseControlDashboard";
+import DirectorGeneralDiseaseControlDashboard from "../pages/DirectorGeneralDiseaseControlDashboard";
+import HealthDeputyDashboard from "../pages/HealthDeputyDashboard";
+import QuarantineExpertDashboard from "../pages/QuarantineExpertDashboard";
+import PoultryExpertDashboard from "../pages/PoultryExpertDashboard";
+import DiagnosisExpertDashboard from "../pages/DiagnosisExpertDashboard";
+import LabExpertDashboard from "../pages/LabExpertDashboard";
 import SupervisionDashboard from "../pages/SupervisionDashboard";
 import SupervisionInspectionCreate from "../pages/SupervisionInspectionCreate";
 import SupervisionInspectionList from "../pages/SupervisionInspectionList";
@@ -39,12 +43,6 @@ import SupervisionControlRoom from "../pages/SupervisionControlRoom";
 import SupervisionAIAnalysis from "../pages/SupervisionAIAnalysis";
 import SupervisionRiskDashboard from "../pages/SupervisionRiskDashboard";
 import SupervisionOperationalDashboard from "../pages/SupervisionOperationalDashboard";
-
-import HealthDeputyDashboard from "../pages/HealthDeputyDashboard";
-import QuarantineExpertDashboard from "../pages/QuarantineExpertDashboard";
-import PoultryExpertDashboard from "../pages/PoultryExpertDashboard";
-import DiagnosisExpertDashboard from "../pages/DiagnosisExpertDashboard";
-import LabExpertDashboard from "../pages/LabExpertDashboard";
 import SupervisionForm from "../pages/SupervisionForm";
 import SupervisionGISImport from "../pages/SupervisionGISImport";
 import ResponsibleHealthDashboard from "../pages/ResponsibleHealthDashboard";
@@ -56,8 +54,9 @@ export default function AppRouter() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Dashboard />} />
 
-        {/* Health / disease control */}
         <Route path="health-deputy" element={<HealthDeputyDashboard />} />
+        <Route path="health-deputy/disease-control" element={<HealthDeputyDiseaseControlDashboard />} />
+        <Route path="director-general/disease-control" element={<DirectorGeneralDiseaseControlDashboard />} />
         <Route path="disease-control" element={<DiseaseControlManagementDashboard />} />
         <Route path="disease-control/management" element={<DiseaseControlManagementDashboard />} />
         <Route path="quarantine" element={<QuarantineExpertDashboard />} />
@@ -65,7 +64,6 @@ export default function AppRouter() {
         <Route path="diagnosis" element={<DiagnosisExpertDashboard />} />
         <Route path="laboratory" element={<LabExpertDashboard />} />
 
-        {/* GIS */}
         <Route path="gis" element={<GISDashboard />} />
         <Route path="gis/departments" element={<GISDepartmentList />} />
         <Route path="gis/department/:code" element={<GISDepartmentDetail />} />
@@ -73,7 +71,6 @@ export default function AppRouter() {
         <Route path="gis-county-dashboard" element={<GISCountyDashboard />} />
         <Route path="vaccination-vaccine-report" element={<VaccinationVaccineReport />} />
 
-        {/* County */}
         <Route path="county/:id" element={<CountyDashboard />} />
         <Route path="county/:id/deputy" element={<DiseaseControlCountyDashboard />} />
         <Route path="county/:id/disease-control" element={<DiseaseControlCountyDashboard />} />
@@ -81,7 +78,6 @@ export default function AppRouter() {
         <Route path="county/:id/gis-detail" element={<GISCountyDetailDashboard />} />
         <Route path="county/:id/expert/supervision/import" element={<SupervisionGISImport />} />
 
-        {/* Supervision */}
         <Route path="supervision" element={<SupervisionDashboard />} />
         <Route path="supervision/create" element={<SupervisionInspectionCreate />} />
         <Route path="supervision/list" element={<SupervisionInspectionList />} />
@@ -106,7 +102,6 @@ export default function AppRouter() {
         <Route path="supervision/ai-analysis" element={<SupervisionAIAnalysis />} />
         <Route path="supervision/risk-dashboard" element={<SupervisionRiskDashboard />} />
         <Route path="supervision/operational-dashboard" element={<SupervisionOperationalDashboard />} />
-
         <Route path="responsible-health" element={<ResponsibleHealthDashboard />} />
       </Route>
     </Routes>
