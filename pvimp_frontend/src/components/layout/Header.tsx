@@ -1,24 +1,53 @@
-import React from "react";
-﻿
-export default function Header(){
+﻿import React from "react";
+import "./Header.css";
 
-return (
+export default function Header() {
+    return (
+        <header className="app-header" dir="rtl">
 
-<header
-dir="rtl"
-className="bg-white shadow-sm p-5 flex justify-between items-center"
->
+            <div className="app-header__right">
 
-<h2 className="text-xl font-bold text-[#0f2747]">
-سامانه مدیریت هوشمند دامپزشکی
-</h2>
+                <div className="app-header__icon">
+                    دام
+                </div>
 
-<div className="text-sm text-gray-500">
-مدیر سیستم
-</div>
+                <div className="app-header__titles">
+                    <h1>
+                        سامانه مدیریت یکپارچه دامپزشکی
+                    </h1>
 
-</header>
+                    <span>
+                        اداره کل دامپزشکی استان زنجان
+                    </span>
+                </div>
 
-);
+            </div>
 
+            <div className="app-header__left">
+
+                <div className="app-header__status">
+                    <span className="app-header__status-dot" />
+                    سامانه فعال
+                </div>
+
+                <div className="app-header__user">
+                    <div className="app-header__avatar">
+                        ک
+                    </div>
+
+                    <div className="app-header__user-info">
+                        <strong>
+                            کاربر سامانه
+                        </strong>
+
+                        <span>
+                            مدیریت استان
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+    );
 }

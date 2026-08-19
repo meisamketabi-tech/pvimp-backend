@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionEscalation(){
@@ -9,7 +9,7 @@ return(
 
 <div className="expert-header">
 <h1>
-?????? ????? ???????
+????? ?
 </h1>
 </div>
 
@@ -22,3 +22,5 @@ return(
 )
 
 }
+
+

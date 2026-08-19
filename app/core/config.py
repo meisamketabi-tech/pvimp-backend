@@ -1,9 +1,9 @@
 from urllib.parse import quote_plus
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+
     PROJECT_NAME: str = "PVIMP Backend"
     APP_NAME: str = "PVIMP Backend"
 
@@ -13,9 +13,12 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = "postgres123"
     DB_NAME: str = "pvimp_db"
 
+    # مهم: فعلا دست نزن
     SECRET_KEY: str = "CHANGE_THIS_TO_A_RANDOM_LONG_SECRET_KEY"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
     ALGORITHM: str = "HS256"
+
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     API_V1_STR: str = "/api/v1"
 
@@ -29,8 +32,10 @@ settings = Settings()
 
 
 def get_database_url() -> str:
+
     return (
         f"postgresql+psycopg2://{quote_plus(settings.DB_USER)}:"
-        f"{quote_plus(settings.DB_PASSWORD)}@{settings.DB_HOST}:"
-        f"{settings.DB_PORT}/{settings.DB_NAME}"
+        f"{quote_plus(settings.DB_PASSWORD)}@"
+        f"{settings.DB_HOST}:{settings.DB_PORT}/"
+        f"{settings.DB_NAME}"
     )

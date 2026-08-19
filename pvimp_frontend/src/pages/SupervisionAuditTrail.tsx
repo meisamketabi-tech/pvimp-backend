@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionAuditTrail(){
@@ -8,15 +8,16 @@ return(
 
 <div className="expert-header">
 <h1>
-?????? ?????? ???????
+?
 </h1>
 </div>
 
 <div className="dashboard-card">
-Audit Log ??????
-</div>
+Audit Log </div>
 
 </div>
 )
 
 }
+
+

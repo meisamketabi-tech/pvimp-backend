@@ -1,42 +1,75 @@
-import React, { useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+
 import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
+
 import "./MainLayout.css";
 
 export default function MainLayout() {
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
+    useEffect(() => {
+
+        function handleResize() {
+
+            if (window.innerWidth > 900) {
+                setSidebarOpen(false);
+            }
+        }
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+
+    }, []);
+
+    useEffect(() => {
+
+        if (sidebarOpen && window.innerWidth <= 900) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+
+    }, [sidebarOpen]);
+
     return (
-        <div className="main-layout">
-
-            <button
-                className="mobile-menu-button"
-                onClick={() => setSidebarOpen(true)}
-                aria-label="??? ???? ???"
-            >
-                ?
-            </button>
-
-            {sidebarOpen && (
-                <div
-                    className="mobile-sidebar-overlay"
-                    onClick={() => setSidebarOpen(false)}
-                />
-            )}
+        <div className="main-layout" dir="rtl">
 
             <Sidebar
                 mobileOpen={sidebarOpen}
                 onMobileClose={() => setSidebarOpen(false)}
             />
 
-            <div className="main-content">
+            <div className="main-layout__content">
+
                 <Header />
 
-                <main className="page-content">
+                <main className="main-layout__page">
                     <Outlet />
                 </main>
+
             </div>
+
+            <button
+                type="button"
+                className="mobile-menu-button"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="باز کردن منوی اصلی"
+                aria-expanded={sidebarOpen}
+            >
+                <span />
+                <span />
+                <span />
+            </button>
 
         </div>
     );

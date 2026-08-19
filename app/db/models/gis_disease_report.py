@@ -1,9 +1,13 @@
 from sqlalchemy import (
+    Boolean,
     Column,
+    Date,
+    DateTime,
+    Float,
+    ForeignKey,
     Integer,
     String,
-    Date,
-    ForeignKey,
+    Text,
 )
 
 from sqlalchemy.orm import relationship
@@ -14,13 +18,11 @@ from app.db.base_class import Base
 class GISDiseaseReport(Base):
     __tablename__ = "gis_disease_reports"
 
-    # Internal ID
     id = Column(
         Integer,
         primary_key=True,
-        index=True
+        index=True,
     )
-
 
     # =========================
     # Excel Identification
@@ -28,14 +30,14 @@ class GISDiseaseReport(Base):
 
     observation_detail_vcode = Column(
         String(100),
-        index=True
+        unique=True,
+        index=True,
     )
 
     observation_vcode = Column(
         String(100),
-        index=True
+        index=True,
     )
-
 
     # =========================
     # Geography
@@ -43,23 +45,21 @@ class GISDiseaseReport(Base):
 
     province_code = Column(
         String(20),
-        index=True
+        index=True,
     )
 
     province_name = Column(
-        String(100)
+        String(100),
     )
-
 
     county_code = Column(
         String(20),
-        index=True
+        index=True,
     )
 
     county_name = Column(
-        String(100)
+        String(100),
     )
-
 
     # =========================
     # Epidemiology Unit
@@ -67,26 +67,23 @@ class GISDiseaseReport(Base):
 
     epidemiology_unit_id = Column(
         Integer,
-        ForeignKey(
-            "gis_epidemiology_units.id"
-        ),
+        ForeignKey("gis_epidemiology_units.id"),
         nullable=True,
-        index=True
+        index=True,
     )
 
     epidemiology_unit_code = Column(
         String(50),
-        index=True
+        index=True,
     )
 
     epidemiology_unit_name = Column(
-        String(255)
+        String(255),
     )
 
     epidemiology_unit_type = Column(
-        String(100)
+        String(100),
     )
-
 
     # =========================
     # Disease
@@ -94,95 +91,86 @@ class GISDiseaseReport(Base):
 
     disease_id = Column(
         Integer,
-        ForeignKey(
-            "gis_diseases.id"
-        ),
+        ForeignKey("gis_diseases.id"),
         nullable=True,
-        index=True
+        index=True,
     )
 
     disease_name = Column(
         String(255),
-        index=True
+        index=True,
     )
-
 
     # =========================
     # Animal
     # =========================
 
     animal_type = Column(
-        String(100)
+        String(100),
     )
 
-
     # =========================
-    # Disease Report Data
+    # Disease Report
     # =========================
 
     disease_start_date = Column(
-        Date
+        Date,
+        nullable=True,
     )
 
-
     total_animals = Column(
-        Integer
+        Integer,
     )
 
     infected_count = Column(
-        Integer
+        Integer,
     )
 
     death_count = Column(
-        Integer
+        Integer,
     )
 
     slaughtered_count = Column(
-        Integer
+        Integer,
+    )
+
+    sampling = Column(
+        String(100),
     )
 
     destroyed_count = Column(
-        Integer
+        Integer,
     )
-
-
-    sampling = Column(
-        String(100)
-    )
-
 
     # =========================
-    # Old System Information
+    # Old System
     # =========================
 
     old_system_id = Column(
         String(100),
-        index=True
+        index=True,
+    )
+
+    age_group = Column(
+        String(100),
     )
 
     old_unit_code = Column(
         String(50),
-        index=True
+        index=True,
     )
-
-    age_group = Column(
-        String(100)
-    )
-
 
     # =========================
-    # Other Information
+    # Other
     # =========================
 
     biting_animal = Column(
-        String(100)
+        String(100),
     )
-
 
     operation_license_type = Column(
-        String(255)
+        String(255),
     )
-
 
     # =========================
     # Creator User
@@ -190,13 +178,12 @@ class GISDiseaseReport(Base):
 
     creator_user_code = Column(
         String(50),
-        index=True
+        index=True,
     )
 
     creator_user_name = Column(
-        String(255)
+        String(255),
     )
-
 
     # =========================
     # Source Unit
@@ -204,27 +191,25 @@ class GISDiseaseReport(Base):
 
     source_unit_code = Column(
         String(50),
-        index=True
+        index=True,
     )
 
     source_unit_name = Column(
-        String(255)
+        String(255),
     )
 
     source_unit_type = Column(
-        String(100)
+        String(100),
     )
-
 
     # =========================
     # Relationships
     # =========================
 
     epidemiology_unit = relationship(
-        "GISEpidemiologyUnit"
+        "GISEpidemiologyUnit",
     )
 
-
     disease = relationship(
-        "GISDisease"
+        "GISDisease",
     )

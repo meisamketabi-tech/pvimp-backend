@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionFollowUp(){
@@ -8,8 +8,7 @@ return(
 
 <div className="expert-header">
 <h1>
-?????? ??????? ??????
-</h1>
+? </h1>
 </div>
 
 <table className="dashboard-table">
@@ -30,3 +29,5 @@ return(
 )
 
 }
+
+

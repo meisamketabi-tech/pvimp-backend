@@ -19,91 +19,99 @@ class GISVaccineDisposal(Base):
     id = Column(
         Integer,
         primary_key=True,
-        index=True
+        index=True,
     )
 
+    # Excel: DistributionVaccineCenterVCode
     distribution_vaccine_center_vcode = Column(
-        String,
-        index=True
+        String(100),
+        unique=True,
+        index=True,
     )
 
-    distribution_no = Column(
-        String(100)
-    )
+    # Excel: شماره توزیع
+    distribution_no = Column(String(100))
 
+    # System FK
     epidemiology_unit_id = Column(
         Integer,
-        ForeignKey(
-            "gis_epidemiology_units.id"
-        ),
-        index=True
+        ForeignKey("gis_epidemiology_units.id"),
+        index=True,
     )
 
-    province_name = Column(String)
+    # Excel: استان
+    province_name = Column(String(100))
 
-    county_name = Column(String)
+    # Excel: شهرستان
+    county_name = Column(String(100))
 
-
+    # Excel: تاریخ توزیع
     distribution_date = Column(Date)
 
+    # Excel: DistributionStatusId
+    distribution_status_id = Column(Integer)
 
-    distribution_status_id = Column(
-        Integer
-    )
+    # Excel: استان واحد مقصد
+    destination_province = Column(String(100))
 
+    # Excel: شهر واحد مقصد
+    destination_county = Column(String(100))
 
-    destination_province = Column(String)
+    # Excel: کد واحد مقصد
+    destination_unit_code = Column(String(100))
 
-    destination_county = Column(String)
+    # Excel: نام واحد مقصد
+    destination_unit_name = Column(String(255))
 
-    destination_unit_code = Column(String)
+    # Excel: نوع واحد مقصد
+    destination_unit_type = Column(String(100))
 
-    destination_unit_name = Column(String)
+    # Excel: نوع واکسن
+    vaccine_type = Column(String(100))
 
-    destination_unit_type = Column(String)
+    # Excel: نام تجاری واکسن
+    vaccine_brand = Column(String(255))
 
+    # Excel: کارخانه سازنده
+    manufacturer = Column(String(255))
 
-    vaccine_type = Column(String)
+    # Excel: سری ساخت
+    batch_number = Column(String(100))
 
-    vaccine_brand = Column(String)
+    # Excel: وضعیت
+    vaccine_status = Column(String(100))
 
-    manufacturer = Column(String)
+    # Excel: شکل واکسن
+    vaccine_shape = Column(String(100))
 
-    batch_number = Column(String)
-
-
-    vaccine_shape = Column(String)
-
-
+    # Excel: تعداد بسته
     package_count = Column(Integer)
 
+    # Excel: حجم/ دز هر بسته
     dose_volume = Column(Float)
 
+    # Excel: واحد
+    unit_name = Column(String(100))
 
-    unit_name = Column(String)
+    # Excel: کد کاربر
+    user_code = Column(String(100))
 
+    # Excel: نام کاربر
+    user_name = Column(String(255))
 
-    user_code = Column(String)
-
-    user_name = Column(String)
-
-
+    # Excel: تاریخ ثبت
     registration_date = Column(Date)
 
+    # Excel: نوع واحد اپیدمیولوژیک
+    epidemiology_unit_type = Column(String(100))
 
-    disposal_status = Column(
-        String(100)
-    )
+    # Excel: کد واحد اپیدمیولوژیک
+    epidemiology_unit_code = Column(String(100))
 
-    disposal_date = Column(
-        Date
-    )
+    # Excel: نام واحد اپیدمیولوژیک
+    epidemiology_unit_name = Column(String(255))
 
-    disposal_reason = Column(
-        String(500)
-    )
+    # Excel: نوع توزیع
+    distribution_type = Column(String(100))
 
-
-    epidemiology_unit = relationship(
-        "GISEpidemiologyUnit"
-    )
+    epidemiology_unit = relationship("GISEpidemiologyUnit")

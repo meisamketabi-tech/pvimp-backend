@@ -75,9 +75,23 @@ class GISDiseaseOccurrence(Base):
     animal_type = Column(String(100))
 
     # تاریخ‌ها
-    start_date = Column(Date)
 
-    report_date = Column(Date)
+    start_date = Column(
+        Date,
+        nullable=True,
+    )
+
+    report_date = Column(
+        Date,
+        nullable=True,
+    )
+
+    registration_date = Column(
+        Date,
+        nullable=True,
+    )
+
+    # زمان ثبت سیستمی رکورد در دیتابیس
 
     registered_at = Column(
         DateTime,

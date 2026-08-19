@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -25,12 +25,11 @@ return(
 
 
 <button onClick={()=>nav("/supervision/create")}>
-??? ??????
-</button>
+??? </button>
 
 
 <button onClick={()=>nav("/supervision/list")}>
-???? ?????? ??
+???? ??
 </button>
 
 
@@ -45,13 +44,11 @@ GIS
 
 
 <button onClick={()=>nav("/supervision/violations")}>
-??????
 </button>
 
 
 <button onClick={()=>nav("/supervision/samples")}>
-????? ??????
-</button>
+????? </button>
 
 
 <button onClick={()=>nav("/supervision/legal")}>
@@ -66,3 +63,6 @@ GIS
 )
 
 }
+
+
+

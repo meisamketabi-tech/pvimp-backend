@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -8,7 +7,6 @@ from app.schemas.gis.laboratory_result import (
     LaboratoryResultCreate,
     LaboratoryResultResponse,
 )
-
 
 router = APIRouter(
     prefix="/gis/laboratory-results",
@@ -29,9 +27,7 @@ def create_result(
     db: Session = Depends(get_db),
 ):
 
-    item = GISLaboratoryResult(
-        **data.model_dump()
-    )
+    item = GISLaboratoryResult(**data.model_dump())
 
     db.add(item)
     db.commit()

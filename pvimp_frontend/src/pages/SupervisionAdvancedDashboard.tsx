@@ -1,34 +1,51 @@
+﻿import React from "react";
 
-import React from "react";
 
-export default function SupervisionAdvancedDashboard(){
+export default function SupervisionAdvancedDashboard() {
 
-return(
-<div className="dashboard-container" dir="rtl">
 
-<div className="expert-header">
-<h1>
-??????? ??????? ?????
-</h1>
-</div>
+    return (
 
-<div className="dashboard-cards">
+        <div
+            className="dashboard-container"
+            dir="rtl"
+        >
 
-<div className="dashboard-card">
-KPI ??
-</div>
 
-<div className="dashboard-card">
-????? ????
-</div>
+            <div className="expert-header">
 
-<div className="dashboard-card">
-????? ??????
-</div>
+                <h1>
+                    داشبورد پیشرفته نظارت
+                </h1>
 
-</div>
+            </div>
 
-</div>
-)
+
+
+            <div className="dashboard-cards">
+
+
+                <div className="dashboard-card">
+                    KPI ها
+                </div>
+
+
+                <div className="dashboard-card">
+                    جستجوی پیشرفته
+                </div>
+
+
+                <div className="dashboard-card">
+                    تحلیل هوشمند
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    )
+
 
 }

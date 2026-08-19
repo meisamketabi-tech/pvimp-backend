@@ -1,22 +1,37 @@
+﻿import React from "react";
 
-import React from "react";
 
-export default function SupervisionAlertManagement(){
+export default function SupervisionAlertManagement() {
 
-return(
-<div className="dashboard-container" dir="rtl">
 
-<div className="expert-header">
-<h1>
-?????? ???????
-</h1>
-</div>
+    return (
 
-<div className="dashboard-card">
-???????? ?????? ? ??????
-</div>
+        <div
+            className="dashboard-container"
+            dir="rtl"
+        >
 
-</div>
-)
+
+            <div className="expert-header">
+
+                <h1>
+                    مدیریت هشدارها
+                </h1>
+
+            </div>
+
+
+
+            <div className="dashboard-card">
+
+                مدیریت و پیگیری هشدارها
+
+            </div>
+
+
+        </div>
+
+    )
+
 
 }

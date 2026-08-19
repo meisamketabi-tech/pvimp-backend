@@ -1,5 +1,7 @@
-import React from "react";
+﻿import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+import Login from "../pages/Login";
 
 import MainLayout from "../layouts/MainLayout";
 
@@ -12,6 +14,7 @@ import GISDepartmentList from "../pages/GISDepartmentList";
 import GISDepartmentDetail from "../pages/GISDepartmentDetail";
 import GISDepartmentUpload from "../pages/GISDepartmentUpload";
 import GISCountyDashboard from "../pages/GISCountyDashboard";
+import VaccinationVaccineReport from "../pages/VaccinationVaccineReport";
 import GISCountyDetailDashboard from "../pages/GISCountyDetailDashboard";
 
 
@@ -39,7 +42,6 @@ import SupervisionCountyView from "../pages/SupervisionCountyView";
 import SupervisionMasterReports from "../pages/SupervisionMasterReports";
 import SupervisionPortal from "../pages/SupervisionPortal";
 import SupervisionTrendAnalysis from "../pages/SupervisionTrendAnalysis";
-import SupervisionNationalKPIs from "../pages/SupervisionNationalKPIs";
 import SupervisionAnalyticsCenter from "../pages/SupervisionAnalyticsCenter";
 import SupervisionControlRoom from "../pages/SupervisionControlRoom";
 import SupervisionAIAnalysis from "../pages/SupervisionAIAnalysis";
@@ -73,6 +75,10 @@ export default function AppRouter() {
 
         <Routes>
 
+            <Route
+                path="/login"
+                element={<Login />}
+            />
 
             <Route path="/" element={<MainLayout />}>
 
@@ -104,10 +110,30 @@ export default function AppRouter() {
                 <Route path="gis" element={<GISDashboard />} />
 
                 <Route path="gis/departments" element={<GISDepartmentList />} />
+                <Route
+                />
+
+                <Route
+                />
+
+                <Route
+                    element={<VaccinationVaccineReport />}
+                />
+
+                <Route
+                    element={<VaccinationVaccineReport />}
+                />
+
+                <Route
+                />
+
+                <Route
+                />
 
                 <Route path="gis/department/:code" element={<GISDepartmentDetail />} />
 
                 <Route path="gis/upload/:department" element={<GISDepartmentUpload />} />
+
 
 
 
@@ -153,7 +179,6 @@ export default function AppRouter() {
 
                 <Route path="supervision/trend-analysis" element={<SupervisionTrendAnalysis />} />
 
-                <Route path="supervision/national-kpis" element={<SupervisionNationalKPIs />} />
 
                 <Route path="supervision/analytics-center" element={<SupervisionAnalyticsCenter />} />
 
@@ -229,8 +254,30 @@ export default function AppRouter() {
 
 
 
+            {/* DIRECT TEST ROUTE */}
+            <Route
+            />
+            <Route
+            />
+            <Route
+            />
+            <Route
+            />
         </Routes>
 
     )
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,93 +1,93 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 
 
 interface OrganizationNode {
 
-    id:number;
-    name:string;
-    code:string;
-    unit_type:string;
-    positions:any[];
-    children:OrganizationNode[];
+    id: number;
+    name: string;
+    code: string;
+    unit_type: string;
+    positions: any[];
+    children: OrganizationNode[];
 
 }
 
 
-const typeTitle:any = {
+const typeTitle: any = {
 
-    GENERAL_DIRECTORATE:"اداره کل",
-    MANAGEMENT:"حوزه مدیریت",
-    DEPUTY:"معاونت",
-    DEPARTMENT:"اداره",
-    COUNTY_OFFICE:"اداره شهرستان",
-    COUNTIES:"ادارات شهرستان",
-    UNIT:"واحد"
+    GENERAL_DIRECTORATE: "اداره کل",
+    MANAGEMENT: "حوزه مدیریت",
+    DEPUTY: "معاونت",
+    DEPARTMENT: "اداره",
+    COUNTY_OFFICE: "اداره شهرستان",
+    COUNTIES: "ادارات شهرستان",
+    UNIT: "واحد"
 
 };
 
 
 
-export default function SupervisionOrganizationChart(){
+export default function SupervisionOrganizationChart() {
 
 
-    const [tree,setTree] = useState<OrganizationNode[]>([]);
-    const [selected,setSelected] = useState<any>(null);
-    const [expanded,setExpanded] = useState<number[]>([]);
-    const [loading,setLoading] = useState(false);
+    const [tree, setTree] = useState<OrganizationNode[]>([]);
+    const [selected, setSelected] = useState<any>(null);
+    const [expanded, setExpanded] = useState<number[]>([]);
+    const [loading, setLoading] = useState(false);
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
 
-        fetch("http://127.0.0.1:8000/organization/tree")
+        fetch("http://127.0.0.1:8000/api/v1/organization/tree")
 
-        .then(res=>res.json())
+            .then(res => res.json())
 
-        .then(data=>{
+            .then(data => {
 
-            setTree(data);
+                setTree(data);
 
-            if(data.length){
+                if (data.length) {
 
-                setExpanded(
-                    data.map((x:any)=>x.id)
+                    setExpanded(
+                        data.map((x: any) => x.id)
+                    );
+
+                }
+
+            })
+
+            .catch(err => {
+
+                console.error(
+                    "Organization tree error:",
+                    err
                 );
 
-            }
-
-        })
-
-        .catch(err=>{
-
-            console.error(
-                "Organization tree error:",
-                err
-            );
-
-        });
+            });
 
 
-    },[]);
+    }, []);
 
 
 
 
 
-    function toggle(id:number){
+    function toggle(id: number) {
 
-        setExpanded(prev=>
+        setExpanded(prev =>
 
             prev.includes(id)
 
-            ?
+                ?
 
-            prev.filter(x=>x!==id)
+                prev.filter(x => x !== id)
 
-            :
+                :
 
-            [...prev,id]
+                [...prev, id]
 
         );
 
@@ -97,29 +97,29 @@ export default function SupervisionOrganizationChart(){
 
 
 
-    function selectUnit(id:number){
+    function selectUnit(id: number) {
 
 
         setLoading(true);
 
 
         fetch(
-            `http://127.0.0.1:8000/organization/${id}`
+            `http://127.0.0.1:8000/api/v1/organization/${id}`
         )
 
-        .then(res=>res.json())
+            .then(res => res.json())
 
-        .then(data=>{
+            .then(data => {
 
-            setSelected(data);
+                setSelected(data);
 
-        })
+            })
 
-        .finally(()=>{
+            .finally(() => {
 
-            setLoading(false);
+                setLoading(false);
 
-        });
+            });
 
 
     }
@@ -129,9 +129,9 @@ export default function SupervisionOrganizationChart(){
 
 
     function renderNode(
-        node:OrganizationNode,
-        level:number=0
-    ){
+        node: OrganizationNode,
+        level: number = 0
+    ) {
 
 
         const open =
@@ -140,7 +140,7 @@ export default function SupervisionOrganizationChart(){
 
         const hasChildren =
             node.children &&
-            node.children.length>0;
+            node.children.length > 0;
 
 
 
@@ -149,7 +149,7 @@ export default function SupervisionOrganizationChart(){
             <div
                 key={node.id}
                 style={{
-                    marginRight:level*25
+                    marginRight: level * 25
                 }}
             >
 
@@ -159,10 +159,10 @@ export default function SupervisionOrganizationChart(){
                     className="dashboard-card"
 
                     style={{
-                        display:"flex",
-                        alignItems:"center",
-                        gap:"10px",
-                        cursor:"pointer"
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        cursor: "pointer"
                     }}
 
                 >
@@ -174,7 +174,7 @@ export default function SupervisionOrganizationChart(){
 
                         <button
 
-                            onClick={(e)=>{
+                            onClick={(e) => {
 
                                 e.stopPropagation();
 
@@ -195,7 +195,7 @@ export default function SupervisionOrganizationChart(){
 
 
                     <div
-                        onClick={()=>selectUnit(node.id)}
+                        onClick={() => selectUnit(node.id)}
                     >
 
                         <b>
@@ -203,7 +203,7 @@ export default function SupervisionOrganizationChart(){
                         </b>
 
 
-                        <br/>
+                        <br />
 
 
                         <span>
@@ -221,8 +221,8 @@ export default function SupervisionOrganizationChart(){
                         <div
 
                             style={{
-                                fontSize:"12px",
-                                marginTop:"5px"
+                                fontSize: "12px",
+                                marginTop: "5px"
                             }}
 
                         >
@@ -263,12 +263,12 @@ export default function SupervisionOrganizationChart(){
 
                             node.children.map(
 
-                                child=>
+                                child =>
 
-                                renderNode(
-                                    child,
-                                    level+1
-                                )
+                                    renderNode(
+                                        child,
+                                        level + 1
+                                    )
 
                             )
 
@@ -320,11 +320,11 @@ export default function SupervisionOrganizationChart(){
 
                 style={{
 
-                    display:"grid",
+                    display: "grid",
 
-                    gridTemplateColumns:"2fr 1fr",
+                    gridTemplateColumns: "2fr 1fr",
 
-                    gap:"20px"
+                    gap: "20px"
 
                 }}
 
@@ -348,9 +348,9 @@ export default function SupervisionOrganizationChart(){
 
                         tree.map(
 
-                            node=>
+                            node =>
 
-                            renderNode(node)
+                                renderNode(node)
 
                         )
 
@@ -425,61 +425,61 @@ export default function SupervisionOrganizationChart(){
 
                                 selected.positions?.length
 
-                                ?
+                                    ?
 
-                                selected.positions.map(
+                                    selected.positions.map(
 
-                                    (p:any)=>(
+                                        (p: any) => (
 
-                                        <div
+                                            <div
 
-                                            key={p.id}
+                                                key={p.id}
 
-                                            style={{
+                                                style={{
 
-                                                padding:"8px",
+                                                    padding: "8px",
 
-                                                borderBottom:
-                                                "1px solid #ddd"
+                                                    borderBottom:
+                                                        "1px solid #ddd"
 
-                                            }}
+                                                }}
 
-                                        >
+                                            >
 
-                                            <b>
+                                                <b>
 
-                                                {p.position_title}
+                                                    {p.position_title}
 
-                                            </b>
-
-
-                                            <br/>
-
-                                            کد:
-
-                                            {p.position_code}
+                                                </b>
 
 
-                                            <br/>
+                                                <br />
 
-                                            افراد منصوب:
+                                                کد:
 
-                                            {p.assigned_users}
+                                                {p.position_code}
 
 
-                                        </div>
+                                                <br />
+
+                                                افراد منصوب:
+
+                                                {p.assigned_users}
+
+
+                                            </div>
+
+                                        )
 
                                     )
 
-                                )
+                                    :
 
-                                :
+                                    <p>
 
-                                <p>
+                                        سمتی تعریف نشده است
 
-                                    سمتی تعریف نشده است
-
-                                </p>
+                                    </p>
 
                             }
 
@@ -501,51 +501,51 @@ export default function SupervisionOrganizationChart(){
 
                                 selected.users?.length
 
-                                ?
+                                    ?
 
-                                selected.users.map(
+                                    selected.users.map(
 
-                                    (u:any)=>(
+                                        (u: any) => (
 
-                                        <div
+                                            <div
 
-                                            key={u.assignment_id}
+                                                key={u.assignment_id}
 
-                                            style={{
+                                                style={{
 
-                                                padding:"8px"
+                                                    padding: "8px"
 
-                                            }}
+                                                }}
 
-                                        >
+                                            >
 
-                                            <b>
+                                                <b>
 
-                                                {u.full_name}
+                                                    {u.full_name}
 
-                                            </b>
-
-
-                                            <br/>
-
-                                            سمت:
-
-                                            {u.role}
+                                                </b>
 
 
-                                        </div>
+                                                <br />
+
+                                                سمت:
+
+                                                {u.role}
+
+
+                                            </div>
+
+                                        )
 
                                     )
 
-                                )
+                                    :
 
-                                :
+                                    <p>
 
-                                <p>
+                                        مسئولی ثبت نشده است
 
-                                    مسئولی ثبت نشده است
-
-                                </p>
+                                    </p>
 
                             }
 
@@ -567,71 +567,71 @@ export default function SupervisionOrganizationChart(){
 
                                 selected.responsibilities?.length
 
-                                ?
+                                    ?
 
-                                selected.responsibilities.map(
+                                    selected.responsibilities.map(
 
-                                    (r:any)=>(
+                                        (r: any) => (
 
-                                        <div
+                                            <div
 
-                                            key={r.id}
+                                                key={r.id}
 
-                                            style={{
+                                                style={{
 
-                                                borderBottom:
-                                                "1px solid #ddd",
+                                                    borderBottom:
+                                                        "1px solid #ddd",
 
-                                                padding:"10px"
+                                                    padding: "10px"
 
-                                            }}
+                                                }}
 
-                                        >
+                                            >
 
-                                            <b>
+                                                <b>
 
-                                                {r.title}
+                                                    {r.title}
 
-                                            </b>
-
-
-                                            <br/>
+                                                </b>
 
 
-                                            شرح:
-
-                                            {r.description}
+                                                <br />
 
 
-                                            <br/>
+                                                شرح:
+
+                                                {r.description}
 
 
-                                            نوع بازرسی:
-
-                                            {r.inspection_type}
+                                                <br />
 
 
-                                            <br/>
+                                                نوع بازرسی:
+
+                                                {r.inspection_type}
 
 
-                                            اولویت:
-
-                                            {r.priority}
+                                                <br />
 
 
-                                        </div>
+                                                اولویت:
+
+                                                {r.priority}
+
+
+                                            </div>
+
+                                        )
 
                                     )
 
-                                )
+                                    :
 
-                                :
+                                    <p>
 
-                                <p>
+                                        مسئولیت نظارتی ثبت نشده است
 
-                                    مسئولیت نظارتی ثبت نشده است
-
-                                </p>
+                                    </p>
 
                             }
 
@@ -673,3 +673,5 @@ export default function SupervisionOrganizationChart(){
 
 
 }
+
+

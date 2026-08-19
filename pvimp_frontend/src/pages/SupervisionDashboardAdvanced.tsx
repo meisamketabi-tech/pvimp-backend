@@ -1,4 +1,4 @@
-
+﻿
 import React,{useEffect,useState} from "react";
 import {getSupervisionInspections} from "../services/supervisionService";
 import {SupervisionInspection} from "../types/SupervisionInspection";
@@ -25,7 +25,7 @@ return(
 <div className="expert-header">
 
 <h1>
-??????? ??????? ??????? ????? ?????
+? ? ? ????? ?????
 </h1>
 
 </div>
@@ -35,13 +35,13 @@ return(
 
 
 <div className="dashboard-card">
-<h3>?????? ?????</h3>
+<h3>?????</h3>
 <strong>{data.length}</strong>
 </div>
 
 
 <div className="dashboard-card">
-<h3>??????? ??????</h3>
+<h3>? </h3>
 <strong>
 {
 data.filter(x=>(x.nonComplianceCount || 0)>2).length
@@ -51,7 +51,7 @@ data.filter(x=>(x.nonComplianceCount || 0)>2).length
 
 
 <div className="dashboard-card">
-<h3>????? ??????</h3>
+<h3>????? </h3>
 <strong>
 {
 data.filter(x=>x.judicialReferral).length
@@ -68,3 +68,6 @@ data.filter(x=>x.judicialReferral).length
 )
 
 }
+
+
+

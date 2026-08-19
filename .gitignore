@@ -1,7 +1,7 @@
 ﻿# Python cache
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
 
 # Virtual environments
 venv/
@@ -10,6 +10,7 @@ env/
 
 # Environment variables
 .env
+.env.*
 
 # Packaging
 *.egg-info/
@@ -31,6 +32,46 @@ Thumbs.db
 # Logs
 *.log
 
-# Frontend
+# Frontend dependencies/build
 pvimp_frontend/node_modules/
 pvimp_frontend/dist/
+pvimp_frontend/.vite/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Local backups
+_backup*/
+**/_backup*/
+*.bak
+*.bak_*
+*.before-*.bak
+*.corrupted_*
+
+# Database dumps / local backups
+*.dump
+
+# Local test / import data
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+
+# Uploaded GIS data
+uploads/
+
+# Local audit / diagnostic artifacts
+backend_dashboard_api_audit.txt
+db_schema_columns.txt
+db_schema_foreign_keys.txt
+db_table_counts.txt
+vaccination_kpi_backup.txt
+restore_list.txt
+
+# Temporary frontend exports / reports
+pvimp_frontend/*_backup*/
+pvimp_frontend/src/*_backup*/
+pvimp_frontend/*.txt
+pvimp_frontend/*_report/
+pvimp_frontend/*_report.txt
+pvimp_frontend/*_extract.json

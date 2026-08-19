@@ -11,9 +11,6 @@ from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
-from app.db.models.gis_province import GISProvince
-from app.db.models.gis_county import GISCounty
-
 
 class GISEpidemiologyUnit(Base):
     __tablename__ = "gis_epidemiology_units"
@@ -160,16 +157,6 @@ class GISEpidemiologyUnit(Base):
     unit_type = relationship(
         "GISEpidemiologyUnitType",
         back_populates="units",
-    )
-
-    province = relationship(
-        "GISProvince",
-        foreign_keys=[province_id],
-    )
-
-    county = relationship(
-        "GISCounty",
-        foreign_keys=[county_id],
     )
 
     parent = relationship(

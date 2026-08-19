@@ -1,26 +1,29 @@
-import axios from "axios";
+﻿import axios from "axios";
+
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 const api = axios.create({
-    baseURL: "http://localhost:8000",
-    headers:{
-        "Content-Type":"application/json"
-    }
+    baseURL: API_BASE_URL,
+    headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    },
 });
 
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("pvimp_token");
 
-api.interceptors.request.use((config)=>{
+        if (token) {
+            config.headers = config.headers ?? {};
+            config.headers.Authorization = `Bearer ${token}`;
+        }
 
-    const token = localStorage.getItem("token");
-
-    if(token){
-
-        config.headers.Authorization =
-            `Bearer ${token}`;
-
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
     }
-
-    return config;
-});
-
+);
 
 export default api;

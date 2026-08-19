@@ -1,47 +1,47 @@
 import api from "./api";
-import type {LoginRequest, LoginResponse, User} from "../types/auth";
+import type { LoginRequest, LoginResponse, User } from "../types/auth";
 
 
-export async function login(data: LoginRequest){
+export async function login(data: LoginRequest) {
 
- const formData = new URLSearchParams();
+    const formData = new URLSearchParams();
 
- formData.append(
-  "username",
-  data.username
- );
+    formData.append(
+        "username",
+        data.username
+    );
 
- formData.append(
-  "password",
-  data.password
- );
-
-
- const response =
- await api.post<LoginResponse>(
-  "/auth/login",
-  formData,
-  {
-   headers:{
-    "Content-Type":
-    "application/x-www-form-urlencoded"
-   }
-  }
- );
+    formData.append(
+        "password",
+        data.password
+    );
 
 
- return response.data;
+    const response =
+        await api.post<LoginResponse>(
+            "/api/v1/auth/login",
+            formData,
+            {
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded"
+                }
+            }
+        );
+
+
+    return response.data;
 
 }
 
 
-export async function getCurrentUser(){
+export async function getCurrentUser() {
 
- const response =
- await api.get<User>(
-  "/auth/me"
- );
+    const response =
+        await api.get<User>(
+            "/api/v1/auth/me"
+        );
 
- return response.data;
+    return response.data;
 
 }

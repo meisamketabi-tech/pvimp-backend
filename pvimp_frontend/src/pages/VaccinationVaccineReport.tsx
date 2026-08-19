@@ -1,6 +1,9 @@
-﻿import { getToken } from "../utils/token";
-import React, { useEffect, useMemo, useState } from "react";
-import "./VaccinationDashboard.css";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import {
   Bar,
   BarChart,
@@ -14,21 +17,37 @@ import {
   YAxis,
 } from "recharts";
 
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+
+import api from "../services/api";
 import { displayUnitName } from "../utils/display";
 
+import "./VaccinationDashboard.css";
+
+
+/* =========================================================
+   TYPES
+   ========================================================= */
 
 type CountyRow = {
   county_code: string | number;
   county_name: string;
+
   records: number;
   units: number;
+
   total_animals: number;
   eligible_animals: number;
   vaccinated_animals: number;
   remaining_animals: number;
+
   coverage_percent: number;
+
   adverse_events: number;
+
   status: string;
 };
 
@@ -36,54 +55,87 @@ type CountyRow = {
 type UnitRow = {
   unit_code: string;
   unit_name: string;
+
   province_name: string | null;
+
   county_code: string | number;
   county_name: string | null;
+
   unit_type: string | null;
+
   records: number;
+
   total_animals: number;
   eligible_animals: number;
   vaccinated_animals: number;
   remaining_animals: number;
+
   coverage_percent: number;
+
   adverse_events: number;
   adverse_event_rate_percent: number;
+
   status: string;
   priority: string;
 };
 
 
+type VaccineData = {
+  vaccine_type: string;
+  vaccine_brand: string | null;
+
+  records: number;
+
+  total_animals: number;
+  eligible_animals: number;
+  vaccinated_animals: number;
+  remaining_animals: number;
+
+  coverage_percent: number;
+
+  adverse_events: number;
+  adverse_event_rate_percent: number;
+};
+
 
 type Report = {
-  vaccine: {
-    vaccine_type: string;
-    vaccine_brand: string | null;
-    records: number;
-    total_animals: number;
-    eligible_animals: number;
-    vaccinated_animals: number;
-    coverage_percent: number;
-    adverse_events: number;
-    adverse_event_rate_percent: number;
-  };
+  vaccine: VaccineData;
 
   summary: {
     counties: number;
     units: number;
+
     completed_units: number;
     incomplete_units: number;
+
     critical_units: number;
     zero_vaccination_units: number;
+
     total_remaining_animals: number;
   };
 
   counties: CountyRow[];
+
   units: UnitRow[];
+
   top_priority_counties: CountyRow[];
+
   top_priority_units: UnitRow[];
 };
-const API_BASE = "http://127.0.0.1:8000/api/v1";
 
+
+type PaginationResponse = {
+  page: number;
+  page_size: number;
+  total: number;
+  pages: number;
+  items: UnitRow[];
+};
+
+
+/* =========================================================
+   COLORS
+   ========================================================= */
 
 const COLORS = {
   critical: "#dc2626",
@@ -93,6 +145,10 @@ const COLORS = {
   remaining: "#94a3b8",
 };
 
+
+/* =========================================================
+   FORMATTERS
+   ========================================================= */
 
 function fmt(value: number) {
   return new Intl.NumberFormat("fa-IR").format(
@@ -105,6 +161,10 @@ function pct(value: number) {
   return `${Number(value || 0).toFixed(1)}%`;
 }
 
+
+/* =========================================================
+   LABEL HELPERS
+   ========================================================= */
 
 function statusLabel(status: string) {
   switch (status) {
@@ -150,396 +210,275 @@ function priorityLabel(priority: string) {
 
 
 function statusColor(status: string) {
-  if (status === "NO_COVERAGE") {
-    return COLORS.critical;
-  }
+  switch (status) {
+    case "NO_COVERAGE":
+    case "CRITICAL":
+      return COLORS.critical;
 
-  if (status === "CRITICAL") {
-    return COLORS.critical;
-  }
+    case "WARNING":
+      return COLORS.warning;
 
-  if (status === "WARNING") {
-    return COLORS.warning;
-  }
+    case "EXCELLENT":
+      return COLORS.excellent;
 
-  if (status === "EXCELLENT") {
-    return COLORS.excellent;
+    default:
+      return COLORS.track;
   }
-
-  return COLORS.track;
 }
+
+
+/* =========================================================
+   ERROR HELPERS
+   ========================================================= */
+
+function isCanceledError(error: unknown) {
+  const err = error as {
+    code?: string;
+    name?: string;
+  } | null;
+
+  return (
+    err?.code === "ERR_CANCELED" ||
+    err?.name === "CanceledError" ||
+    err?.name === "AbortError"
+  );
+}
+
+
+/* =========================================================
+   NORMALIZERS
+   ========================================================= */
+
+function normalizeUnit(unit: Partial<UnitRow>): UnitRow {
+  return {
+    unit_code: String(
+      unit?.unit_code ?? ""
+    ),
+
+    unit_name: String(
+      unit?.unit_name ?? ""
+    ),
+
+    province_name:
+      unit?.province_name ?? null,
+
+    county_code:
+      unit?.county_code ?? "",
+
+    county_name:
+      unit?.county_name ?? null,
+
+    unit_type:
+      unit?.unit_type ?? null,
+
+    records:
+      Number(
+        unit?.records ?? 0
+      ),
+
+    total_animals:
+      Number(
+        unit?.total_animals ?? 0
+      ),
+
+    eligible_animals:
+      Number(
+        unit?.eligible_animals ?? 0
+      ),
+
+    vaccinated_animals:
+      Number(
+        unit?.vaccinated_animals ?? 0
+      ),
+
+    remaining_animals:
+      Number(
+        unit?.remaining_animals ?? 0
+      ),
+
+    coverage_percent:
+      Number(
+        unit?.coverage_percent ?? 0
+      ),
+
+    adverse_events:
+      Number(
+        unit?.adverse_events ?? 0
+      ),
+
+    adverse_event_rate_percent:
+      Number(
+        unit?.adverse_event_rate_percent ?? 0
+      ),
+
+    status:
+      String(
+        unit?.status ?? "CRITICAL"
+      ),
+
+    priority:
+      String(
+        unit?.priority ?? "HIGH"
+      ),
+  };
+}
+
+
+function normalizeCounty(
+  county: Partial<CountyRow>
+): CountyRow {
+  return {
+    county_code:
+      county?.county_code ?? "",
+
+    county_name:
+      String(
+        county?.county_name ?? ""
+      ),
+
+    records:
+      Number(
+        county?.records ?? 0
+      ),
+
+    units:
+      Number(
+        county?.units ?? 0
+      ),
+
+    total_animals:
+      Number(
+        county?.total_animals ?? 0
+      ),
+
+    eligible_animals:
+      Number(
+        county?.eligible_animals ?? 0
+      ),
+
+    vaccinated_animals:
+      Number(
+        county?.vaccinated_animals ?? 0
+      ),
+
+    remaining_animals:
+      Number(
+        county?.remaining_animals ?? 0
+      ),
+
+    coverage_percent:
+      Number(
+        county?.coverage_percent ?? 0
+      ),
+
+    adverse_events:
+      Number(
+        county?.adverse_events ?? 0
+      ),
+
+    status:
+      String(
+        county?.status ?? "CRITICAL"
+      ),
+  };
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
 export default function VaccinationVaccineReport() {
-  const { vaccineType } = useParams();
-  const navigate = useNavigate();
+  const params =
+    useParams<{
+      vaccineType?: string;
+    }>();
+
+  const navigate =
+    useNavigate();
 
 
-  const [report, setReport] = useState<Report | null>(null);
-
-  const [pageUnits, setPageUnits] = useState<UnitRow[]>([]);
-
-  const [unitPage, setUnitPage] = useState<number>(1);
-
-  const [unitPageSize] = useState<number>(50);
-
-  const [unitTotal, setUnitTotal] = useState<number>(0);
-
-  const [unitTotalPages, setUnitTotalPages] =
-    useState<number>(0);
-
-  const [unitsLoading, setUnitsLoading] =
-    useState<boolean>(false);
-
-  const [loading, setLoading] =
-    useState<boolean>(true);
-
-  const [error, setError] =
-    useState<string>("");
+  /*
+   * بسیار مهم:
+   *
+   * vaccineType ممکن است undefined باشد.
+   *
+   * از اینجا به بعد فقط selectedVaccineType
+   * استفاده می‌کنیم.
+   */
+  const selectedVaccineType =
+    params.vaccineType ?? "";
 
 
+  /* =======================================================
+     STATE
+     ======================================================= */
+
+  const [
+    report,
+    setReport,
+  ] = useState<Report | null>(null);
+
+
+  const [
+    pageUnits,
+    setPageUnits,
+  ] = useState<UnitRow[]>([]);
+
+
+  const [
+    unitPage,
+    setUnitPage,
+  ] = useState<number>(1);
+
+
+  const [
+    unitPageSize,
+  ] = useState<number>(50);
+
+
+  const [
+    unitTotal,
+    setUnitTotal,
+  ] = useState<number>(0);
+
+
+  const [
+    unitTotalPages,
+    setUnitTotalPages,
+  ] = useState<number>(0);
+
+
+  const [
+    unitsLoading,
+    setUnitsLoading,
+  ] = useState<boolean>(false);
+
+
+  const [
+    loading,
+    setLoading,
+  ] = useState<boolean>(true);
+
+
+  const [
+    error,
+    setError,
+  ] = useState<string>("");
+
+
+  /* =======================================================
+     MAIN MANAGEMENT REPORT
+     ======================================================= */
 
   useEffect(() => {
-    if (!vaccineType) return;
-
-
-    const controller = new AbortController();
-
-
-    async function loadReport() {
-
-      setLoading(true);
-      setError("");
-      setReport(null);
-
-
-      const selectedVaccineType =
-        vaccineType ?? "";
-
-
-      if (!selectedVaccineType) {
-
-        setError(
-          "نوع واکسن مشخص نشده است."
-        );
-
-        setLoading(false);
-
-        return;
-      }
-
-
-      let lastError = "";
-
-
-      for (
-        let attempt = 1;
-        attempt <= 3;
-        attempt++
-      ) {
-
-        try {
-
-          const response = await fetch(
-            `${API_BASE}/gis/kpi/vaccination/management-report?vaccine_type=${encodeURIComponent(
-              selectedVaccineType
-            )}`,
-            {
-              headers: {
-                Accept: "application/json",
-                Authorization: "Bearer " + getToken(),
-              },
-
-              cache: "no-store",
-
-              signal:
-                controller.signal,
-            }
-          );
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              `HTTP ${response.status}`
-            );
-          }
-
-
-          const data =
-            await response.json();
-          const vaccineData =
-            Array.isArray(data?.vaccines) &&
-              data.vaccines.length > 0
-              ? data.vaccines[0]
-              : null;
-
-          if (!vaccineData) {
-            console.error(
-              "[MANAGEMENT REPORT INVALID - VACCINE MISSING]",
-              data
-            );
-
-            throw new Error(
-              `INVALID_REPORT: vaccines[] خالی است: ${JSON.stringify(data)}`
-            );
-          }
-
-          const unitsData: UnitRow[] =
-            Array.isArray(data?.units)
-              ? data.units.map((unit: any) => ({
-                unit_code: String(unit.unit_code ?? ""),
-                unit_name: String(unit.unit_name ?? ""),
-                province_name:
-                  unit.province_name ?? null,
-                county_code:
-                  unit.county_code ?? "",
-                county_name:
-                  unit.county_name ?? null,
-                unit_type:
-                  unit.unit_type ?? null,
-                records:
-                  Number(unit.records ?? 0),
-                total_animals:
-                  Number(unit.total_animals ?? 0),
-                eligible_animals:
-                  Number(unit.eligible_animals ?? 0),
-                vaccinated_animals:
-                  Number(unit.vaccinated_animals ?? 0),
-                remaining_animals:
-                  Number(unit.remaining_animals ?? 0),
-                coverage_percent:
-                  Number(unit.coverage_percent ?? 0),
-                adverse_events:
-                  Number(unit.adverse_events ?? 0),
-                adverse_event_rate_percent:
-                  Number(
-                    unit.adverse_event_rate_percent ?? 0
-                  ),
-                status:
-                  String(unit.status ?? "CRITICAL"),
-                priority:
-                  String(unit.priority ?? "HIGH"),
-              }))
-              : [];
-
-          const countiesData: CountyRow[] =
-            Array.isArray(data?.counties)
-              ? data.counties.map((county: any) => ({
-                county_code:
-                  county.county_code ?? "",
-                county_name:
-                  String(county.county_name ?? ""),
-                records:
-                  Number(county.records ?? 0),
-                units:
-                  Number(county.units ?? 0),
-                total_animals:
-                  Number(county.total_animals ?? 0),
-                eligible_animals:
-                  Number(county.eligible_animals ?? 0),
-                vaccinated_animals:
-                  Number(county.vaccinated_animals ?? 0),
-                remaining_animals:
-                  Number(county.remaining_animals ?? 0),
-                coverage_percent:
-                  Number(county.coverage_percent ?? 0),
-                adverse_events:
-                  Number(county.adverse_events ?? 0),
-                status:
-                  String(county.status ?? "CRITICAL"),
-              }))
-              : [];
-
-          const totalUnits =
-            Number(
-              data?.dashboard?.units ??
-              unitsData.length
-            );
-
-          const totalCounties =
-            Number(
-              data?.dashboard?.counties ??
-              countiesData.length
-            );
-
-          const criticalUnits =
-            unitsData.filter(
-              (x) =>
-                x.status === "CRITICAL" ||
-                x.status === "NO_COVERAGE"
-            ).length;
-
-          const zeroVaccinationUnits =
-            unitsData.filter(
-              (x) =>
-                Number(x.vaccinated_animals ?? 0) === 0
-            ).length;
-
-          const completedUnits =
-            unitsData.filter(
-              (x) =>
-                Number(x.coverage_percent ?? 0) >= 90
-            ).length;
-
-          const incompleteUnits =
-            Math.max(
-              totalUnits - completedUnits,
-              0
-            );
-
-          const totalRemainingAnimals =
-            Number(
-              data?.dashboard?.remaining_animals ??
-              vaccineData.remaining_animals ??
-              Math.max(
-                Number(vaccineData.total_animals ?? 0) -
-                Number(vaccineData.vaccinated_animals ?? 0),
-                0
-              )
-            );
-
-          const normalizedReport: Report = {
-            vaccine: {
-              vaccine_type:
-                String(
-                  vaccineData.vaccine_type ??
-                  selectedVaccineType
-                ),
-
-              vaccine_brand:
-                vaccineData.vaccine_brand ?? null,
-
-              records:
-                Number(vaccineData.records ?? 0),
-
-              total_animals:
-                Number(vaccineData.total_animals ?? 0),
-
-              eligible_animals:
-                Number(vaccineData.eligible_animals ?? 0),
-
-              vaccinated_animals:
-                Number(vaccineData.vaccinated_animals ?? 0),
-
-              coverage_percent:
-                Number(vaccineData.coverage_percent ?? 0),
-
-              adverse_events:
-                Number(vaccineData.adverse_events ?? 0),
-
-              adverse_event_rate_percent:
-                Number(
-                  vaccineData.adverse_event_rate_percent ?? 0
-                ),
-            },
-
-            summary: {
-              counties: totalCounties,
-              units: totalUnits,
-
-              completed_units:
-                completedUnits,
-
-              incomplete_units:
-                incompleteUnits,
-
-              critical_units:
-                criticalUnits,
-
-              zero_vaccination_units:
-                zeroVaccinationUnits,
-
-              total_remaining_animals:
-                totalRemainingAnimals,
-            },
-
-            counties:
-              countiesData,
-
-            units:
-              unitsData,
-
-            top_priority_counties:
-              [...countiesData]
-                .sort(
-                  (a, b) =>
-                    Number(b.remaining_animals ?? 0) -
-                    Number(a.remaining_animals ?? 0)
-                )
-                .slice(0, 5),
-
-            top_priority_units:
-              [...unitsData]
-                .sort(
-                  (a, b) =>
-                    Number(b.remaining_animals ?? 0) -
-                    Number(a.remaining_animals ?? 0)
-                )
-                .slice(0, 10),
-          };
-
-          console.log(
-            "[NORMALIZED VACCINE REPORT]",
-            normalizedReport
-          );
-
-          setReport(normalizedReport);
-          setLoading(false);
-          setError("");
-
-          return;
-
-        } catch (err: any) {
-
-
-          if (
-            err?.name === "AbortError"
-          ) {
-
-            return;
-          }
-
-
-          lastError =
-            err?.message ||
-            "خطا در دریافت گزارش واکسن";
-
-
-          if (attempt < 3) {
-
-            await new Promise(
-              (resolve) =>
-                setTimeout(
-                  resolve,
-                  500
-                )
-            );
-          }
-        }
-      }
-
-
+    if (!selectedVaccineType) {
       setLoading(false);
+      setReport(null);
+      setError(
+        "نوع واکسن مشخص نشده است."
+      );
 
-      setError(lastError);
-    }
-
-
-    loadReport();
-
-
-    return () =>
-      controller.abort();
-
-
-  }, [vaccineType]);
-
-
-
-
-
-  useEffect(() => {
-
-    if (!vaccineType) {
       return;
     }
 
@@ -548,268 +487,773 @@ export default function VaccinationVaccineReport() {
       new AbortController();
 
 
+    let mounted = true;
 
-    async function loadPaginatedUnits() {
 
-
+    async function loadReport() {
       try {
+        setLoading(true);
+        setError("");
 
-        setUnitsLoading(true);
+
+        const response =
+          await api.get(
+            "/api/v1/gis/kpi/vaccination/management-report",
+            {
+              params: {
+                vaccine_type:
+                  selectedVaccineType,
+              },
+
+              headers: {
+                Accept:
+                  "application/json",
+              },
+
+              signal:
+                controller.signal,
+            }
+          );
 
 
+        if (!mounted) {
+          return;
+        }
 
-        const url =
-          `${API_BASE}/gis/kpi/vaccination/vaccine/${encodeURIComponent(
-            vaccineType ?? ""
-          )}/units-paginated?page=${unitPage}&page_size=${unitPageSize}`;
 
+        const data =
+          response.data;
 
 
         console.log(
-          "[VACCINE PAGINATION]",
-          url
+          "[VACCINE MANAGEMENT REPORT]",
+          data
         );
 
 
+        /*
+         * پیدا کردن دقیق واکسن انتخاب‌شده
+         */
+        const vaccineData =
+          Array.isArray(
+            data?.vaccines
+          )
+            ? data.vaccines.find(
+              (item: VaccineData) =>
+                String(
+                  item?.vaccine_type ?? ""
+                ) ===
+                selectedVaccineType
+            )
+            : null;
 
-        const token = getToken();
 
-        const response = await fetch(url, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if (!vaccineData) {
+          console.error(
+            "[VACCINE REPORT] vaccine not found",
+            {
+              selectedVaccineType,
+              vaccines:
+                data?.vaccines,
+            }
+          );
 
-        if (!response.ok) {
+
           throw new Error(
-            `HTTP ${response.status}`
+            "گزارش این واکسن در سامانه موجود نیست."
           );
         }
 
-        const data = await response.json();
-        console.log(
-          "[MANAGEMENT REPORT STATUS]",
-          response.status
-        );
+
+        /*
+         * شهرستان‌ها
+         */
+        const countiesData =
+          Array.isArray(
+            data?.counties
+          )
+            ? data.counties.map(
+              normalizeCounty
+            )
+            : [];
+
+
+        /*
+         * واحدها
+         */
+        const unitsData =
+          Array.isArray(
+            data?.units
+          )
+            ? data.units.map(
+              normalizeUnit
+            )
+            : [];
+
+
+        /*
+         * تعداد شهرستان
+         */
+        const totalCounties =
+          Number(
+            data?.dashboard?.counties ??
+            countiesData.length
+          );
+
+
+        /*
+         * تعداد واحد
+         */
+        const totalUnits =
+          Number(
+            data?.dashboard?.units ??
+            unitsData.length
+          );
+
+
+        /*
+         * واحدهای بحرانی
+         */
+        const criticalUnits =
+          unitsData.filter(
+            (unit: UnitRow) =>
+              unit.status ===
+              "CRITICAL" ||
+              unit.status ===
+              "NO_COVERAGE"
+          ).length;
+
+
+        /*
+         * واحدهای بدون واکسیناسیون
+         */
+        const zeroVaccinationUnits =
+          unitsData.filter(
+            (unit: UnitRow) =>
+              Number(
+                unit.vaccinated_animals
+              ) === 0
+          ).length;
+
+
+        /*
+         * واحدهای تکمیل‌شده
+         */
+        const completedUnits =
+          unitsData.filter(
+            (unit: UnitRow) =>
+              Number(
+                unit.coverage_percent
+              ) >= 90
+          ).length;
+
+
+        /*
+         * واحدهای ناقص
+         */
+        const incompleteUnits =
+          Math.max(
+            totalUnits -
+            completedUnits,
+            0
+          );
+
+
+        /*
+         * دام باقی‌مانده
+         *
+         * اولویت با dashboard backend
+         */
+        const totalRemainingAnimals =
+          Number(
+            data?.dashboard
+              ?.remaining_animals ??
+            vaccineData
+              ?.remaining_animals ??
+            Math.max(
+              Number(
+                vaccineData
+                  ?.total_animals ??
+                0
+              ) -
+              Number(
+                vaccineData
+                  ?.vaccinated_animals ??
+                0
+              ),
+              0
+            )
+          );
+
+
+        /*
+         * گزارش نهایی
+         */
+        const normalizedReport:
+          Report = {
+          vaccine: {
+            vaccine_type:
+              String(
+                vaccineData
+                  ?.vaccine_type ??
+                selectedVaccineType
+              ),
+
+            vaccine_brand:
+              vaccineData
+                ?.vaccine_brand ??
+              null,
+
+            records:
+              Number(
+                vaccineData
+                  ?.records ??
+                0
+              ),
+
+            total_animals:
+              Number(
+                vaccineData
+                  ?.total_animals ??
+                0
+              ),
+
+            eligible_animals:
+              Number(
+                vaccineData
+                  ?.eligible_animals ??
+                0
+              ),
+
+            vaccinated_animals:
+              Number(
+                vaccineData
+                  ?.vaccinated_animals ??
+                0
+              ),
+
+            remaining_animals:
+              Number(
+                vaccineData
+                  ?.remaining_animals ??
+                0
+              ),
+
+            coverage_percent:
+              Number(
+                vaccineData
+                  ?.coverage_percent ??
+                0
+              ),
+
+            adverse_events:
+              Number(
+                vaccineData
+                  ?.adverse_events ??
+                0
+              ),
+
+            adverse_event_rate_percent:
+              Number(
+                vaccineData
+                  ?.adverse_event_rate_percent ??
+                0
+              ),
+          },
+
+
+          summary: {
+            counties:
+              totalCounties,
+
+            units:
+              totalUnits,
+
+            completed_units:
+              completedUnits,
+
+            incomplete_units:
+              incompleteUnits,
+
+            critical_units:
+              criticalUnits,
+
+            zero_vaccination_units:
+              zeroVaccinationUnits,
+
+            total_remaining_animals:
+              totalRemainingAnimals,
+          },
+
+
+          counties:
+            countiesData,
+
+
+          units:
+            unitsData,
+
+
+          top_priority_counties:
+            [...countiesData]
+              .sort(
+                (a, b) =>
+                  Number(
+                    b.remaining_animals
+                  ) -
+                  Number(
+                    a.remaining_animals
+                  )
+              )
+              .slice(0, 5),
+
+
+          top_priority_units:
+            [...unitsData]
+              .sort(
+                (a, b) =>
+                  Number(
+                    b.remaining_animals
+                  ) -
+                  Number(
+                    a.remaining_animals
+                  )
+              )
+              .slice(0, 10),
+        };
+
 
         console.log(
-          "[MANAGEMENT REPORT RESPONSE]",
-          data
+          "[NORMALIZED VACCINE REPORT]",
+          normalizedReport
         );
+
+
+        setReport(
+          normalizedReport
+        );
+
+        setError("");
+
+
+      } catch (err: unknown) {
+        if (
+          isCanceledError(err)
+        ) {
+          return;
+        }
+
+
+        if (!mounted) {
+          return;
+        }
+
+
+        const errorObject =
+          err as {
+            response?: {
+              data?: {
+                detail?: string;
+              };
+            };
+            message?: string;
+          };
+
+
+        console.error(
+          "[VACCINE REPORT ERROR]",
+          err
+        );
+
+
+        setReport(null);
+
+
+        setError(
+          errorObject
+            ?.response
+            ?.data
+            ?.detail ||
+          errorObject
+            ?.message ||
+          "خطا در دریافت گزارش واکسن"
+        );
+
+
+      } finally {
+        if (
+          mounted &&
+          !controller.signal.aborted
+        ) {
+          setLoading(false);
+        }
+      }
+    }
+
+
+    loadReport();
+
+
+    return () => {
+      mounted = false;
+      controller.abort();
+    };
+
+  }, [
+    selectedVaccineType,
+  ]);
+
+
+  /* =======================================================
+     PAGINATED UNITS
+     ======================================================= */
+
+  useEffect(() => {
+    if (!selectedVaccineType) {
+      setPageUnits([]);
+      setUnitTotal(0);
+      setUnitTotalPages(0);
+
+      return;
+    }
+
+
+    const controller =
+      new AbortController();
+
+
+    let mounted = true;
+
+
+    async function loadPaginatedUnits() {
+      try {
+        setUnitsLoading(true);
+
+
+        /*
+         * نکته مهم:
+         *
+         * selectedVaccineType حتماً string است.
+         *
+         * بنابراین دیگر خطای:
+         *
+         * string | undefined
+         *
+         * نداریم.
+         */
+        const encodedVaccineType =
+          encodeURIComponent(
+            selectedVaccineType
+          );
+
+
+        const response =
+          await api.get(
+            `/api/v1/gis/kpi/vaccination/vaccine/${encodedVaccineType}/units-paginated`,
+            {
+              params: {
+                page:
+                  unitPage,
+
+                page_size:
+                  unitPageSize,
+              },
+
+              headers: {
+                Accept:
+                  "application/json",
+              },
+
+              signal:
+                controller.signal,
+            }
+          );
+
+
+        if (!mounted) {
+          return;
+        }
+
+
+        const rawData =
+          response.data;
 
 
         console.log(
           "[VACCINE PAGINATION RESPONSE]",
-          data
+          rawData
         );
 
+
+        const data:
+          PaginationResponse = {
+          page:
+            Number(
+              rawData?.page ?? 1
+            ),
+
+          page_size:
+            Number(
+              rawData?.page_size ??
+              unitPageSize
+            ),
+
+          total:
+            Number(
+              rawData?.total ?? 0
+            ),
+
+          pages:
+            Number(
+              rawData?.pages ?? 0
+            ),
+
+          items:
+            Array.isArray(
+              rawData?.items
+            )
+              ? rawData.items.map(
+                normalizeUnit
+              )
+              : [],
+        };
 
 
         setPageUnits(
-          Array.isArray(data?.items)
-            ? data.items
-            : []
+          data.items
         );
-
 
 
         setUnitTotal(
-          Number(
-            data?.total || 0
-          )
+          data.total
         );
-
 
 
         setUnitTotalPages(
-          Number(
-            data?.total_pages || 0
-          )
+          data.pages
         );
 
 
-
-      } catch (err: any) {
-
-
+      } catch (err: unknown) {
         if (
-          err?.name !== "AbortError"
+          isCanceledError(err)
         ) {
-
-          console.error(
-            "[VACCINE PAGINATION ERROR]",
-            err
-          );
-
-
-          setPageUnits([]);
-
-          setUnitTotal(0);
-
-          setUnitTotalPages(0);
+          return;
         }
 
 
+        if (!mounted) {
+          return;
+        }
+
+
+        console.error(
+          "[VACCINE PAGINATION ERROR]",
+          err
+        );
+
+
+        setPageUnits([]);
+
+        setUnitTotal(0);
+
+        setUnitTotalPages(0);
+
 
       } finally {
-
-        setUnitsLoading(false);
-
+        if (mounted) {
+          setUnitsLoading(false);
+        }
       }
-
     }
-
 
 
     loadPaginatedUnits();
 
 
-
-    return () =>
+    return () => {
+      mounted = false;
       controller.abort();
-
-
+    };
 
   }, [
-    vaccineType,
+    selectedVaccineType,
     unitPage,
     unitPageSize,
   ]);
-  const unitStatusData = useMemo(() => {
-    if (!report) return [];
-
-    return [
-      {
-        name: "بحرانی",
-        value: report.summary.critical_units,
-        fill: COLORS.critical,
-      },
-      {
-        name: "نیازمند توجه",
-        value:
-          report.summary.incomplete_units -
-          report.summary.critical_units,
-        fill: COLORS.warning,
-      },
-      {
-        name: "تکمیل شده",
-        value:
-          report.summary.completed_units,
-        fill: COLORS.excellent,
-      },
-    ].filter(
-      (item) => item.value > 0
-    );
-
-  }, [report]);
 
 
+  /* =======================================================
+     CHART DATA
+     ======================================================= */
 
-  const countyChart = useMemo(
-    () =>
-      (report?.counties || []).map(
-        (x) => ({
-          countyCode:
-            x.county_code,
+  const unitStatusData =
+    useMemo(() => {
+      if (!report) {
+        return [];
+      }
 
+
+      return [
+        {
+          name: "بحرانی",
+
+          value:
+            report.summary
+              .critical_units,
+
+          fill:
+            COLORS.critical,
+        },
+
+        {
           name:
-            x.county_name,
+            "نیازمند توجه",
 
-          coverage:
-            Number(
-              x.coverage_percent || 0
+          value:
+            Math.max(
+              report.summary
+                .incomplete_units -
+              report.summary
+                .critical_units,
+              0
             ),
-        })
-      ),
 
-    [report]
-  );
+          fill:
+            COLORS.warning,
+        },
+
+        {
+          name:
+            "تکمیل شده",
+
+          value:
+            report.summary
+              .completed_units,
+
+          fill:
+            COLORS.excellent,
+        },
+      ].filter(
+        (item) =>
+          item.value > 0
+      );
+
+    }, [
+      report,
+    ]);
 
 
-
-  const remainingByCounty = useMemo(
-    () =>
-      [
-        ...(report?.counties || [])
-      ]
-        .sort(
-          (a, b) =>
-            Number(
-              b.remaining_animals || 0
-            ) -
-            Number(
-              a.remaining_animals || 0
-            )
-        )
-
-        .map(
-          (x) => ({
+  const countyChart =
+    useMemo(
+      () =>
+        (
+          report?.counties ||
+          []
+        ).map(
+          (county) => ({
             countyCode:
-              x.county_code,
+              county.county_code,
 
             name:
-              x.county_name,
+              county.county_name,
 
-            remaining:
+            coverage:
               Number(
-                x.remaining_animals || 0
+                county.coverage_percent ||
+                0
               ),
           })
         ),
 
-    [report]
-  );
+      [
+        report,
+      ]
+    );
 
 
+  const remainingByCounty =
+    useMemo(
+      () =>
+        [
+          ...(report?.counties ||
+            []),
+        ]
+          .sort(
+            (a, b) =>
+              Number(
+                b.remaining_animals ||
+                0
+              ) -
+              Number(
+                a.remaining_animals ||
+                0
+              )
+          )
+          .map(
+            (county) => ({
+              countyCode:
+                county.county_code,
+
+              name:
+                county.county_name,
+
+              remaining:
+                Number(
+                  county.remaining_animals ||
+                  0
+                ),
+            })
+          ),
+
+      [
+        report,
+      ]
+    );
+
+
+  /* =======================================================
+     LOADING
+     ======================================================= */
 
   if (loading) {
-
     return (
       <div
         className="dashboard-page vaccination-command-center"
         dir="rtl"
       >
-
         <div className="panel">
-
           <h2>
             در حال دریافت گزارش واکسن...
           </h2>
-
         </div>
-
       </div>
     );
-
   }
 
 
+  /* =======================================================
+     ERROR
+     ======================================================= */
 
-  if (error || !report) {
-
+  if (
+    error ||
+    !report
+  ) {
     return (
-
       <div
         className="dashboard-page vaccination-command-center"
         dir="rtl"
       >
-
         <div className="panel">
-
           <h2>
             خطا
           </h2>
 
-
           <p>
-            {
-              error ||
-              "گزارش موجود نیست."
-            }
+            {error ||
+              "گزارش موجود نیست."}
           </p>
-
-
 
           <button
             type="button"
@@ -819,32 +1263,29 @@ export default function VaccinationVaccineReport() {
               )
             }
           >
-
             بازگشت
-
           </button>
-
-
         </div>
-
       </div>
-
     );
-
   }
 
 
+  /* =======================================================
+     MAIN PAGE
+     ======================================================= */
 
   return (
-
     <div
       className="dashboard-page vaccination-command-center"
       dir="rtl"
     >
 
-      <div
-        className="dashboard-header"
-      >
+      {/* =================================================
+          HEADER
+          ================================================= */}
+
+      <div className="dashboard-header">
 
         <button
           type="button"
@@ -854,39 +1295,39 @@ export default function VaccinationVaccineReport() {
             )
           }
         >
-
           بازگشت به KPI واکسیناسیون
-
         </button>
 
 
-
         <h1>
-
           گزارش مدیریتی واکسن{" "}
-          {report.vaccine.vaccine_type}
-
+          {
+            report.vaccine
+              .vaccine_type
+          }
         </h1>
 
 
-
         <p>
-
-          برند:
-          {" "}
+          برند:{" "}
           {
-            report.vaccine.vaccine_brand ||
+            report.vaccine
+              .vaccine_brand ||
             "-"
           }
-
         </p>
 
-
       </div>
+
+
+      {/* =================================================
+          KPI CARDS
+          ================================================= */}
 
       <div className="kpi-grid">
 
         <div className="kpi-card">
+
           <div className="kpi-title">
             درصد پوشش واکسیناسیون
           </div>
@@ -894,28 +1335,37 @@ export default function VaccinationVaccineReport() {
           <div
             className="kpi-value"
             style={{
-              color: statusColor(
-                report.vaccine.coverage_percent < 50
-                  ? "CRITICAL"
-                  : report.vaccine.coverage_percent < 75
-                    ? "WARNING"
-                    : report.vaccine.coverage_percent >= 90
-                      ? "EXCELLENT"
-                      : "ON_TRACK"
-              ),
+              color:
+                statusColor(
+                  report
+                    .vaccine
+                    .coverage_percent <
+                    50
+                    ? "CRITICAL"
+                    : report
+                      .vaccine
+                      .coverage_percent <
+                      75
+                      ? "WARNING"
+                      : report
+                        .vaccine
+                        .coverage_percent >=
+                        90
+                        ? "EXCELLENT"
+                        : "ON_TRACK"
+                ),
             }}
           >
-
             {
               pct(
-                report.vaccine.coverage_percent
+                report
+                  .vaccine
+                  .coverage_percent
               )
             }
-
           </div>
 
         </div>
-
 
 
         <div className="kpi-card">
@@ -925,17 +1375,16 @@ export default function VaccinationVaccineReport() {
           </div>
 
           <div className="kpi-value">
-
             {
               fmt(
-                report.vaccine.total_animals
+                report
+                  .vaccine
+                  .total_animals
               )
             }
-
           </div>
 
         </div>
-
 
 
         <div className="kpi-card">
@@ -944,20 +1393,17 @@ export default function VaccinationVaccineReport() {
             دام واکسینه شده
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.vaccine.vaccinated_animals
+                report
+                  .vaccine
+                  .vaccinated_animals
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -966,24 +1412,16 @@ export default function VaccinationVaccineReport() {
             باقی مانده
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                Math.max(
-                  report.vaccine.total_animals -
-                  report.vaccine.vaccinated_animals,
-                  0
-                )
+                report.summary
+                  .total_remaining_animals
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -992,20 +1430,16 @@ export default function VaccinationVaccineReport() {
             شهرستان‌ها
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.summary.counties
+                report.summary
+                  .counties
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -1014,20 +1448,16 @@ export default function VaccinationVaccineReport() {
             واحدهای دامپزشکی
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.summary.units
+                report.summary
+                  .units
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -1036,20 +1466,16 @@ export default function VaccinationVaccineReport() {
             واحد بحرانی
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.summary.critical_units
+                report.summary
+                  .critical_units
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -1058,20 +1484,16 @@ export default function VaccinationVaccineReport() {
             واحد بدون واکسیناسیون
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.summary.zero_vaccination_units
+                report.summary
+                  .zero_vaccination_units
               )
             }
-
           </div>
 
         </div>
-
-
 
 
         <div className="kpi-card">
@@ -1080,36 +1502,41 @@ export default function VaccinationVaccineReport() {
             عوارض ثبت شده
           </div>
 
-
           <div className="kpi-value">
-
             {
               fmt(
-                report.vaccine.adverse_events
+                report.vaccine
+                  .adverse_events
               )
             }
-
           </div>
 
         </div>
 
-
       </div>
+
+
+      {/* =================================================
+          CHARTS
+          ================================================= */}
+
       <div
         className="dashboard-grid"
         style={{
           marginTop: 24,
+
           gridTemplateColumns:
             "repeat(auto-fit, minmax(420px, 1fr))",
         }}
       >
+
+        {/* UNIT STATUS */}
 
         <div className="dashboard-panel">
 
           <h2>
             وضعیت واحدهای واکسیناسیون
           </h2>
-
 
           <div
             style={{
@@ -1123,13 +1550,24 @@ export default function VaccinationVaccineReport() {
               <PieChart>
 
                 <Pie
-                  data={unitStatusData}
+                  data={
+                    unitStatusData
+                  }
+
                   dataKey="value"
+
                   nameKey="name"
+
                   cx="50%"
+
                   cy="50%"
+
                   outerRadius={105}
-                  label={({ name, value }) =>
+
+                  label={({
+                    name,
+                    value,
+                  }) =>
                     `${name}: ${value}`
                   }
                 >
@@ -1138,15 +1576,19 @@ export default function VaccinationVaccineReport() {
                     unitStatusData.map(
                       (entry) => (
                         <Cell
-                          key={entry.name}
-                          fill={entry.fill}
+                          key={
+                            entry.name
+                          }
+
+                          fill={
+                            entry.fill
+                          }
                         />
                       )
                     )
                   }
 
                 </Pie>
-
 
                 <Tooltip />
 
@@ -1161,14 +1603,13 @@ export default function VaccinationVaccineReport() {
         </div>
 
 
-
+        {/* COUNTY COVERAGE */}
 
         <div className="dashboard-panel">
 
           <h2>
             درصد پوشش شهرستان‌ها
           </h2>
-
 
           <div
             style={{
@@ -1180,35 +1621,52 @@ export default function VaccinationVaccineReport() {
             <ResponsiveContainer>
 
               <BarChart
-                data={countyChart}
+                data={
+                  countyChart
+                }
               >
 
                 <XAxis
                   dataKey="name"
+
                   angle={-35}
+
                   textAnchor="end"
+
                   interval={0}
+
                   height={90}
                 />
 
 
                 <YAxis
-                  domain={[0, 100]}
-                  tickFormatter={(value) =>
-                    `${value}%`
+                  domain={[
+                    0,
+                    100,
+                  ]}
+
+                  tickFormatter={
+                    (value) =>
+                      `${value}%`
                   }
                 />
 
 
                 <Tooltip
-                  formatter={(value) =>
-                    pct(Number(value || 0))
+                  formatter={
+                    (value) =>
+                      pct(
+                        Number(
+                          value || 0
+                        )
+                      )
                   }
                 />
 
 
                 <Bar
                   dataKey="coverage"
+
                   name="پوشش"
                 >
 
@@ -1223,45 +1681,49 @@ export default function VaccinationVaccineReport() {
                           }
 
                           fill={
-                            entry.coverage < 50
+                            entry.coverage <
+                              50
                               ? COLORS.critical
-                              : entry.coverage < 75
+                              : entry.coverage <
+                                75
                                 ? COLORS.warning
                                 : COLORS.excellent
                           }
 
                           cursor="pointer"
 
-                          onClick={() => {
+                          onClick={() =>
                             navigate(
                               `/gis/kpi/vaccination/drilldown/county/${entry.countyCode}`
-                            );
-                          }}
-
+                            )
+                          }
                         />
                       )
                     )
                   }
 
-
                 </Bar>
-
 
               </BarChart>
 
             </ResponsiveContainer>
 
-
           </div>
-
 
         </div>
 
-
       </div>
+
+
+      {/* =================================================
+          COUNTIES
+          ================================================= */}
+
       <div
         className="dashboard-panel"
-        style={{ marginTop: 24 }}
+        style={{
+          marginTop: 24,
+        }}
       >
 
         <h2>
@@ -1271,14 +1733,18 @@ export default function VaccinationVaccineReport() {
 
         <div
           style={{
-            overflowX: "auto"
+            overflowX:
+              "auto",
           }}
         >
 
           <table
             style={{
-              width: "100%",
-              borderCollapse: "collapse"
+              width:
+                "100%",
+
+              borderCollapse:
+                "collapse",
             }}
           >
 
@@ -1323,87 +1789,86 @@ export default function VaccinationVaccineReport() {
             </thead>
 
 
-
             <tbody>
-
 
               {
                 report.counties.map(
                   (county) => (
-
                     <tr
-
                       key={
                         String(
                           county.county_code
                         )
                       }
 
-
-                      onClick={() => {
-
+                      onClick={() =>
                         navigate(
                           `/gis/kpi/vaccination/drilldown/county/${county.county_code}`
-                        );
-
-                      }}
-
+                        )
+                      }
 
                       style={{
-                        cursor: "pointer",
-                        borderTop:
-                          "1px solid #ddd"
-                      }}
+                        cursor:
+                          "pointer",
 
+                        borderTop:
+                          "1px solid #ddd",
+                      }}
                     >
 
-
                       <td>
-                        {county.county_name}
+                        {
+                          county.county_name
+                        }
                       </td>
 
-
                       <td>
-                        {fmt(
-                          county.total_animals
-                        )}
+                        {
+                          fmt(
+                            county.total_animals
+                          )
+                        }
                       </td>
 
-
                       <td>
-                        {fmt(
-                          county.vaccinated_animals
-                        )}
+                        {
+                          fmt(
+                            county.vaccinated_animals
+                          )
+                        }
                       </td>
 
-
                       <td>
-                        {fmt(
-                          county.remaining_animals
-                        )}
+                        {
+                          fmt(
+                            county.remaining_animals
+                          )
+                        }
                       </td>
 
-
                       <td>
-                        {pct(
-                          county.coverage_percent
-                        )}
+                        {
+                          pct(
+                            county.coverage_percent
+                          )
+                        }
                       </td>
 
-
                       <td>
-                        {fmt(
-                          county.units
-                        )}
+                        {
+                          fmt(
+                            county.units
+                          )
+                        }
                       </td>
 
-
                       <td>
-                        {fmt(
-                          county.adverse_events
-                        )}
+                        {
+                          fmt(
+                            county.adverse_events
+                          )
+                        }
                       </td>
-
 
                       <td>
                         {
@@ -1413,36 +1878,38 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                     </tr>
-
                   )
                 )
               }
 
-
             </tbody>
 
-
           </table>
-
 
         </div>
 
 
         <p
           style={{
-            marginTop: 12
+            marginTop: 12,
           }}
         >
           برای مشاهده جزئیات بیشتر روی هر شهرستان کلیک کنید.
         </p>
 
-
       </div>
+
+
+      {/* =================================================
+          REMAINING BY COUNTY
+          ================================================= */}
+
       <div
         className="dashboard-panel"
-        style={{ marginTop: 24 }}
+        style={{
+          marginTop: 24,
+        }}
       >
 
         <h2>
@@ -1452,21 +1919,28 @@ export default function VaccinationVaccineReport() {
 
         <div
           style={{
-            width: "100%",
-            height: 380
+            width:
+              "100%",
+
+            height:
+              380,
           }}
         >
 
           <ResponsiveContainer>
 
             <BarChart
-              data={remainingByCounty}
+              data={
+                remainingByCounty
+              }
+
               layout="vertical"
+
               margin={{
                 left: 20,
                 right: 40,
                 top: 20,
-                bottom: 20
+                bottom: 20,
               }}
             >
 
@@ -1477,82 +1951,77 @@ export default function VaccinationVaccineReport() {
 
               <YAxis
                 type="category"
+
                 dataKey="name"
+
                 width={130}
               />
 
 
               <Tooltip
-                formatter={(value) =>
-                  fmt(
-                    Number(value || 0)
-                  )
+                formatter={
+                  (value) =>
+                    fmt(
+                      Number(
+                        value || 0
+                      )
+                    )
                 }
               />
 
 
               <Bar
                 dataKey="remaining"
+
                 name="دام باقی‌مانده"
               >
 
                 {
                   remainingByCounty.map(
                     (entry) => (
-
                       <Cell
-
                         key={
                           String(
                             entry.countyCode
                           )
                         }
 
-
                         fill={
                           COLORS.remaining
                         }
 
-
                         cursor="pointer"
 
-
-                        onClick={() => {
-
+                        onClick={() =>
                           navigate(
                             `/gis/kpi/vaccination/drilldown/county/${entry.countyCode}`
-                          );
-
-                        }}
-
+                          )
+                        }
                       />
-
                     )
                   )
                 }
 
-
               </Bar>
-
 
             </BarChart>
 
-
           </ResponsiveContainer>
 
-
         </div>
-
 
       </div>
 
 
-
-
+      {/* =================================================
+          PRIORITY UNITS
+          ================================================= */}
 
       <div
         className="dashboard-panel"
-        style={{ marginTop: 24 }}
+        style={{
+          marginTop: 24,
+        }}
       >
 
         <h2>
@@ -1562,14 +2031,18 @@ export default function VaccinationVaccineReport() {
 
         <div
           style={{
-            overflowX: "auto"
+            overflowX:
+              "auto",
           }}
         >
 
           <table
             style={{
-              width: "100%",
-              borderCollapse: "collapse"
+              width:
+                "100%",
+
+              borderCollapse:
+                "collapse",
             }}
           >
 
@@ -1616,33 +2089,27 @@ export default function VaccinationVaccineReport() {
 
             <tbody>
 
-
               {
                 report.top_priority_units.map(
                   (unit) => (
-
                     <tr
-
                       key={
                         unit.unit_code
                       }
 
-
-                      onClick={() => {
-
+                      onClick={() =>
                         navigate(
                           `/gis/kpi/vaccination/unit/${unit.unit_code}`
-                        );
-
-                      }}
-
+                        )
+                      }
 
                       style={{
-                        cursor: "pointer",
-                        borderTop:
-                          "1px solid #ddd"
-                      }}
+                        cursor:
+                          "pointer",
 
+                        borderTop:
+                          "1px solid #ddd",
+                      }}
                     >
 
                       <td>
@@ -1653,13 +2120,12 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
-                          unit.county_name || "-"
+                          unit.county_name ||
+                          "-"
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1669,7 +2135,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           fmt(
@@ -1677,7 +2142,6 @@ export default function VaccinationVaccineReport() {
                           )
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1687,7 +2151,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           fmt(
@@ -1695,7 +2158,6 @@ export default function VaccinationVaccineReport() {
                           )
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1705,7 +2167,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           statusLabel(
@@ -1714,27 +2175,29 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                     </tr>
-
                   )
                 )
               }
 
-
             </tbody>
-
 
           </table>
 
-
         </div>
 
-
       </div>
+
+
+      {/* =================================================
+          PAGINATED UNITS
+          ================================================= */}
+
       <div
         className="dashboard-panel"
-        style={{ marginTop: 24 }}
+        style={{
+          marginTop: 24,
+        }}
       >
 
         <h2>
@@ -1744,21 +2207,35 @@ export default function VaccinationVaccineReport() {
 
         <div
           style={{
-            display: "flex",
-            gap: 12,
-            flexWrap: "wrap",
-            alignItems: "center",
-            marginBottom: 16
+            display:
+              "flex",
+
+            gap:
+              12,
+
+            flexWrap:
+              "wrap",
+
+            alignItems:
+              "center",
+
+            marginBottom:
+              16,
           }}
         >
 
           <strong>
-            تعداد کل واحدها: {fmt(unitTotal)}
+            تعداد کل واحدها:{" "}
+            {fmt(unitTotal)}
           </strong>
 
 
           <span>
-            صفحه {fmt(unitPage)} از {fmt(unitTotalPages)}
+            صفحه{" "}
+            {fmt(unitPage)}
+            {" "}
+            از{" "}
+            {fmt(unitTotalPages)}
           </span>
 
 
@@ -1770,21 +2247,23 @@ export default function VaccinationVaccineReport() {
             )
           }
 
-
         </div>
-
 
 
         <div
           style={{
-            overflowX: "auto"
+            overflowX:
+              "auto",
           }}
         >
 
           <table
             style={{
-              width: "100%",
-              borderCollapse: "collapse"
+              width:
+                "100%",
+
+              borderCollapse:
+                "collapse",
             }}
           >
 
@@ -1833,43 +2312,36 @@ export default function VaccinationVaccineReport() {
             </thead>
 
 
-
             <tbody>
-
 
               {
                 pageUnits.map(
                   (unit) => (
-
                     <tr
-
                       key={
                         unit.unit_code
                       }
 
-
-                      onClick={() => {
-
+                      onClick={() =>
                         navigate(
                           `/gis/kpi/vaccination/unit/${unit.unit_code}`
-                        );
-
-                      }}
-
+                        )
+                      }
 
                       style={{
-                        cursor: "pointer",
-                        borderTop:
-                          "1px solid #ddd"
-                      }}
+                        cursor:
+                          "pointer",
 
+                        borderTop:
+                          "1px solid #ddd",
+                      }}
                     >
 
-
                       <td>
-                        {unit.unit_code}
+                        {
+                          unit.unit_code
+                        }
                       </td>
-
 
                       <td>
                         {
@@ -1879,13 +2351,12 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
-                          unit.county_name || "-"
+                          unit.county_name ||
+                          "-"
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1895,7 +2366,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           fmt(
@@ -1903,7 +2373,6 @@ export default function VaccinationVaccineReport() {
                           )
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1913,7 +2382,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           pct(
@@ -1921,7 +2389,6 @@ export default function VaccinationVaccineReport() {
                           )
                         }
                       </td>
-
 
                       <td>
                         {
@@ -1931,7 +2398,6 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                       <td>
                         {
                           statusLabel(
@@ -1940,31 +2406,25 @@ export default function VaccinationVaccineReport() {
                         }
                       </td>
 
-
                     </tr>
-
                   )
                 )
               }
 
-
             </tbody>
 
-
           </table>
-
 
         </div>
 
 
-
         {
           !unitsLoading &&
-          pageUnits.length === 0 &&
-          (
+          pageUnits.length === 0 && (
             <p
               style={{
-                marginTop: 16
+                marginTop:
+                  16,
               }}
             >
               اطلاعاتی برای نمایش وجود ندارد.
@@ -1973,21 +2433,31 @@ export default function VaccinationVaccineReport() {
         }
 
 
+        {/* PAGINATION */}
 
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 12,
-            marginTop: 20,
-            flexWrap: "wrap"
+            display:
+              "flex",
+
+            justifyContent:
+              "center",
+
+            alignItems:
+              "center",
+
+            gap:
+              12,
+
+            marginTop:
+              20,
+
+            flexWrap:
+              "wrap",
           }}
         >
 
-
           <button
-
             type="button"
 
             disabled={
@@ -1995,59 +2465,52 @@ export default function VaccinationVaccineReport() {
               unitPage <= 1
             }
 
-
-            onClick={() => {
-
+            onClick={() =>
               setUnitPage(
-                p => Math.max(
-                  p - 1,
-                  1
-                )
-              );
-
-            }}
-
+                (page) =>
+                  Math.max(
+                    page - 1,
+                    1
+                  )
+              )
+            }
           >
             قبلی
           </button>
 
 
-
           <span>
-            {fmt(unitPage)} / {fmt(unitTotalPages)}
+            {fmt(unitPage)}
+            {" / "}
+            {fmt(unitTotalPages)}
           </span>
 
 
-
           <button
-
             type="button"
 
             disabled={
               unitsLoading ||
-              unitPage >= unitTotalPages
+              unitTotalPages <= 0 ||
+              unitPage >=
+              unitTotalPages
             }
 
-
-            onClick={() => {
-
+            onClick={() =>
               setUnitPage(
-                p => Math.min(
-                  p + 1,
-                  unitTotalPages
-                )
-              );
-
-            }}
-
+                (page) =>
+                  Math.min(
+                    page + 1,
+                    unitTotalPages
+                  )
+              )
+            }
           >
             بعدی
           </button>
 
 
-
           <button
-
             type="button"
 
             disabled={
@@ -2055,51 +2518,47 @@ export default function VaccinationVaccineReport() {
               unitPage <= 1
             }
 
-
-            onClick={() => {
-
-              setUnitPage(1);
-
-            }}
-
+            onClick={() =>
+              setUnitPage(1)
+            }
           >
             صفحه اول
           </button>
 
 
-
           <button
-
             type="button"
 
             disabled={
               unitsLoading ||
-              unitPage >= unitTotalPages
+              unitTotalPages <= 0 ||
+              unitPage >=
+              unitTotalPages
             }
 
-
-            onClick={() => {
-
+            onClick={() =>
               setUnitPage(
-                unitTotalPages || 1
-              );
-
-            }}
-
+                unitTotalPages ||
+                1
+              )
+            }
           >
             صفحه آخر
           </button>
 
-
-
         </div>
 
-
       </div>
+
+
+      {/* =================================================
+          AI BOX
+          ================================================= */}
+
       <div
         className="panel ai-box"
         style={{
-          marginTop: 24
+          marginTop: 24,
         }}
       >
 
@@ -2109,105 +2568,75 @@ export default function VaccinationVaccineReport() {
 
 
         <p>
-
           بر اساس اطلاعات ثبت شده در{" "}
-          {fmt(report.summary.counties)}
+          {fmt(
+            report.summary
+              .counties
+          )}
           {" "}
           شهرستان و{" "}
-          {fmt(report.summary.units)}
+          {fmt(
+            report.summary
+              .units
+          )}
           {" "}
           واحد، وضعیت واکسیناسیون این واکسن بررسی شده است.
-
         </p>
 
 
-
         <p>
-
           میزان پوشش کلی:
-
           {" "}
-
           <strong>
-
             {
               pct(
-                report.vaccine.coverage_percent
+                report.vaccine
+                  .coverage_percent
               )
             }
-
           </strong>
-
-
           {" "}
-
           و تعداد دام باقی‌مانده:
-
           {" "}
-
           <strong>
-
             {
               fmt(
-                report.summary.total_remaining_animals
+                report.summary
+                  .total_remaining_animals
               )
             }
-
           </strong>
-
-
+          {" "}
           رأس می‌باشد.
-
         </p>
 
 
-
         <p>
-
           تعداد واحدهای بحرانی:
-
           {" "}
-
           <strong>
-
             {
               fmt(
-                report.summary.critical_units
+                report.summary
+                  .critical_units
               )
             }
-
           </strong>
-
-
+          {" "}
           واحد است و نیاز به بررسی و اقدام اصلاحی دارد.
-
         </p>
 
 
-
         <p>
-
           پیشنهاد مدیریتی:
-
           {" "}
-
           واحدهای دارای اولویت بالا ابتدا بررسی شوند،
           سپس برای شهرستان‌هایی که بیشترین دام باقی‌مانده دارند
           برنامه تکمیلی واکسیناسیون اجرا گردد.
-
         </p>
-
-
 
       </div>
 
     </div>
   );
 }
-
-
-
-
-
-
-

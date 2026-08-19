@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionRegionalComparison(){
@@ -8,7 +8,7 @@ return(
 
 <div className="expert-header">
 <h1>
-?????? ?????? ?????
+?????
 </h1>
 </div>
 
@@ -17,7 +17,7 @@ return(
 <thead>
 <tr>
 <th>?????</th>
-<th>??????</th>
+<th></th>
 <th>????</th>
 </tr>
 </thead>
@@ -30,3 +30,5 @@ return(
 )
 
 }
+
+

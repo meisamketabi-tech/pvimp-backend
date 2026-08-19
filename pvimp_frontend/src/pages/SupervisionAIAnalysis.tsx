@@ -1,24 +1,39 @@
+﻿import React from "react";
 
-import React from "react";
 
-export default function SupervisionAIAnalysis(){
+export default function SupervisionAIAnalysis() {
 
-return(
 
-<div className="dashboard-container" dir="rtl">
+    return (
 
-<div className="expert-header">
-<h1>
-????? ?????? ????? ?????
-</h1>
-</div>
 
-<div className="dashboard-card">
-??? ???? ?????? ? ????? ??????? ??????
-</div>
+        <div
+            className="dashboard-container"
+            dir="rtl"
+        >
 
-</div>
 
-)
+            <div className="expert-header">
+
+                <h1>
+                    تحلیل هوشمند نظارت
+                </h1>
+
+            </div>
+
+
+
+            <div className="dashboard-card">
+
+                نمایش تحلیل‌های هوش مصنوعی و پیشنهادهای مدیریتی
+
+            </div>
+
+
+        </div>
+
+
+    )
+
 
 }

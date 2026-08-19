@@ -1,4 +1,4 @@
-
+﻿
 import React,{useEffect,useState} from "react";
 import {getSupervisionInspections} from "../services/supervisionService";
 import {SupervisionInspection} from "../types/SupervisionInspection";
@@ -19,7 +19,7 @@ return(
 <div className="dashboard-container" dir="rtl">
 
 <div className="expert-header">
-<h1>?????? ????? ?????? ????? ?????</h1>
+<h1>Samples</h1>
 </div>
 
 <table className="dashboard-table">
@@ -61,3 +61,6 @@ samples.map(item=>(
 )
 
 }
+
+
+

@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionCommandDashboard(){
@@ -8,7 +8,7 @@ return(
 
 <div className="expert-header">
 <h1>
-??????? ???????? ?????
+? ?? ?????
 </h1>
 </div>
 
@@ -23,7 +23,7 @@ return(
 </div>
 
 <div className="dashboard-card">
-???????
+?
 </div>
 
 </div>
@@ -32,3 +32,5 @@ return(
 )
 
 }
+
+

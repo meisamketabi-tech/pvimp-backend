@@ -1,0 +1,57 @@
+﻿:root {
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: var(--space-6);
+}
+
+.page-section {
+    margin-bottom: var(--space-8);
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.stack-sm {
+    gap: var(--space-2);
+}
+
+.stack-md {
+    gap: var(--space-4);
+}
+
+.stack-lg {
+    gap: var(--space-6);
+}
+
+.cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cluster-sm {
+    gap: var(--space-2);
+}
+
+.cluster-md {
+    gap: var(--space-4);
+}
+
+.cluster-lg {
+    gap: var(--space-6);
+}

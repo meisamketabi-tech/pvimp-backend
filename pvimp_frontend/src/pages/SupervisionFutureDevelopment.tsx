@@ -1,4 +1,4 @@
-
+﻿
 import React from "react";
 
 export default function SupervisionFutureDevelopment(){
@@ -13,10 +13,11 @@ return(
 </div>
 
 <div className="dashboard-card">
-?????? ??? ??? ??????
-</div>
+??? ??? </div>
 
 </div>
 )
 
 }
+
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails, UserDetails } from "../services/userService";
 
@@ -61,7 +61,7 @@ const kpis = [
   value:"18",
   icon:"⚠️",
   detail:"موارد نیازمند اقدام مدیر",
-  path:"/kpi"
+  path:"/dashboard"
  }
 ];
 
@@ -589,3 +589,4 @@ departmentData.map((item,index)=>(
 )
 
 }
+

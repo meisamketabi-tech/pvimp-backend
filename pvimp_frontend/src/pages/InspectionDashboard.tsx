@@ -1,22 +1,28 @@
-
-import React, {useEffect, useState} from "react";
+﻿import React, { useEffect, useState } from "react";
 import {
     getInspections,
     Inspection
 } from "../services/inspectionService";
 
 
-export default function InspectionDashboard(){
+export default function InspectionDashboard() {
 
-    const [data,setData] = useState<Inspection[]>([]);
+    const [data, setData] =
+        useState<Inspection[]>([]);
 
-    useEffect(()=>{
+
+    useEffect(() => {
 
         getInspections()
-            .then(response => setData(response.data))
-            .catch(err=>console.error(err));
+            .then(response =>
+                setData(response.data)
+            )
+            .catch(err =>
+                console.error(err)
+            );
 
-    },[]);
+    }, []);
+
 
 
     return (
@@ -24,59 +30,67 @@ export default function InspectionDashboard(){
         <div dir="rtl">
 
             <h1>
-                ??????? ?????? ??
+                داشبورد بازرسی
             </h1>
 
 
-            <table border={1} width="100%">
+            <table
+                border={1}
+                width="100%"
+            >
 
                 <thead>
 
-                <tr>
-                    <th>?????</th>
-                    <th>?????</th>
-                    <th>?????</th>
-                    <th>?????</th>
-                </tr>
+                    <tr>
+                        <th>شماره</th>
+                        <th>تاریخ</th>
+                        <th>وضعیت</th>
+                        <th>نتیجه</th>
+                    </tr>
 
                 </thead>
 
 
                 <tbody>
 
-                {
-                    data.map(item=>(
+                    {
+                        data.map(item => (
 
-                        <tr key={item.id}>
+                            <tr key={item.id}>
 
-                            <td>
-                                {item.inspection_number}
-                            </td>
+                                <td>
+                                    {item.inspection_number}
+                                </td>
 
-                            <td>
-                                {item.inspection_date}
-                            </td>
 
-                            <td>
-                                {item.status}
-                            </td>
+                                <td>
+                                    {item.inspection_date}
+                                </td>
 
-                            <td>
-                                {item.result}
-                            </td>
 
-                        </tr>
+                                <td>
+                                    {item.status}
+                                </td>
 
-                    ))
-                }
+
+                                <td>
+                                    {item.result}
+                                </td>
+
+
+                            </tr>
+
+                        ))
+                    }
 
                 </tbody>
+
 
             </table>
 
 
         </div>
 
-    )
+    );
 
 }
