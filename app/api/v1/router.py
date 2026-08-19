@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter
+from fastapi import APIRouter
 
 # =========================================================
 # Core endpoints
@@ -33,6 +33,7 @@ from app.api.v1.endpoints import (
 # =========================================================
 
 from app.api.v1.endpoints.gis import (
+    disease_control_dashboard,
     disease_occurrence,
     disease_report,
     enable_care,
@@ -53,37 +54,18 @@ from app.api.v1.endpoints.gis import (
 # Authentication
 # =========================================================
 
-from app.api.v1.auth.router import (
-    router as auth_router,
-)
+from app.api.v1.auth.router import router as auth_router
 
 # =========================================================
 # Organization
 # =========================================================
 
-from app.api.v1.organization_dashboard import (
-    router as organization_dashboard_router,
-)
-
-from app.api.v1.organization_positions import (
-    router as organization_positions_router,
-)
-
-from app.api.v1.organization_responsibility import (
-    router as organization_responsibility_router,
-)
-
-from app.api.v1.organization_tree import (
-    router as organization_tree_router,
-)
-
-from app.api.v1.organization_unit_detail import (
-    router as organization_unit_detail_router,
-)
-
-from app.api.v1.organization_users import (
-    router as organization_users_router,
-)
+from app.api.v1.organization_dashboard import router as organization_dashboard_router
+from app.api.v1.organization_positions import router as organization_positions_router
+from app.api.v1.organization_responsibility import router as organization_responsibility_router
+from app.api.v1.organization_tree import router as organization_tree_router
+from app.api.v1.organization_unit_detail import router as organization_unit_detail_router
+from app.api.v1.organization_users import router as organization_users_router
 
 # =========================================================
 # Supervision
@@ -91,25 +73,10 @@ from app.api.v1.organization_users import (
 
 from app.api.v1 import supervision
 
-# =========================================================
-# Main API router
-# =========================================================
-
 api_router = APIRouter()
 
-# =========================================================
-# Router registry
-# =========================================================
-
 ROUTERS = [
-    # -----------------------------------------------------
-    # Health
-    # -----------------------------------------------------
     health.router,
-
-    # -----------------------------------------------------
-    # Inspection
-    # -----------------------------------------------------
     inspection.router,
     inspection_assignment.router,
     inspection_attachment.router,
@@ -126,16 +93,13 @@ ROUTERS = [
     inspection_schedule.router,
     inspection_template.router,
     inspection_violation.router,
-
-    # -----------------------------------------------------
-    # GIS
-    # -----------------------------------------------------
     geography.router,
     organization_geography.router,
     epidemiology_units.router,
     import_files.router,
     disease_report.router,
     disease_occurrence.router,
+    disease_control_dashboard.router,
     vaccine_disposal.router,
     vaccine_inventory.router,
     vaccine_distribution.router,
@@ -145,42 +109,18 @@ ROUTERS = [
     slaughter_disposal.router,
     laboratory_result.router,
     spraying.router,
-
-    # -----------------------------------------------------
-    # Organization
-    # -----------------------------------------------------
     organization_positions_router,
     organization_users_router,
     organization_responsibility_router,
     organization_tree_router,
     organization_dashboard_router,
     organization_unit_detail_router,
-
-    # -----------------------------------------------------
-    # Assignment
-    # -----------------------------------------------------
     assignment.router,
-
-    # -----------------------------------------------------
-    # Authentication
-    # -----------------------------------------------------
     auth_router,
-
-    # -----------------------------------------------------
-    # Supervision
-    # -----------------------------------------------------
     supervision.router,
 ]
 
-# =========================================================
-# Register standard routers
-# =========================================================
-
 for router in ROUTERS:
     api_router.include_router(router)
-
-# =========================================================
-# GIS base routes
-# =========================================================
 
 api_router.include_router(gis_base.router)
