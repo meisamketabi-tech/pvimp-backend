@@ -11,6 +11,9 @@ export default function NotificationBell() {
   const [items, setItems] = useState<NotificationItem[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fallbackRead, setFallbackRead] = useState<number[]>(() => {
+    try { return JSON.parse(localStorage.getItem("pvimp_fallback_read_notifications") || "[]"); } catch { return []; }
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -33,19 +36,24 @@ export default function NotificationBell() {
         const r = await fetch(`${API}/gis/disease-control-dashboard/summary`, { headers: { Accept: "application/json", Authorization: `Bearer ${getToken()}` } });
         const data = await r.json();
         const alerts = Array.isArray(data?.management_alerts) ? data.management_alerts.slice(0, 10) : [];
-        setItems(alerts.map((a: any, i: number) => ({ id: 900000 + i, title: a.title, message: a.value != null ? `مقدار شاخص: ${Number(a.value).toLocaleString("fa-IR")}` : "نیازمند بررسی مدیریتی", is_read: false, level: a.level })));
+        setItems(alerts.map((a: any, i: number) => ({ id: 900000 + i, title: a.title, message: a.value != null ? `مقدار شاخص: ${Number(a.value).toLocaleString("fa-IR")}` : "نیازمند بررسی مدیریتی", is_read: fallbackRead.includes(900000 + i), level: a.level })));
       } catch { setItems([]); }
     }
     load();
     const timer = window.setInterval(load, 60000);
     return () => { mounted = false; window.clearInterval(timer); };
-  }, []);
+  }, [fallbackRead]);
 
   const unread = useMemo(() => items.filter((x) => !x.is_read), [items]);
 
   async function readOne(item: NotificationItem) {
     if (item.is_read) return;
     if (item.id < 900000) { try { await markRead(item.id); } catch { /* optimistic update */ } }
+    else {
+      const next = Array.from(new Set([...fallbackRead, item.id]));
+      setFallbackRead(next);
+      localStorage.setItem("pvimp_fallback_read_notifications", JSON.stringify(next));
+    }
     setItems((prev) => prev.map((x) => x.id === item.id ? { ...x, is_read: true } : x));
   }
 
