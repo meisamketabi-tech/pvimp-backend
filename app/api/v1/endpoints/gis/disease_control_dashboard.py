@@ -1,6 +1,7 @@
 from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_active_assignments, get_current_user, get_db
@@ -9,11 +10,7 @@ from app.db.models.gis_province import GISProvince
 from app.db.models.user import User
 from app.services.gis_disease_control_dashboard_service import GISDiseaseControlDashboardService
 
-router = APIRouter(
-    prefix="/gis/disease-control-dashboard",
-    tags=["GIS Disease Control Dashboard"],
-)
-
+router = APIRouter(prefix="/gis/disease-control-dashboard", tags=["GIS Disease Control Dashboard"])
 GLOBAL_ROLES = {"admin", "director_general", "health_deputy", "مدیرکل دامپزشکی استان", "معاون سلامت"}
 PROVINCE_ROLES = {"disease_control_expert", "کارشناس مبارزه با بیماری‌های دامی", "اداره مبارزه با بیماری‌های دامی"}
 COUNTY_ROLES = {"county_head", "رئیس اداره"}
@@ -23,9 +20,17 @@ def _role_names(assignments):
     return {a.role.name.strip().lower() for a in assignments if a.role and a.role.name}
 
 
+def _resolve_county_code(db: Session, value: str | None) -> str | None:
+    if not value:
+        return None
+    county = db.query(GISCounty).filter(or_(GISCounty.county_code == value, GISCounty.county_name == value)).first()
+    return county.county_code if county else value
+
+
 def _scope_for_user(db: Session, user: User, province_code: str | None, county_code: str | None):
     assignments = get_active_assignments(db, user)
     roles = _role_names(assignments)
+    county_code = _resolve_county_code(db, county_code)
 
     if roles.intersection({x.lower() for x in GLOBAL_ROLES}):
         return province_code, county_code
@@ -69,12 +74,4 @@ def get_dashboard_summary(
     db: Session = Depends(get_db),
 ):
     province_code, county_code = _scope_for_user(db, current_user, province_code, county_code)
-    return GISDiseaseControlDashboardService.dashboard(
-        db=db,
-        province_code=province_code,
-        county_code=county_code,
-        start_date=start_date,
-        end_date=end_date,
-        disease=disease,
-        animal_type=animal_type,
-    )
+    return GISDiseaseControlDashboardService.dashboard(db=db, province_code=province_code, county_code=county_code, start_date=start_date, end_date=end_date, disease=disease, animal_type=animal_type)
