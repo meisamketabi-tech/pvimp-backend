@@ -33,6 +33,7 @@ from app.api.v1.endpoints import (
 # =========================================================
 
 from app.api.v1.endpoints.gis import (
+    disease_control_ai,
     disease_control_dashboard,
     disease_occurrence,
     disease_report,
@@ -100,6 +101,7 @@ ROUTERS = [
     disease_report.router,
     disease_occurrence.router,
     disease_control_dashboard.router,
+    disease_control_ai.router,
     vaccine_disposal.router,
     vaccine_inventory.router,
     vaccine_distribution.router,
