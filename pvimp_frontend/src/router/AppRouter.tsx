@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import MainLayout from "../layouts/MainLayout";
 import Dashboard from "../pages/Dashboard";
@@ -46,12 +46,21 @@ import SupervisionOperationalDashboard from "../pages/SupervisionOperationalDash
 import SupervisionForm from "../pages/SupervisionForm";
 import SupervisionGISImport from "../pages/SupervisionGISImport";
 import ResponsibleHealthDashboard from "../pages/ResponsibleHealthDashboard";
+import { getToken } from "../utils/token";
+
+function ProtectedLayout() {
+  return getToken() ? <MainLayout /> : <Navigate to="/login" replace />;
+}
+
+function LoginGate() {
+  return getToken() ? <Navigate to="/" replace /> : <Login />;
+}
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<MainLayout />}>
+      <Route path="/login" element={<LoginGate />} />
+      <Route path="/" element={<ProtectedLayout />}>
         <Route index element={<Dashboard />} />
 
         <Route path="health-deputy" element={<HealthDeputyDashboard />} />
@@ -69,6 +78,7 @@ export default function AppRouter() {
         <Route path="gis/department/:code" element={<GISDepartmentDetail />} />
         <Route path="gis/upload/:department" element={<GISDepartmentUpload />} />
         <Route path="gis-county-dashboard" element={<GISCountyDashboard />} />
+        <Route path="vaccination-vaccine-report/:vaccineType" element={<VaccinationVaccineReport />} />
         <Route path="vaccination-vaccine-report" element={<VaccinationVaccineReport />} />
 
         <Route path="county/:id" element={<CountyDashboard />} />
