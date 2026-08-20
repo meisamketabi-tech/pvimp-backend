@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Token(BaseModel):
@@ -19,7 +19,7 @@ class UserMe(BaseModel):
     mobile: str | None = None
     is_active: bool
     role: str | None = None
-    roles: list[str] = []
+    roles: list[str] = Field(default_factory=list)
 
     class Config:
         from_attributes = True
