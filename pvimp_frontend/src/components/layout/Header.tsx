@@ -1,20 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../../services/auth.service";
 import { useAuthStore } from "../../store/auth.store";
 import NotificationBell from "./NotificationBell";
 import "./Header.css";
 
 export default function Header() {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
+  const [authLoading, setAuthLoading] = useState(!user);
 
   useEffect(() => {
-    if (user) return;
-    getCurrentUser().then(setUser).catch(() => undefined);
-  }, [user, setUser]);
+    let mounted = true;
 
-  const displayName = user?.full_name || user?.username || "کاربر سامانه";
-  const role = user?.role || "مدیریت استان";
+    if (user) {
+      setAuthLoading(false);
+      return () => {
+        mounted = false;
+      };
+    }
+
+    setAuthLoading(true);
+    getCurrentUser()
+      .then((currentUser) => {
+        if (mounted) setUser(currentUser);
+      })
+      .catch(() => {
+        if (mounted) {
+          logout();
+          navigate("/login", { replace: true });
+        }
+      })
+      .finally(() => {
+        if (mounted) setAuthLoading(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [user, setUser, logout, navigate]);
+
+  const displayName = user?.full_name?.trim() || user?.username || "کاربر سامانه";
+  const role = user?.role || user?.roles?.[0] || "کاربر سامانه";
+  const isAuthenticated = Boolean(user);
+
+  function handleLogout() {
+    logout();
+    navigate("/login", { replace: true });
+  }
 
   return (
     <header className="app-header" dir="rtl">
@@ -27,12 +62,33 @@ export default function Header() {
       </div>
 
       <div className="app-header__left">
-        <NotificationBell />
-        <div className="app-header__status"><span className="app-header__status-dot" />سامانه فعال</div>
-        <div className="app-header__user">
-          <div className="app-header__avatar">{displayName.trim().charAt(0) || "ک"}</div>
-          <div className="app-header__user-info"><strong>{displayName}</strong><span>{role}</span></div>
+        {isAuthenticated && <NotificationBell />}
+
+        <div className={`app-header__status ${isAuthenticated ? "is-authenticated" : ""}`}>
+          <span className="app-header__status-dot" />
+          {authLoading ? "در حال بررسی ورود" : isAuthenticated ? "وارد شده" : "خارج از حساب"}
         </div>
+
+        <div className="app-header__user">
+          <div className="app-header__avatar">
+            {displayName.charAt(0) || "ک"}
+          </div>
+          <div className="app-header__user-info">
+            <strong>{displayName}</strong>
+            <span>{role}</span>
+          </div>
+        </div>
+
+        {isAuthenticated && (
+          <button
+            type="button"
+            className="app-header__logout"
+            onClick={handleLogout}
+            title="خروج از حساب کاربری"
+          >
+            خروج
+          </button>
+        )}
       </div>
     </header>
   );
