@@ -1,192 +1,83 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth.service";
 import { useAuthStore } from "../store/auth.store";
 import logo from "../assets/logo.png";
+import "./Login.css";
 
+export default function Login() {
+  const navigate = useNavigate();
+  const authLogin = useAuthStore((state) => state.login);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-export default function Login(){
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      const result = await login({ username, password });
+      authLogin(result.access_token);
+      navigate("/", { replace: true });
+    } catch (err: any) {
+      console.error("LOGIN ERROR", err);
+      setError(err.response?.data?.detail || "نام کاربری یا رمز عبور صحیح نیست یا ارتباط با سرور برقرار نشد.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-const navigate = useNavigate();
+  return (
+    <div dir="rtl" className="login-page">
+      <div className="login-shell">
+        <section className="login-visual">
+          <div className="login-orbit" />
+          <div className="login-brand">
+            <img src={logo} className="login-logo" alt="سازمان دامپزشکی" />
+            <div>
+              <h2>سامانه مدیریت یکپارچه دامپزشکی</h2>
+              <p>اداره کل دامپزشکی استان زنجان</p>
+            </div>
+          </div>
 
-const authLogin = useAuthStore(
-    state => state.login
-);
+          <div className="login-hero">
+            <div className="eyebrow">GIS • VET • INTELLIGENCE</div>
+            <h1>تصمیم‌گیری دامپزشکی،<br /><span>داده‌محور و هوشمند</span></h1>
+            <p>پایش عملیات، واکسیناسیون، بیماری‌ها، مراقبت و نقشه‌های GIS در یک محیط مدیریتی یکپارچه؛ با دسترسی متناسب با نقش سازمانی شما.</p>
+          </div>
 
+          <div className="login-features">
+            <div className="login-feature"><b>داشبورد مدیریتی</b>نمای شمای کلی استان و شهرستان</div>
+            <div className="login-feature"><b>GIS عملیاتی</b>رصد مکانی واحدها و رخدادها</div>
+            <div className="login-feature"><b>AI Analytics</b>پاسخ تحلیلی از داده‌های سامانه</div>
+            <div className="login-feature"><b>هشدار هوشمند</b>اعلام موارد بحرانی و نیازمند اقدام</div>
+          </div>
+        </section>
 
-const [username,setUsername] = useState("");
-const [password,setPassword] = useState("");
-const [error,setError] = useState("");
+        <section className="login-form-panel">
+          <h1 className="login-form-title">ورود به سامانه</h1>
+          <p className="login-form-subtitle">برای ادامه، اطلاعات کاربری سازمانی خود را وارد کنید.</p>
 
+          <form className="login-form" onSubmit={submit}>
+            <label className="login-label">
+              نام کاربری
+              <input className="login-input" autoComplete="username" placeholder="مثلاً admin" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            </label>
+            <label className="login-label">
+              رمز عبور
+              <input className="login-input" type="password" autoComplete="current-password" placeholder="رمز عبور" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </label>
+            {error && <div className="login-error">{error}</div>}
+            <button className="login-button" type="submit" disabled={loading}>
+              {loading ? "در حال ورود..." : "ورود امن به سامانه"}
+            </button>
+          </form>
 
-async function submit(e:React.FormEvent){
-
-e.preventDefault();
-
-setError("");
-
-try{
-
-const result = await login({
-    username,
-    password
-});
-
-
-console.log("LOGIN SUCCESS", result);
-
-
-authLogin(
-    result.access_token
-);
-
-
-navigate("/");
-
-
-}catch(error:any){
-
-
-console.error(
-    "LOGIN ERROR",
-    error
-);
-
-
-setError(
-    error.response?.data?.detail ||
-    "خطای ارتباط با سرور"
-);
-
-
+          <div className="login-footnote">دسترسی‌ها بر اساس نقش و حوزه سازمانی کاربر اعمال می‌شوند. اطلاعات داشبورد مستقیماً از داده‌های سامانه خوانده می‌شود.</div>
+        </section>
+      </div>
+    </div>
+  );
 }
-
-}
-
-
-
-return (
-
-<div dir="rtl" className="login-page">
-
-<div className="login-container">
-
-
-<div className="login-brand">
-
-
-<img
-src={logo}
-className="login-logo"
-/>
-
-
-<h2>
-سامانه مدیریت دامپزشکی
-</h2>
-
-
-<p>
-سیستم هوشمند مدیریت و نظارت دامپزشکی استان زنجان
-</p>
-
-
-</div>
-
-
-
-<div className="login-form">
-
-
-<h1 className="login-title">
-ورود به سامانه
-</h1>
-
-
-<p className="login-subtitle">
-لطفا اطلاعات خود را وارد کنید
-</p>
-
-
-
-<form onSubmit={submit}>
-
-
-<input
-
-className="login-input"
-
-placeholder="نام کاربری"
-
-value={username}
-
-onChange={
-e=>setUsername(e.target.value)
-}
-
-/>
-
-
-
-<input
-
-type="password"
-
-className="login-input"
-
-placeholder="رمز عبور"
-
-value={password}
-
-onChange={
-e=>setPassword(e.target.value)
-}
-
-/>
-
-
-
-<button 
-className="login-button"
-type="submit"
->
-
-ورود
-
-</button>
-
-
-</form>
-
-
-
-{
-error &&
-
-<div
-style={{
-color:"red",
-marginTop:"20px",
-textAlign:"center"
-}}
->
-
-{error}
-
-</div>
-
-}
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-);
-
-}
-
