@@ -19,8 +19,30 @@ from app.db.models.gis_vaccine_inventory import GISVaccineInventory
 from app.db.models.gis_vaccination_performance import GISVaccinationPerformance
 
 
+ANIMAL_GROUPS = {
+    "گاو": ("cattle_count",),
+    "گاو و گوساله": ("cattle_count",),
+    "گوساله": ("cattle_count",),
+    "گوسفند": ("sheep_count",),
+    "بز": ("goat_count",),
+    "گوسفند و بز": ("sheep_count", "goat_count"),
+    "دام سبک": ("sheep_count", "goat_count"),
+    "بره و بزغاله": ("sheep_count", "goat_count"),
+    "سگ": ("dog_count",),
+    "سگ صاحبدار": ("dog_count",),
+    "سگ بدون صاحب": ("dog_count",),
+    "اسب": ("horse_count",),
+    "تک سمی": ("horse_count",),
+    "شتر": ("camel_count",),
+    "گاومیش": ("buffalo_count",),
+}
+
+PUBLIC_WORDS = ("دولتی", "رایگان", "عمومی", "شبکه", "اداره")
+PRIVATE_WORDS = ("خصوصی", "غیردولتی", "کلینیک", "مرکز خصوصی", "داروخانه")
+
+
 class GISDiseaseControlDashboardService:
-    """Technical management KPIs; financial KPIs remain future-ready placeholders."""
+    """Technical management KPIs. Vaccination coverage uses master animal population."""
 
     @staticmethod
     def _period_filter(query, column, start_date: date | None, end_date: date | None):
@@ -50,53 +72,74 @@ class GISDiseaseControlDashboardService:
             return "ON_TRACK"
         return "EXCELLENT"
 
+    @staticmethod
+    def _normalize(value: Any) -> str:
+        return str(value or "").strip().replace("ي", "ی").replace("ك", "ک").replace("‌", " ").lower()
+
+    @classmethod
+    def _animal_group(cls, value: str | None) -> str | None:
+        t = cls._normalize(value)
+        if not t:
+            return None
+        for key in sorted(ANIMAL_GROUPS, key=len, reverse=True):
+            if cls._normalize(key) == t or cls._normalize(key) in t:
+                if key in ("گاو", "گاو و گوساله", "گوساله"):
+                    return "گاو و گوساله"
+                if key in ("گوسفند",):
+                    return "گوسفند"
+                if key in ("بز",):
+                    return "بز"
+                if key in ("گوسفند و بز", "دام سبک", "بره و بزغاله"):
+                    return "گوسفند و بز"
+                if key in ("سگ", "سگ صاحبدار", "سگ بدون صاحب"):
+                    return "سگ"
+                if key in ("اسب", "تک سمی"):
+                    return "اسب"
+                return key
+        return None
+
+    @staticmethod
+    def _segment(value: Any) -> str:
+        text = str(value or "").strip().lower().replace("ي", "ی").replace("ك", "ک")
+        if any(x in text for x in PUBLIC_WORDS):
+            return "public"
+        if any(x in text for x in PRIVATE_WORDS):
+            return "private"
+        return "other"
+
+    @classmethod
+    def _population_map(cls, units: list[GISEpidemiologyUnit]) -> dict[tuple[int, str], int]:
+        result: dict[tuple[int, str], int] = {}
+        for u in units:
+            result[(u.id, "گاو و گوساله")] = int(u.cattle_count or 0)
+            result[(u.id, "گوسفند")] = int(u.sheep_count or 0)
+            result[(u.id, "بز")] = int(u.goat_count or 0)
+            result[(u.id, "گوسفند و بز")] = int(u.sheep_count or 0) + int(u.goat_count or 0)
+            result[(u.id, "اسب")] = int(u.horse_count or 0)
+            result[(u.id, "سگ")] = int(u.dog_count or 0)
+            result[(u.id, "شتر")] = int(u.camel_count or 0)
+            result[(u.id, "گاومیش")] = int(u.buffalo_count or 0)
+        return result
+
+    @classmethod
+    def _units(cls, db: Session, province_code: str | None, county_code: str | None) -> list[GISEpidemiologyUnit]:
+        q = db.query(GISEpidemiologyUnit).filter(GISEpidemiologyUnit.is_active.is_(True))
+        if county_code:
+            county = db.query(GISCounty).filter(GISCounty.county_code == county_code).first()
+            return q.filter(GISEpidemiologyUnit.county_id == county.id).all() if county else []
+        if province_code:
+            province = __import__("app.db.models.gis_province", fromlist=["GISProvince"]).GISProvince
+            p = db.query(province).filter(province.province_code == province_code).first()
+            if not p:
+                return []
+            county_ids = [c.id for c in db.query(GISCounty).filter(GISCounty.province_id == p.id).all()]
+            return q.filter(GISEpidemiologyUnit.county_id.in_(county_ids)).all() if county_ids else []
+        return q.all()
+
     @classmethod
     def dashboard(cls, db: Session, province_code=None, county_code=None, start_date=None, end_date=None, disease=None, animal_type=None):
-        units_q = db.query(GISEpidemiologyUnit).filter(GISEpidemiologyUnit.is_active.is_(True))
-        if province_code:
-            county_ids = [c.id for c in db.query(GISCounty).filter(GISCounty.province_id.in_(
-                db.query(GISCounty.province_id).join(GISCounty.province).filter(GISCounty.county_code == county_code)
-            )).all()] if county_code else []
-            # Prefer the direct geography FK on the epidemiology-unit table.
-            if county_code:
-                county = db.query(GISCounty).filter(GISCounty.county_code == county_code).first()
-                if county:
-                    units_q = units_q.filter(GISEpidemiologyUnit.county_id == county.id)
-            else:
-                province = db.query(GISCounty.province_id).join(GISCounty.province).filter(GISCounty.county_code == county_code).first() if False else None
-                # province_code is resolved through counties to keep this service independent
-                # of a separate Province import.
-                province_ids = [x[0] for x in db.query(GISCounty.province_id).filter(GISCounty.county_code.in_(
-                    db.query(GISCounty.county_code).filter(GISCounty.county_code == county_code)
-                )).all()] if county_code else []
-                if province_ids:
-                    units_q = units_q.filter(GISEpidemiologyUnit.county_id.in_(
-                        db.query(GISCounty.id).filter(GISCounty.province_id.in_(province_ids))
-                    ))
-        elif county_code:
-            county = db.query(GISCounty).filter(GISCounty.county_code == county_code).first()
-            if county:
-                units_q = units_q.filter(GISEpidemiologyUnit.county_id == county.id)
-            else:
-                units_q = units_q.filter(False)
-        units = units_q.all()
-
-        # If a province is supplied, derive its counties from operational data when
-        # the province/county FK cannot be resolved from the unit table.
-        if province_code and not county_code:
-            province_unit_ids = {r[0] for r in db.query(GISVaccinationPerformance.epidemiology_unit_id).filter(GISVaccinationPerformance.province_code == province_code).distinct().all() if r[0] is not None}
-            if province_unit_ids:
-                units = [u for u in units if u.id in province_unit_ids]
-
-        animal_population = {
-            "گوسفند": sum(int(u.sheep_count or 0) for u in units),
-            "گاو": sum(int(u.cattle_count or 0) for u in units),
-            "بز": sum(int(u.goat_count or 0) for u in units),
-            "اسب": sum(int(u.horse_count or 0) for u in units),
-            "سگ": sum(int(u.dog_count or 0) for u in units),
-            "شتر": sum(int(u.camel_count or 0) for u in units),
-            "گاومیش": sum(int(u.buffalo_count or 0) for u in units),
-        }
+        units = cls._units(db, province_code, county_code)
+        population = cls._population_map(units)
 
         vacc_q = db.query(GISVaccinationPerformance)
         vacc_q = cls._scope_query(vacc_q, GISVaccinationPerformance, province_code, county_code)
@@ -105,35 +148,53 @@ class GISDiseaseControlDashboardService:
             vacc_q = vacc_q.filter(GISVaccinationPerformance.disease_name == disease)
         if animal_type:
             vacc_q = vacc_q.filter(GISVaccinationPerformance.animal_type == animal_type)
-        vacc_rows = vacc_q.order_by(GISVaccinationPerformance.vaccination_date.desc(), GISVaccinationPerformance.id.desc()).all()
+        vacc_rows = vacc_q.order_by(GISVaccinationPerformance.vaccination_date.asc(), GISVaccinationPerformance.id.asc()).all()
 
-        latest = {}
+        vaccination_by_key: dict[str, dict[str, Any]] = {}
+        unit_animal_keys: dict[str, set[tuple[int, str]]] = defaultdict(set)
+        monthly: dict[str, dict[str, int]] = defaultdict(lambda: {"vaccinated": 0, "public": 0, "private": 0})
+        map_rows: list[dict[str, Any]] = []
+
         for row in vacc_rows:
-            key = (row.epidemiology_unit_id or row.epidemiology_unit_code, row.vaccine_type, row.animal_type)
-            if key not in latest:
-                latest[key] = row
-
-        vaccination_by_key = {}
-        for row in latest.values():
             vaccine = row.vaccine_type or row.disease_name or "نامشخص"
-            item = vaccination_by_key.setdefault(vaccine, {"vaccine": vaccine, "eligible_animals": 0, "vaccinated_animals": 0, "remaining_animals": 0, "coverage_percent": 0, "animal_types": {}})
-            eligible = int(row.eligible_animals or row.total_animals or row.animal_count or 0)
+            group = cls._animal_group(row.animal_type)
+            item = vaccination_by_key.setdefault(vaccine, {
+                "vaccine": vaccine, "eligible_animals": 0, "vaccinated_animals": 0, "remaining_animals": 0,
+                "coverage_percent": None, "status": "NO_DATA", "animal_types": {},
+                "public": {"vaccinated_animals": 0, "coverage_vs_population_percent": None},
+                "private": {"vaccinated_animals": 0, "coverage_vs_population_percent": None},
+                "other": {"vaccinated_animals": 0, "coverage_vs_population_percent": None},
+                "target": None, "target_progress_percent": None, "target_available": False,
+            })
             vaccinated = int(row.vaccinated_animals or 0)
-            item["eligible_animals"] += eligible
+            segment = cls._segment(row.operation_type)
             item["vaccinated_animals"] += vaccinated
-            animal = row.animal_type or "نامشخص"
-            a = item["animal_types"].setdefault(animal, {"animal_type": animal, "eligible_animals": 0, "vaccinated_animals": 0})
-            a["eligible_animals"] += eligible
-            a["vaccinated_animals"] += vaccinated
+            item[segment]["vaccinated_animals"] += vaccinated
+            if group and row.epidemiology_unit_id:
+                key = (row.epidemiology_unit_id, group)
+                unit_animal_keys[vaccine].add(key)
+                a = item["animal_types"].setdefault(group, {"animal_type": group, "eligible_animals": 0, "vaccinated_animals": 0, "remaining_animals": 0, "coverage_percent": None})
+                a["vaccinated_animals"] += vaccinated
+                if row.latitude is not None and row.longitude is not None:
+                    map_rows.append({"lat": row.latitude, "lng": row.longitude, "unit_id": row.epidemiology_unit_id, "unit_code": row.epidemiology_unit_code, "unit_name": row.epidemiology_unit_name, "county_code": row.county_code, "county_name": row.county_name, "operation": "vaccination", "vaccine": vaccine, "animal_type": group, "value": vaccinated})
+            if row.vaccination_date:
+                month_key = row.vaccination_date.strftime("%Y-%m")
+                monthly[month_key]["vaccinated"] += vaccinated
+                monthly[month_key][segment] += vaccinated
 
-        for item in vaccination_by_key.values():
-            item["remaining_animals"] = max(item["eligible_animals"] - item["vaccinated_animals"], 0)
-            item["coverage_percent"] = round(item["vaccinated_animals"] / item["eligible_animals"] * 100, 2) if item["eligible_animals"] else 0
+        for vaccine, item in vaccination_by_key.items():
+            eligible = sum(population.get(key, 0) for key in unit_animal_keys[vaccine])
+            item["eligible_animals"] = eligible
+            item["remaining_animals"] = max(eligible - item["vaccinated_animals"], 0)
+            item["coverage_percent"] = round(item["vaccinated_animals"] / eligible * 100, 2) if eligible else None
             item["status"] = cls._coverage_status(item["coverage_percent"])
-            for a in item["animal_types"].values():
+            for segment in ("public", "private", "other"):
+                item[segment]["coverage_vs_population_percent"] = round(item[segment]["vaccinated_animals"] / eligible * 100, 2) if eligible else None
+            for group, a in item["animal_types"].items():
+                a_keys = {key for key in unit_animal_keys[vaccine] if key[1] == group}
+                a["eligible_animals"] = sum(population.get(key, 0) for key in a_keys)
                 a["remaining_animals"] = max(a["eligible_animals"] - a["vaccinated_animals"], 0)
-                a["coverage_percent"] = round(a["vaccinated_animals"] / a["eligible_animals"] * 100, 2) if a["eligible_animals"] else 0
-                a["status"] = cls._coverage_status(a["coverage_percent"])
+                a["coverage_percent"] = round(a["vaccinated_animals"] / a["eligible_animals"] * 100, 2) if a["eligible_animals"] else None
             item["animal_types"] = list(item["animal_types"].values())
 
         disease_q = db.query(GISDiseaseOccurrence)
@@ -144,7 +205,7 @@ class GISDiseaseControlDashboardService:
         if animal_type:
             disease_q = disease_q.filter(GISDiseaseOccurrence.animal_type == animal_type)
         disease_rows = disease_q.all()
-        disease_summary = {}
+        disease_summary: dict[str, dict[str, Any]] = {}
         for row in disease_rows:
             name = row.disease_name or "نامشخص"
             x = disease_summary.setdefault(name, {"disease": name, "outbreaks": 0, "exposed": 0, "infected": 0, "deaths": 0, "slaughtered": 0, "sampled": 0})
@@ -154,6 +215,8 @@ class GISDiseaseControlDashboardService:
             x["deaths"] += int(row.dead_count or 0)
             x["slaughtered"] += int(row.slaughtered_count or 0)
             x["sampled"] += 1 if row.sample_taken else 0
+            if row.latitude is not None and row.longitude is not None:
+                map_rows.append({"lat": row.latitude, "lng": row.longitude, "unit_id": row.epidemiology_unit_id, "unit_code": row.epidemiology_unit_code, "unit_name": row.epidemiology_unit_name, "county_code": row.county_code, "county_name": row.county_name, "operation": "disease", "disease": row.disease_name, "animal_type": row.animal_type, "value": int(row.infected_count or 0)})
         for x in disease_summary.values():
             x["attack_rate_percent"] = round(x["infected"] / x["exposed"] * 100, 2) if x["exposed"] else 0
             x["case_fatality_percent"] = round(x["deaths"] / x["infected"] * 100, 2) if x["infected"] else 0
@@ -181,25 +244,62 @@ class GISDiseaseControlDashboardService:
         expiring_30 = sum(int(r.package_count or 0) for r in inventory_rows if r.expiration_date and 0 <= (r.expiration_date - today).days <= 30)
         expiring_60 = sum(int(r.package_count or 0) for r in inventory_rows if r.expiration_date and 0 <= (r.expiration_date - today).days <= 60)
 
-        map_points = []
-        for row in latest.values():
-            if row.latitude is not None and row.longitude is not None:
-                eligible = int(row.eligible_animals or row.total_animals or row.animal_count or 0)
-                map_points.append({"lat": row.latitude, "lng": row.longitude, "unit_id": row.epidemiology_unit_id, "unit_code": row.epidemiology_unit_code, "unit_name": row.epidemiology_unit_name, "county_code": row.county_code, "county_name": row.county_name, "operation": "vaccination", "vaccine": row.vaccine_type, "animal_type": row.animal_type, "value": int(row.vaccinated_animals or 0), "coverage_percent": round(int(row.vaccinated_animals or 0) / eligible * 100, 2) if eligible else 0})
-        for row in disease_rows:
-            if row.latitude is not None and row.longitude is not None:
-                map_points.append({"lat": row.latitude, "lng": row.longitude, "unit_id": row.epidemiology_unit_id, "unit_code": row.epidemiology_unit_code, "unit_name": row.epidemiology_unit_name, "county_code": row.county_code, "county_name": row.county_name, "operation": "disease", "disease": row.disease_name, "animal_type": row.animal_type, "value": int(row.infected_count or 0)})
+        population_by_animal = {
+            "گاو و گوساله": sum(int(u.cattle_count or 0) for u in units),
+            "گوسفند": sum(int(u.sheep_count or 0) for u in units),
+            "بز": sum(int(u.goat_count or 0) for u in units),
+            "اسب": sum(int(u.horse_count or 0) for u in units),
+            "سگ": sum(int(u.dog_count or 0) for u in units),
+            "شتر": sum(int(u.camel_count or 0) for u in units),
+            "گاومیش": sum(int(u.buffalo_count or 0) for u in units),
+        }
+        total_population = sum(population_by_animal.values())
+        total_vaccinated = sum(x["vaccinated_animals"] for x in vaccination_by_key.values())
+        public_vaccinated = sum(x["public"]["vaccinated_animals"] for x in vaccination_by_key.values())
+        private_vaccinated = sum(x["private"]["vaccinated_animals"] for x in vaccination_by_key.values())
 
-        return {"scope": {"province_code": province_code, "county_code": county_code}, "period": {"start": start_date.isoformat() if start_date else None, "end": end_date.isoformat() if end_date else None}, "population": {"by_animal_type": animal_population, "total": sum(animal_population.values())}, "vaccination": list(vaccination_by_key.values()), "disease": list(disease_summary.values()), "surveillance": surveillance, "samples": {"sent_operations": len(samples), "sample_count": sum(int(r.sample_count or 0) for r in samples), "without_result": sum(1 for r in samples if not r.result_status)}, "laboratory": {"results": len(lab_rows), "sample_count": sum(int(r.sample_count or 0) for r in lab_rows), "by_status": dict(lab_status)}, "parasitic_control": {"operations": len(spraying_rows), "units": len({r.epidemiology_unit_id for r in spraying_rows if r.epidemiology_unit_id}), "animals": sum(int(r.sprayed_animal_count or 0) for r in spraying_rows), "area": float(sum(r.sprayed_area or 0 for r in spraying_rows))}, "control_actions": {"operations": len(slaughter_rows), "positive": sum(int(r.positive_count or 0) for r in slaughter_rows), "slaughtered": sum(int(r.slaughtered_count or 0) for r in slaughter_rows), "destroyed": sum(int(r.destroyed_count or 0) for r in slaughter_rows), "dead": sum(int(r.dead_count or 0) for r in slaughter_rows)}, "vaccine_supply": {"distribution_operations": len(distribution_rows), "distributed_packages": sum(int(r.package_count or 0) for r in distribution_rows), "inventory_rows": len(inventory_rows), "expiring_30_days_packages": expiring_30, "expiring_60_days_packages": expiring_60}, "management_alerts": cls._alerts(vaccination_by_key, disease_summary, samples, inventory_rows, slaughter_rows, today), "map_points": map_points, "economic": {"status": "not_available", "budget": None, "technical_cost": None, "avoided_loss": None, "roi": None, "note": "ساختار اقتصادی آماده اتصال است؛ پس از ایجاد جداول بودجه، هزینه و ارزش دام محاسبه خواهد شد."}}
+        management_alerts = cls._alerts(vaccination_by_key, disease_summary, samples, inventory_rows, slaughter_rows, today)
+        map_points = []
+        seen = set()
+        for p in map_rows:
+            key = (p.get("unit_id"), p.get("operation"), p.get("vaccine") or p.get("disease"), p.get("animal_type"))
+            if key in seen:
+                continue
+            seen.add(key)
+            if p.get("operation") == "vaccination":
+                group = p.get("animal_type")
+                eligible = population.get((p.get("unit_id"), group), 0) if group else 0
+                p["coverage_percent"] = round(p["value"] / eligible * 100, 2) if eligible else None
+            map_points.append(p)
+
+        return {
+            "scope": {"province_code": province_code, "county_code": county_code},
+            "period": {"start": start_date.isoformat() if start_date else None, "end": end_date.isoformat() if end_date else None},
+            "population": {"by_animal_type": population_by_animal, "total": total_population},
+            "vaccination": list(vaccination_by_key.values()),
+            "vaccination_overview": {"vaccinated_animals": total_vaccinated, "public_vaccinated": public_vaccinated, "private_vaccinated": private_vaccinated, "other_vaccinated": max(total_vaccinated - public_vaccinated - private_vaccinated, 0), "note": "پوشش کلی بین واکسن‌های مختلف تجمیع نمی‌شود؛ پوشش فقط در سطح هر واکسن و گروه دام معتبر است."},
+            "vaccination_monthly": [{"month": k, **v} for k, v in sorted(monthly.items())],
+            "disease": list(disease_summary.values()),
+            "surveillance": surveillance,
+            "samples": {"sent_operations": len(samples), "sample_count": sum(int(r.sample_count or 0) for r in samples), "without_result": sum(1 for r in samples if not r.result_status)},
+            "laboratory": {"results": len(lab_rows), "sample_count": sum(int(r.sample_count or 0) for r in lab_rows), "by_status": dict(lab_status)},
+            "parasitic_control": {"operations": len(spraying_rows), "units": len({r.epidemiology_unit_id for r in spraying_rows if r.epidemiology_unit_id}), "animals": sum(int(r.sprayed_animal_count or 0) for r in spraying_rows), "area": float(sum(r.sprayed_area or 0 for r in spraying_rows))},
+            "control_actions": {"operations": len(slaughter_rows), "positive": sum(int(r.positive_count or 0) for r in slaughter_rows), "slaughtered": sum(int(r.slaughtered_count or 0) for r in slaughter_rows), "destroyed": sum(int(r.destroyed_count or 0) for r in slaughter_rows), "dead": sum(int(r.dead_count or 0) for r in slaughter_rows)},
+            "vaccine_supply": {"distribution_operations": len(distribution_rows), "distributed_packages": sum(int(r.package_count or 0) for r in distribution_rows), "inventory_rows": len(inventory_rows), "expiring_30_days_packages": expiring_30, "expiring_60_days_packages": expiring_60},
+            "management_alerts": management_alerts,
+            "map_points": map_points,
+            "economic": {"status": "not_available", "budget": None, "technical_cost": None, "avoided_loss": None, "roi": None, "note": "ساختار اقتصادی آماده اتصال است؛ پس از ایجاد جداول بودجه، هزینه و ارزش دام محاسبه خواهد شد."},
+        }
 
     @staticmethod
     def _alerts(vaccination, diseases, samples, inventory, slaughter, today):
         alerts = []
         for item in vaccination.values():
-            if item["eligible_animals"] and item["coverage_percent"] < 50:
-                alerts.append({"level": "CRITICAL", "type": "vaccination", "title": f"پوشش {item['vaccine']} کمتر از ۵۰٪ است", "value": item["coverage_percent"]})
-            elif item["eligible_animals"] and item["coverage_percent"] < 70:
-                alerts.append({"level": "WARNING", "type": "vaccination", "title": f"پوشش {item['vaccine']} نیازمند توجه است", "value": item["coverage_percent"]})
+            coverage = item.get("coverage_percent")
+            if coverage is not None and coverage < 50:
+                alerts.append({"level": "CRITICAL", "type": "vaccination", "title": f"پوشش {item['vaccine']} کمتر از ۵۰٪ است", "value": coverage})
+            elif coverage is not None and coverage < 70:
+                alerts.append({"level": "WARNING", "type": "vaccination", "title": f"پوشش {item['vaccine']} نیازمند توجه است", "value": coverage})
         for item in diseases.values():
             if item["infected"] > 0:
                 alerts.append({"level": "CRITICAL", "type": "disease", "title": f"گزارش {item['disease']} با {item['infected']:,} دام مبتلا", "value": item["infected"]})
