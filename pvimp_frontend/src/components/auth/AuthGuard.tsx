@@ -3,6 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { getCurrentUser } from "../../services/auth.service";
 import { useAuthStore } from "../../store/auth.store";
 import { removeToken } from "../../utils/token";
+import "../../styles/auth.css";
 
 export default function AuthGuard() {
     const location = useLocation();
@@ -14,18 +15,11 @@ export default function AuthGuard() {
 
     useEffect(() => {
         let active = true;
-
         async function hydrateUser() {
-            if (!token) {
+            if (!token || user) {
                 if (active) setChecking(false);
                 return;
             }
-
-            if (user) {
-                if (active) setChecking(false);
-                return;
-            }
-
             try {
                 const currentUser = await getCurrentUser();
                 if (active) setUser(currentUser);
@@ -37,17 +31,11 @@ export default function AuthGuard() {
                 if (active) setChecking(false);
             }
         }
-
         void hydrateUser();
-
-        return () => {
-            active = false;
-        };
+        return () => { active = false; };
     }, [token, user, setUser, logout]);
 
-    if (!token) {
-        return <Navigate to="/login" replace state={{ from: location.pathname }} />;
-    }
+    if (!token) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
 
     if (checking) {
         return (
