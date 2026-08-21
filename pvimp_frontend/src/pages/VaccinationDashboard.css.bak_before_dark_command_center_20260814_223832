@@ -1,0 +1,279 @@
+﻿.vaccination-command-center {
+  --vc-bg: #f4f7fb;
+  --vc-card: #ffffff;
+  --vc-text: #172033;
+  --vc-muted: #718096;
+  --vc-border: #e7edf5;
+  --vc-primary: #2563eb;
+  --vc-success: #16a34a;
+  --vc-warning: #f59e0b;
+  --vc-danger: #dc2626;
+  --vc-purple: #7c3aed;
+  --vc-cyan: #0891b2;
+  direction: rtl;
+  background: var(--vc-bg);
+  min-height: 100%;
+  padding: 24px;
+}
+
+.vaccination-command-center .dashboard-header,
+.vaccination-command-center .page-header {
+  background: linear-gradient(135deg,#0f3d91 0%,#1769aa 55%,#0e7490 100%);
+  color: #fff;
+  border-radius: 22px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 30px rgba(15,61,145,.18);
+}
+
+.vaccination-command-center .dashboard-header h1,
+.vaccination-command-center .page-header h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.vaccination-command-center .dashboard-header p,
+.vaccination-command-center .page-header p {
+  margin: 8px 0 0;
+  opacity: .82;
+}
+
+.vaccination-command-center .kpi-grid,
+.vaccination-command-center .kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.vaccination-command-center .kpi-card,
+.vaccination-command-center .metric-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--vc-card);
+  border: 1px solid var(--vc-border);
+  border-radius: 18px;
+  padding: 20px;
+  min-height: 125px;
+  box-shadow: 0 7px 22px rgba(31,41,55,.06);
+  transition: transform .2s ease,box-shadow .2s ease;
+}
+
+.vaccination-command-center .kpi-card:hover,
+.vaccination-command-center .metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(31,41,55,.10);
+}
+
+.vaccination-command-center .kpi-card::before,
+.vaccination-command-center .metric-card::before {
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:5px;
+  background:var(--vc-primary);
+}
+
+.vaccination-command-center .kpi-card:nth-child(2)::before,
+.vaccination-command-center .metric-card:nth-child(2)::before {
+  background:var(--vc-success);
+}
+
+.vaccination-command-center .kpi-card:nth-child(3)::before,
+.vaccination-command-center .metric-card:nth-child(3)::before {
+  background:var(--vc-warning);
+}
+
+.vaccination-command-center .kpi-card:nth-child(4)::before,
+.vaccination-command-center .metric-card:nth-child(4)::before {
+  background:var(--vc-danger);
+}
+
+.vaccination-command-center .kpi-title,
+.vaccination-command-center .metric-title {
+  color:var(--vc-muted);
+  font-size:13px;
+  font-weight:700;
+}
+
+.vaccination-command-center .kpi-value,
+.vaccination-command-center .metric-value {
+  color:var(--vc-text);
+  font-size:30px;
+  line-height:1;
+  font-weight:900;
+  margin-top:14px;
+}
+
+.vaccination-command-center .kpi-subtitle,
+.vaccination-command-center .metric-subtitle {
+  color:var(--vc-muted);
+  font-size:12px;
+  margin-top:9px;
+}
+
+.vaccination-command-center .dashboard-grid,
+.vaccination-command-center .charts-grid,
+.vaccination-command-center .content-grid {
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(320px,1fr);
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.vaccination-command-center .dashboard-card,
+.vaccination-command-center .chart-card,
+.vaccination-command-center .panel,
+.vaccination-command-center .table-card {
+  background:#fff;
+  border:1px solid var(--vc-border);
+  border-radius:20px;
+  box-shadow:0 7px 24px rgba(31,41,55,.055);
+  padding:20px;
+}
+
+.vaccination-command-center .card-header,
+.vaccination-command-center .chart-header,
+.vaccination-command-center .panel-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.vaccination-command-center .card-header h2,
+.vaccination-command-center .chart-header h2,
+.vaccination-command-center .panel-header h2 {
+  margin:0;
+  color:var(--vc-text);
+  font-size:17px;
+  font-weight:800;
+}
+
+.vaccination-command-center .chart-card {
+  min-height:330px;
+}
+
+.vaccination-command-center table {
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+.vaccination-command-center th {
+  background:#f7f9fc;
+  color:#667085;
+  font-size:12px;
+  font-weight:800;
+  padding:12px;
+  border-bottom:1px solid var(--vc-border);
+}
+
+.vaccination-command-center td {
+  padding:13px 12px;
+  color:#344054;
+  font-size:13px;
+  border-bottom:1px solid #eef2f7;
+}
+
+.vaccination-command-center tr:last-child td {
+  border-bottom:0;
+}
+
+.vaccination-command-center .status-badge,
+.vaccination-command-center .badge {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.vaccination-command-center .success,
+.vaccination-command-center .status-success {
+  color:#166534;
+  background:#dcfce7;
+}
+
+.vaccination-command-center .warning,
+.vaccination-command-center .status-warning {
+  color:#92400e;
+  background:#fef3c7;
+}
+
+.vaccination-command-center .danger,
+.vaccination-command-center .status-danger {
+  color:#991b1b;
+  background:#fee2e2;
+}
+
+.vaccination-command-center .info,
+.vaccination-command-center .status-info {
+  color:#075985;
+  background:#e0f2fe;
+}
+
+.vaccination-command-center .progress {
+  height:9px;
+  overflow:hidden;
+  background:#edf2f7;
+  border-radius:999px;
+}
+
+.vaccination-command-center .progress-bar {
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#2563eb,#06b6d4);
+}
+
+.vaccination-command-center .alert-panel {
+  border-radius:18px;
+  border:1px solid #fde68a;
+  background:#fffbeb;
+  padding:16px;
+}
+
+.vaccination-command-center .priority-list {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.vaccination-command-center .priority-item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:#f8fafc;
+  border:1px solid #edf2f7;
+  border-radius:14px;
+  padding:12px 14px;
+}
+
+@media (max-width:1100px) {
+  .vaccination-command-center .kpi-grid,
+  .vaccination-command-center .kpi-cards {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .vaccination-command-center .dashboard-grid,
+  .vaccination-command-center .charts-grid,
+  .vaccination-command-center .content-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:650px) {
+  .vaccination-command-center {
+    padding:12px;
+  }
+
+  .vaccination-command-center .kpi-grid,
+  .vaccination-command-center .kpi-cards {
+    grid-template-columns:1fr;
+  }
+}

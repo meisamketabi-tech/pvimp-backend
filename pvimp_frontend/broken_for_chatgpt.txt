@@ -1,0 +1,5550 @@
+================================================
+FILE:
+\src\pages\SupervisionAnalytics.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionAnalytics(){
+return <div className="dashboard-container" dir="rtl"><h1>????? ???? ??? ?????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionAnalyticsCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionAnalyticsCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??? ????? ? ????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionAnnualReport.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionAnnualReport(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionApprovals.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionApprovals(){
+return <div className="dashboard-container" dir="rtl"><h1>??????? ??? ??????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionApprovalWorkflow.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionApprovalWorkflow(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ? ????? ?????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionArchive.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionArchive(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????? ?????? ??? ??????</h1>
+</div>
+
+
+<table className="dashboard-table">
+
+<thead>
+
+<tr>
+<th>????? ??????</th>
+<th>?????</th>
+<th>????</th>
+</tr>
+
+</thead>
+
+
+<tbody></tbody>
+
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionArchiveSearch.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionArchiveSearch(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?? ???? ?????? ????? ???? ? ?????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionAudit.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionAudit(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??? ????????? ??????</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>?????</th>
+<th>??????</th>
+<th>????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionAuditTrail.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionAuditTrail(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+Audit Log ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionBackup.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionBackup(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??????? ???? ??????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ???? ??? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCalendar.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionCalendar(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+????? ?????? ??????
+</h1>
+
+</div>
+
+
+<div className="dashboard-card">
+
+?????? ???? ????????? ???????
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCaseManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionCaseManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??? ?????? ? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCenters.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionCenters(){
+return <div className="dashboard-container" dir="rtl"><h1>????? ??? ????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionChangeHistory.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionChangeHistory(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ??????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??? ??????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCommandCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionCommandCenter(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+<h3>????? ????</h3>
+<strong>????</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>??????? ???</h3>
+<strong>0</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>???????</h3>
+<strong>0</strong>
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCommandDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionCommandDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ???????? ?????
+</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+????? ???? ??
+</div>
+
+<div className="dashboard-card">
+???? ??
+</div>
+
+<div className="dashboard-card">
+???????
+</div>
+
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionComplaints.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionComplaints(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ????? ????? ?????</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>?????</th>
+<th>?????</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCompliance.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionCompliance(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ??????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ?????? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionConfiguration.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionConfiguration(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????????? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionControlRoom.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionControlRoom(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionCountyView.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionCountyView(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??????? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDailyOperations.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDailyOperations(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ?????? ??? ??? ????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDashboardAdvanced.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+import {getSupervisionInspections} from "../services/supervisionService";
+import {SupervisionInspection} from "../types/SupervisionInspection";
+
+
+export default function SupervisionDashboardAdvanced(){
+
+const [data,setData]=useState<SupervisionInspection[]>([]);
+
+
+useEffect(()=>{
+
+getSupervisionInspections().then(setData);
+
+},[]);
+
+
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+??????? ??????? ??????? ????? ?????
+</h1>
+
+</div>
+
+
+<div className="dashboard-cards">
+
+
+<div className="dashboard-card">
+<h3>?????? ?????</h3>
+<strong>{data.length}</strong>
+</div>
+
+
+<div className="dashboard-card">
+<h3>??????? ??????</h3>
+<strong>
+{
+data.filter(x=>(x.nonComplianceCount || 0)>2).length
+}
+</strong>
+</div>
+
+
+<div className="dashboard-card">
+<h3>????? ??????</h3>
+<strong>
+{
+data.filter(x=>x.judicialReferral).length
+}
+</strong>
+</div>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDashboardCharts.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDashboardCharts(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????????? ??????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ???? ?????? ??
+</div>
+
+<div className="dashboard-card">
+?????? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDashboardMenu.tsx
+================================================
+
+
+import React from "react";
+import {useNavigate} from "react-router-dom";
+
+
+export default function SupervisionDashboardMenu(){
+
+const nav=useNavigate();
+
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+???? ????? ?????
+</h1>
+
+</div>
+
+
+<div className="dashboard-cards">
+
+
+<button onClick={()=>nav("/supervision/create")}>
+??? ??????
+</button>
+
+
+<button onClick={()=>nav("/supervision/list")}>
+???? ?????? ??
+</button>
+
+
+<button onClick={()=>nav("/supervision/reports")}>
+????? ??
+</button>
+
+
+<button onClick={()=>nav("/supervision/gis")}>
+GIS
+</button>
+
+
+<button onClick={()=>nav("/supervision/violations")}>
+??????
+</button>
+
+
+<button onClick={()=>nav("/supervision/samples")}>
+????? ??????
+</button>
+
+
+<button onClick={()=>nav("/supervision/legal")}>
+????? ?????
+</button>
+
+
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDashboardSummary.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDashboardSummary(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+????? ??????? ??? ????
+</div>
+
+<div className="dashboard-card">
+?????? ??? ????? ???
+</div>
+
+<div className="dashboard-card">
+?????? ??? ???
+</div>
+
+<div className="dashboard-card">
+??????? ??????
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataAnalysis.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataAnalysis(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataDashboard(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ???? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ??? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataExportCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataExportCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ??? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataImport.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataImport(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>???? ???????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??????? ?? ???? ? ?????? ??
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataQuality.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataQuality(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ????? ???? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ???? ? ??? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDataQualityDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDataQualityDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ????? ????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ???? ? ??? ???? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDecisionReports.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDecisionReports(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????? ??? ????? ????</h1>
+</div>
+
+<div className="dashboard-card">
+????? ??? ?????? ???? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDecisionSupport.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDecisionSupport(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????? ??????? ????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ???? ??? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionDocumentManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionDocumentManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ? ?????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionElectronicForms.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionElectronicForms(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??? ??? ?????????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??? ??
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionEscalation.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionEscalation(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ??? ????? ?? ???? ????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionExecutiveReports.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionExecutiveReports(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ????? ?? ?????? ????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionExecutiveSummary.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionExecutiveSummary(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ??? ?????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionExport.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionExport(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+????? ? ????? ????
+</h1>
+
+</div>
+
+
+<div className="dashboard-card">
+
+???? ????? Excel ? PDF
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionExternalReports.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionExternalReports(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??? ???? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????????? ?????? ? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionFieldOperations.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionFieldOperations(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???????? ? ?????? ????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionFollowUp.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionFollowUp(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????? ??????
+</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????</th>
+<th>?????</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionFutureDevelopment.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionFutureDevelopment(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionGeoAnalytics.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionGeoAnalytics(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????? ????? ??????</h1>
+</div>
+
+<div className="dashboard-card">
+????? GIS ? ???????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionGISDashboard.tsx
+================================================
+
+import React from "react";
+
+export default function SupervisionGISDashboard(){
+    return <div>GIS ?????</div>;
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionGISImport.tsx
+================================================
+
+import React from "react";
+
+export default function SupervisionGISImport(){
+    return <div>???? ??????? GIS ?????</div>;
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionHeatMap.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionHeatMap(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ?????? ?????????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionHelp.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionHelp(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??????? ? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionHistory.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionHistory(){
+return <div className="dashboard-container" dir="rtl"><h1>????? ??????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionAI.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionAI(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??? ?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ????? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionApproval.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionApproval(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionArchiveAdvanced.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionArchiveAdvanced(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ? ????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionCalendar.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionCalendar(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ???? ????????? ???? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionEdit.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionEdit(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+?????? ??? ??????
+</h1>
+
+</div>
+
+
+<p>
+?????? ??????? ?????? ?? ??? ??? ????? ??????.
+</p>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionHistory.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionHistory(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ????????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionList.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+
+import {
+    getSupervisionInspections
+} from "../services/supervisionService";
+
+
+import {
+    SupervisionInspection
+} from "../types/SupervisionInspection";
+
+
+
+export default function SupervisionInspectionList(){
+
+
+const [items,setItems]=useState<SupervisionInspection[]>([]);
+
+
+
+useEffect(()=>{
+
+load();
+
+},[]);
+
+
+
+async function load(){
+
+const result = await getSupervisionInspections();
+
+setItems(result);
+
+}
+
+
+
+return (
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+???? ?????? ??? ????? ?????
+</h1>
+
+</div>
+
+
+
+<table className="dashboard-table">
+
+
+<thead>
+
+<tr>
+
+<th>?????</th>
+
+<th>?????</th>
+
+<th>????</th>
+
+<th>???????</th>
+
+<th>?????</th>
+
+<th>?????</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{
+items.map(item=>(
+
+<tr key={item.inspectionId}>
+
+
+<td>
+{item.inspectionId}
+</td>
+
+
+<td>
+{item.inspectionDate}
+</td>
+
+
+<td>
+{item.unitName}
+</td>
+
+
+<td>
+{item.city}
+</td>
+
+
+<td>
+{item.inspectorName}
+</td>
+
+
+<td>
+{item.inspectionStatus}
+</td>
+
+
+</tr>
+
+))
+}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionManager.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionManager(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ????? ? ?????? ?????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionMapAdvanced.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionMapAdvanced(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ??? GIS? ???? ???? ? ????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionPlanning.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionPlanning(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ???? ?????? ??</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ?????? ?? ?????????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionQueue.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionQueue(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?? ?????? ??? ?????? ???? ???
+</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+
+<tr>
+<th>????</th>
+<th>?????</th>
+<th>?????</th>
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionStatistics.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionStatistics(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ?????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionTemplates.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionTemplates(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??? ??? ???? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionTypes.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionInspectionTypes(){
+return <div className="dashboard-container" dir="rtl"><h1>????? ??????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectionWorkflow.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectionWorkflow(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectorAttendance.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectorAttendance(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>???? ? ???? ???????</h1>
+</div>
+
+<div className="dashboard-card">
+??? ????? ???? ?????????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectorMobileTasks.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectorMobileTasks(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ??? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ??????? ??? ????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectorPerformance.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionInspectorPerformance(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??????? ?????? ?????????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionInspectors.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionInspectors(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+?????? ???????
+</h1>
+
+</div>
+
+
+<table className="dashboard-table">
+
+<thead>
+
+<tr>
+
+<th>??? ?????</th>
+<th>??</th>
+<th>?????</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionIntegration.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionIntegration(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>????? ?????? ??? ??????</h1>
+</div>
+
+<div className="dashboard-card">
+GIS - LIMS - ?????? ??? ???
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionIntegrationCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionIntegrationCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??????? ????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionIntegrationStatus.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionIntegrationStatus(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ?????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? GIS? LIMS ? ?????? ??? ???
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionKnowledgeBase.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionKnowledgeBase(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ???? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????????? ?? ? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionKPIManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionKPIManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ???? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ? ???? KPI ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionKPIs.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionKPIs(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>???? ??? ????? ?????? ????? ?????</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+<h3>????? ??????</h3>
+<strong>0</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>??? ??? ????</h3>
+<strong>0%</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>??????? ???? ??????</h3>
+<strong>0</strong>
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLaboratoryResults.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionLaboratoryResults(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLegal.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+import {getSupervisionInspections} from "../services/supervisionService";
+import {SupervisionInspection} from "../types/SupervisionInspection";
+
+
+export default function SupervisionLegal(){
+
+const [data,setData]=useState<SupervisionInspection[]>([]);
+
+
+useEffect(()=>{
+getSupervisionInspections().then(setData);
+},[]);
+
+
+
+const items=data.filter(
+x=>x.judicialReferral
+);
+
+
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ??? ????? ?????</h1>
+</div>
+
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????</th>
+<th>???</th>
+<th>???</th>
+</tr>
+</thead>
+
+
+<tbody>
+
+{
+items.map(x=>(
+
+<tr key={x.inspectionId}>
+
+<td>{x.unitName}</td>
+
+<td>{x.city}</td>
+
+<td>{x.description}</td>
+
+</tr>
+
+))
+}
+
+</tbody>
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLegalCases.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionLegalCases(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ?????? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLegalTracking.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionLegalTracking(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ??? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLiveMonitoring.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionLiveMonitoring(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???? ?? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ?????? ??????? ? ??????? ??
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionLogs.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionLogs(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??? ?????? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionManagement.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionManagement(){
+return <div className="dashboard-container" dir="rtl"><h1>?????? ????? ?????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionManagerPanel.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionManagerPanel(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??? ???? ????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+????? ? ?????? ?? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMapLayers.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionMapLayers(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+???? ??? ???????? GIS ?????
+</h1>
+
+</div>
+
+
+<ul>
+
+<li>??????? ????</li>
+
+<li>????? ????</li>
+
+<li>????? ??????</li>
+
+<li>????? ?????</li>
+
+</ul>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMasterReports.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionMasterReports(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??? ????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ??????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMessageCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionMessageCenter(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ?? ?????? ? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMobileDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionMobileDashboard(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??????? ??? ??? ?? ? ??? ???? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMobileSync.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionMobileSync(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ? ?????? ??????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionModuleDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionModuleDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ?????? ???? ??????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionMonthlyReport.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionMonthlyReport(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionNationalDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionNationalDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ??? ?? ????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionNationalKPIs.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionNationalKPIs(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+?? ?????? ??
+</div>
+
+<div className="dashboard-card">
+?? ??????
+</div>
+
+<div className="dashboard-card">
+?? ????? ??????
+</div>
+
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionNotifications.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionNotifications(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+<h1>
+????? ??? ??????
+</h1>
+</div>
+
+
+<div className="dashboard-card">
+
+???????? ??????? ???? ???????? ? ????? ??????
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionNotificationsCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionNotificationsCenter(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ?? ? ???????? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionOfflineData.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionOfflineData(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ??????? ????? ???
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionOperationalAlerts.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionOperationalAlerts(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???????? ???? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionOperationalDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionOperationalDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??????? ??????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ?????? ????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionPerformance.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionPerformance(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ?????? ???????
+</h1>
+</div>
+
+
+<table className="dashboard-table">
+
+<thead>
+
+<tr>
+
+<th>?????</th>
+<th>????? ??????</th>
+<th>?????? ??? ???</th>
+<th>??????</th>
+
+</tr>
+
+</thead>
+
+
+<tbody></tbody>
+
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionPerformanceAnalysis.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionPerformanceAnalysis(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ?????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionPerformanceDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionPerformanceDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ?????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ????????? ? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionPortal.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionPortal(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???? ????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionPredictiveRisk.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionPredictiveRisk(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??? ???? ???? ??????
+</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????</th>
+<th>?????? ????</th>
+<th>??? ????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionProducts.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionProducts(){
+return <div className="dashboard-container" dir="rtl"><h1>?????? ??????? ??? ?????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionProvinceView.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionProvinceView(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ??????? ??
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRegionalComparison.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRegionalComparison(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????? ?????
+</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>?????</th>
+<th>??????</th>
+<th>????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionReportBuilder.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionReportBuilder(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ????? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionReportCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionReportCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ??? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionReportManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionReportManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ????? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ? ?????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionReports.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+
+import {
+    getSupervisionInspections
+} from "../services/supervisionService";
+
+
+import {
+    SupervisionInspection
+} from "../types/SupervisionInspection";
+
+
+
+export default function SupervisionReports(){
+
+
+const [data,setData]=useState<SupervisionInspection[]>([]);
+
+
+
+useEffect(()=>{
+
+load();
+
+},[]);
+
+
+
+async function load(){
+
+const result =
+await getSupervisionInspections();
+
+setData(result);
+
+}
+
+
+
+const total =
+data.length;
+
+
+const violations =
+data.reduce(
+(sum,item)=>sum+(item.nonComplianceCount || 0),
+0
+);
+
+
+
+const samples =
+data.reduce(
+(sum,item)=>sum+(item.sampleCount || 0),
+0
+);
+
+
+
+const destroyed =
+data.reduce(
+(sum,item)=>sum+(item.destroyedProductKg || 0),
+0
+);
+
+
+
+return (
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+????? ??? ??????? ????? ?????
+</h1>
+
+</div>
+
+
+
+<div className="dashboard-cards">
+
+
+<div className="dashboard-card">
+
+<h3>
+????? ?? ??????
+</h3>
+
+<strong>
+{total}
+</strong>
+
+</div>
+
+
+
+<div className="dashboard-card">
+
+<h3>
+?? ??????
+</h3>
+
+<strong>
+{violations}
+</strong>
+
+</div>
+
+
+
+<div className="dashboard-card">
+
+<h3>
+????? ????? ??
+</h3>
+
+<strong>
+{samples}
+</strong>
+
+</div>
+
+
+
+<div className="dashboard-card">
+
+<h3>
+????? ???? (???????)
+</h3>
+
+<strong>
+{destroyed}
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionResourceManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionResourceManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ????? ?????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ???????? ????? ? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRiskAssessment.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRiskAssessment(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??????? ???? ??????? ??? ?????</h1>
+</div>
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+<h3>???? ????</h3>
+<strong>0</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>???? ?????</h3>
+<strong>0</strong>
+</div>
+
+<div className="dashboard-card">
+<h3>???? ?????</h3>
+<strong>0</strong>
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRiskDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRiskDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??????? ???? ??????</h1>
+</div>
+
+<div className="dashboard-card">
+???? ???? ??????? ??? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRiskMatrix.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRiskMatrix(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ???? ??????? ??? ?????
+</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????</th>
+<th>????</th>
+<th>??????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRiskPrediction.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRiskPrediction(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??? ???? ????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??? ??? ???? ?????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRoleManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRoleManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??? ??
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionRoles.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionRoles(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>???? ??????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??? ?? ? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSamples.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+import {getSupervisionInspections} from "../services/supervisionService";
+import {SupervisionInspection} from "../types/SupervisionInspection";
+
+export default function SupervisionSamples(){
+
+const [data,setData]=useState<SupervisionInspection[]>([]);
+
+useEffect(()=>{
+getSupervisionInspections().then(setData);
+},[]);
+
+
+const samples=data.filter(x=>x.sampling);
+
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ????? ?????? ????? ?????</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????</th>
+<th>??? ?????</th>
+<th>?????</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody>
+
+{
+samples.map(item=>(
+
+<tr key={item.inspectionId}>
+
+<td>{item.unitName}</td>
+
+<td>{item.sampleType}</td>
+
+<td>{item.sampleCount}</td>
+
+<td>{item.inspectorName}</td>
+
+</tr>
+
+))
+}
+
+</tbody>
+
+</table>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSamplingCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSamplingCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ?? ? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSamplingDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSamplingDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ?? ? ????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSamplingLab.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSamplingLab(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ?????? ????? ??</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>?? ?????</th>
+<th>?????????</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSamplingWorkflow.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSamplingWorkflow(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?? ????? ?? ????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSchedules.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionSchedules(){
+return <div className="dashboard-container" dir="rtl"><h1>?????? ???? ???? ??????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSecurity.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSecurity(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ?????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ? ????? ???????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSettings.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionSettings(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+??????? ????? ?????
+</h1>
+
+</div>
+
+
+<div>
+
+<p>
+?????? ????? ??????? ??? ??? ????? ?? ? ?????????? ??????
+</p>
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSettingsCenter.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSettingsCenter(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??????? ????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSmartAlerts.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSmartAlerts(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ???????? ???????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSmartSearch.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSmartSearch(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?? ?? ??????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionStatistics.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionStatistics(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+???? ?????? ????? ?????
+</h1>
+
+</div>
+
+
+<div className="dashboard-cards">
+
+<div className="dashboard-card">
+<h3>???? ?????? ??</h3>
+</div>
+
+
+<div className="dashboard-card">
+<h3>????? ??????</h3>
+</div>
+
+
+<div className="dashboard-card">
+<h3>????? ?????????</h3>
+</div>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSystemDashboard.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSystemDashboard(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ??? ????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSystemHealth.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSystemHealth(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSystemSettings.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSystemSettings(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+??????? ????? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????????? ????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionSystemStatus.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionSystemStatus(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ????? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ????? ?? ? ????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionTaskManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionTaskManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ????? ?????????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ? ?????? ?????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionTasks.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionTasks(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ??????? ??? ??????</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>????? ???????</th>
+<th>?????</th>
+<th>?????</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionTraining.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionTraining(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ?????? ? ?????????? ??
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionTrendAnalysis.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionTrendAnalysis(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ??????? ???? ??? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionUnitMonitoring.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionUnitMonitoring(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??????? ??? ?????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ??????? ???? ? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionUnits.tsx
+================================================
+
+
+import React from "react";
+
+
+export default function SupervisionUnits(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+
+<h1>
+?????? ??????? ??? ?????
+</h1>
+
+</div>
+
+
+<table className="dashboard-table">
+
+<thead>
+
+<tr>
+<th>??? ????</th>
+<th>???</th>
+<th>???????</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionUserManagement.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionUserManagement(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ???????
+</h1>
+</div>
+
+<div className="dashboard-card">
+??????? ? ??? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionUsers.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionUsers(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>??????? ????? ?????</h1>
+</div>
+
+<table className="dashboard-table">
+
+<thead>
+<tr>
+<th>???</th>
+<th>???</th>
+<th>?????</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionVehicleTracking.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionVehicleTracking(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>?????? ???????? ??????</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ? ???? ??????? ??
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationAnalysis.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionViolationAnalysis(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ??? ? ???? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationAnalytics.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionViolationAnalytics(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ?????? ?? ???? ???? ???? ? ????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationDatabase.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionViolationDatabase(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ?????? ??? ???
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolations.tsx
+================================================
+
+
+import React,{useEffect,useState} from "react";
+
+import {
+    getSupervisionInspections
+} from "../services/supervisionService";
+
+
+import {
+    SupervisionInspection
+} from "../types/SupervisionInspection";
+
+
+
+export default function SupervisionViolations(){
+
+
+const [items,setItems]=useState<SupervisionInspection[]>([]);
+
+
+
+useEffect(()=>{
+
+load();
+
+},[]);
+
+
+
+async function load(){
+
+const result =
+await getSupervisionInspections();
+
+setItems(result);
+
+}
+
+
+
+const violations =
+items.filter(
+item=>(item.violations || []).length>0
+);
+
+
+
+return (
+
+<div className="dashboard-container" dir="rtl">
+
+
+<div className="expert-header">
+
+<h1>
+?????? ?????? ????? ?????
+</h1>
+
+</div>
+
+
+
+<table className="dashboard-table">
+
+
+<thead>
+
+<tr>
+
+<th>
+????
+</th>
+
+<th>
+???????
+</th>
+
+<th>
+??????
+</th>
+
+<th>
+????? ?????
+</th>
+
+<th>
+????
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{
+violations.map(item=>(
+
+<tr key={item.inspectionId}>
+
+
+<td>
+{item.unitName}
+</td>
+
+
+<td>
+{item.city}
+</td>
+
+
+<td>
+
+{
+(item.violations || []).join(" - ")
+}
+
+</td>
+
+
+<td>
+
+{
+item.judicialReferral
+?
+"???"
+:
+"???"
+}
+
+</td>
+
+
+<td>
+
+{
+item.sealed
+?
+"???"
+:
+"???"
+}
+
+</td>
+
+
+</tr>
+
+))
+}
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationsRules.tsx
+================================================
+
+
+import React from "react";
+export default function SupervisionViolationsRules(){
+return <div className="dashboard-container" dir="rtl"><h1>?????? ??????</h1></div>
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationTracking.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionViolationTracking(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+?????? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ????? ?????? ??? ???
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionViolationWorkflow.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionViolationWorkflow(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ??? ??????
+</h1>
+</div>
+
+<div className="dashboard-card">
+?????? ??????? ??????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionWorkflow.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionWorkflow(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>???? ??? ????? ?????</h1>
+</div>
+
+<ul>
+
+<li>??? ???????</li>
+
+<li>??????</li>
+
+<li>??? ????</li>
+
+<li>????? ??????</li>
+
+<li>????? ??????</li>
+
+</ul>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionWorkflowDesigner.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionWorkflowDesigner(){
+
+return(
+
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+????? ???? ???
+</h1>
+</div>
+
+<div className="dashboard-card">
+???? ? ?????? ????????? ??????
+</div>
+
+</div>
+
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\pages\SupervisionWorkflowMonitor.tsx
+================================================
+
+
+import React from "react";
+
+export default function SupervisionWorkflowMonitor(){
+
+return(
+<div className="dashboard-container" dir="rtl">
+
+<div className="expert-header">
+<h1>
+???? ???? ???
+</h1>
+</div>
+
+<div className="dashboard-card">
+????? ????? ????????
+</div>
+
+</div>
+)
+
+}
+
+
+
+
+================================================
+FILE:
+\src\types\SupervisionInspection.ts
+================================================
+
+export interface SupervisionInspection {
+
+    sampleType: string;
+
+
+    inspectionId?: number;
+    inspectionNumber?: string;
+    inspectionDate: string;
+    inspectionType: string;
+    inspectionStatus?: string;
+
+    partners: string[];
+
+    centerType: string;
+    unitType: string;
+    slaughterType: string[];
+    selectedSlaughter: string;
+
+    unitName: string;
+    ownerName: string;
+    phone: string;
+
+    province: string;
+    city: string;
+    address: string;
+
+    inspectorName: string;
+
+    nonComplianceCount: number;
+    judicialReferral: boolean;
+    sampling: boolean;
+
+
+sampleCount: number;
+
+    destroyedProductKg: number;
+
+    violations: string[];
+    sealed: boolean;
+
+    description: string;
+}
+
+export const emptyInspection: SupervisionInspection = {
+
+    sampleType: "",
+
+
+    inspectionDate: "",
+    inspectionType: "",
+    partners: [],
+    centerType: "",
+    unitType: "",
+    slaughterType: [],
+    selectedSlaughter: "",
+    unitName: "",
+    ownerName: "",
+    phone: "",
+    province: "?????",
+    city: "",
+    address: "",
+    inspectorName: "",
+    inspectionStatus: "draft",
+    nonComplianceCount: 0,
+    judicialReferral: false,
+    sampling: false,
+    sampleCount: 0,
+    destroyedProductKg: 0,
+    violations: [],
+    sealed: false,
+    description: ""
+};
+
+
+

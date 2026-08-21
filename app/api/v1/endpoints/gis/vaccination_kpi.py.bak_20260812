@@ -1,0 +1,704 @@
+﻿from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Query,
+)
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from app.api.deps import (
+    get_current_user,
+    get_allowed_county_ids,
+)
+from app.db.models.gis_epidemiology_unit import (
+    GISEpidemiologyUnit,
+)
+from app.db.session import get_db
+from app.services.gis.unit_history_service import (
+    unit_history,
+)
+from app.services.gis.vaccination_kpi_service import (
+    alerts,
+    counties,
+    dashboard,
+    effectiveness,
+    vaccine_county_report,
+    vaccine_management_report,
+    vaccine_unit_report,
+    vaccine_unit_report_paginated,
+    unit_detail,
+    units,
+    vaccines,
+    county_units_report,
+)
+
+router = APIRouter(prefix="/gis/kpi/vaccination", tags=["GIS Vaccination KPI"])
+
+
+# =========================================================
+# Scope helpers
+# =========================================================
+
+
+def vaccine_county_report(
+    db: Session,
+    vaccine_type: str,
+    province_code: str | None = None,
+):
+    """
+    KPI report by county for a specific vaccine type.
+    """
+
+    query = """
+    SELECT
+        gc.county_code,
+        gc.county_name,
+        COUNT(*) AS vaccination_count,
+        SUM(vd.dose_count) AS total_doses
+    FROM gis_vaccination_records vd
+    JOIN gis_counties gc
+        ON gc.id = vd.county_id
+    WHERE vd.vaccine_type = :vaccine_type
+    """
+
+    params = {
+        "vaccine_type": vaccine_type,
+    }
+
+    if province_code:
+        query += """
+        AND gc.province_code = :province_code
+        """
+        params["province_code"] = province_code
+
+    query += """
+    GROUP BY
+        gc.county_code,
+        gc.county_name
+
+    ORDER BY
+        vaccination_count DESC
+    """
+
+    rows = (
+        db.execute(
+            text(query),
+            params,
+        )
+        .mappings()
+        .all()
+    )
+
+    return [dict(row) for row in rows]
+
+
+def _get_allowed_county_codes(
+    db: Session,
+    allowed_county_ids: set[int] | None,
+) -> set[str] | None:
+    """
+    None  -> global scope
+    set() -> no access
+    set[str] -> allowed county codes
+    """
+
+    if allowed_county_ids is None:
+        return None
+
+    if not allowed_county_ids:
+        return set()
+
+    rows = (
+        db.execute(
+            text("""
+            SELECT code
+            FROM county
+            WHERE id = ANY(:county_ids)
+              AND is_active = TRUE
+            """),
+            {"county_ids": list(allowed_county_ids)},
+        )
+        .scalars()
+        .all()
+    )
+
+    return {str(code).strip() for code in rows if code is not None}
+
+
+def _authorize_county_code(
+    db: Session,
+    current_user,
+    county_code: str,
+) -> None:
+    """
+    Validate that current user may access county_code.
+    """
+
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    # Global scope
+    if allowed_county_ids is None:
+        return
+
+    allowed_codes = _get_allowed_county_codes(
+        db,
+        allowed_county_ids,
+    )
+
+    if not allowed_codes:
+        raise HTTPException(
+            status_code=403,
+            detail="No organizational county scope is assigned.",
+        )
+
+    if str(county_code).strip() not in allowed_codes:
+        raise HTTPException(
+            status_code=403,
+            detail="You cannot access this county.",
+        )
+
+
+def _resolve_county_scope(
+    db: Session,
+    current_user,
+    requested_county_code: str | None,
+) -> str | None:
+    """
+    Global user:
+        requested county remains optional.
+
+    County-scoped user:
+        requested county is forced to the user's
+        assigned county when omitted.
+
+        If a different county is requested:
+            403
+    """
+
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    # Global scope
+    if allowed_county_ids is None:
+        return requested_county_code
+
+    allowed_codes = _get_allowed_county_codes(
+        db,
+        allowed_county_ids,
+    )
+
+    if not allowed_codes:
+        raise HTTPException(
+            status_code=403,
+            detail="No organizational county scope is assigned.",
+        )
+
+    # Exactly one county is expected for COUNTY_HEAD.
+    if requested_county_code:
+
+        requested = str(requested_county_code).strip()
+
+        if requested not in allowed_codes:
+            raise HTTPException(
+                status_code=403,
+                detail="You cannot access this county.",
+            )
+
+        return requested
+
+    if len(allowed_codes) == 1:
+        return next(iter(allowed_codes))
+
+    raise HTTPException(
+        status_code=403,
+        detail=("Multiple county scopes are assigned. " "A county must be specified."),
+    )
+
+
+def _authorize_unit(
+    db: Session,
+    current_user,
+    unit_code: str,
+) -> None:
+    """
+    Validate that current user may access the
+    specified epidemiological unit.
+    """
+
+    unit = (
+        db.query(GISEpidemiologyUnit)
+        .filter(GISEpidemiologyUnit.unit_code == unit_code)
+        .first()
+    )
+
+    if not unit:
+        raise HTTPException(
+            status_code=404,
+            detail="Epidemiological unit not found.",
+        )
+
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    # Global scope
+    if allowed_county_ids is None:
+        return
+
+    if not unit.county_id:
+        raise HTTPException(
+            status_code=403,
+            detail="This unit has no county scope.",
+        )
+
+    if unit.county_id not in allowed_county_ids:
+        raise HTTPException(
+            status_code=403,
+            detail="You cannot access this epidemiological unit.",
+        )
+
+
+# =========================================================
+# Dashboard
+# =========================================================
+
+
+@router.get("/dashboard")
+def vaccination_dashboard(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    return dashboard(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+    )
+
+
+# =========================================================
+# Counties
+# =========================================================
+
+
+@router.get("/counties")
+def vaccination_counties(
+    province_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    if allowed_county_ids is None:
+        return counties(
+            db,
+            province_code,
+            vaccine_type,
+        )
+
+    allowed_codes = _get_allowed_county_codes(
+        db,
+        allowed_county_ids,
+    )
+
+    if not allowed_codes:
+        return []
+
+    rows = counties(
+        db,
+        province_code,
+        vaccine_type,
+    )
+
+    return [
+        row for row in rows if str(row.get("county_code", "")).strip() in allowed_codes
+    ]
+
+
+# =========================================================
+# Vaccines
+# =========================================================
+
+
+@router.get("/vaccines")
+def vaccination_vaccines(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    if unit_code:
+        _authorize_unit(
+            db,
+            current_user,
+            unit_code,
+        )
+
+    return vaccines(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+        unit_code,
+    )
+
+
+# =========================================================
+# Units
+# =========================================================
+
+
+@router.get("/units")
+def vaccination_units(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    if unit_code:
+        _authorize_unit(
+            db,
+            current_user,
+            unit_code,
+        )
+
+    return units(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+        unit_code,
+    )
+
+
+# =========================================================
+# Alerts
+# =========================================================
+
+
+@router.get("/alerts")
+def vaccination_alerts(
+    province_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    # Global users can use the existing province-level
+    # implementation directly.
+    if allowed_county_ids is None:
+        return alerts(
+            db,
+            province_code,
+        )
+
+    # County-scoped users receive only their county data.
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        None,
+    )
+
+    result = alerts(
+        db,
+        province_code,
+    )
+
+    if not isinstance(result, list):
+        return result
+
+    return [
+        row for row in result if str(row.get("county_code", "")).strip() == county_code
+    ]
+
+
+# =========================================================
+# Effectiveness
+# =========================================================
+
+
+@router.get("/effectiveness")
+def vaccination_effectiveness(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    return effectiveness(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+    )
+
+
+# =========================================================
+# Unit detail
+# =========================================================
+
+
+@router.get("/unit/{unit_code}")
+def vaccination_unit_detail(
+    unit_code: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    _authorize_unit(
+        db,
+        current_user,
+        unit_code,
+    )
+
+    return unit_detail(
+        db,
+        unit_code,
+    )
+
+
+# =========================================================
+# Unit history
+# =========================================================
+
+
+@router.get("/unit/{unit_code}/history")
+def vaccination_unit_history(
+    unit_code: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    _authorize_unit(
+        db,
+        current_user,
+        unit_code,
+    )
+
+    return unit_history(
+        db,
+        unit_code,
+    )
+
+
+# =========================================================
+# Vaccine management report
+# =========================================================
+
+
+@router.get("/vaccine-management-report/{vaccine_type}")
+def vaccination_vaccine_management_report(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    return vaccine_management_report(
+        db,
+        vaccine_type,
+        province_code,
+        county_code,
+    )
+
+
+# =========================================================
+# Vaccine / Counties
+# =========================================================
+
+
+@router.get("/vaccine/{vaccine_type}/counties")
+def vaccination_vaccine_counties(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    allowed_county_ids = get_allowed_county_ids(
+        db,
+        current_user,
+    )
+
+    result = vaccine_county_report(
+        db,
+        vaccine_type,
+        province_code,
+    )
+
+    if allowed_county_ids is None:
+        return result
+
+    allowed_codes = _get_allowed_county_codes(
+        db,
+        allowed_county_ids,
+    )
+
+    return [
+        row
+        for row in result
+        if str(row.get("county_code", "")).strip() in allowed_codes
+    ]
+
+
+# =========================================================
+# Vaccine / Units
+# =========================================================
+
+
+@router.get("/vaccine/{vaccine_type}/units")
+def vaccination_vaccine_units(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    return vaccine_unit_report(
+        db,
+        vaccine_type,
+        province_code,
+        county_code,
+    )
+
+
+# =========================================================
+# Vaccine / Units paginated
+# =========================================================
+
+
+@router.get("/vaccine/{vaccine_type}/units-paginated")
+def vaccination_vaccine_units_paginated(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    page: int = Query(
+        1,
+        ge=1,
+    ),
+    page_size: int = Query(
+        50,
+        ge=1,
+        le=100,
+    ),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    county_code = _resolve_county_scope(
+        db,
+        current_user,
+        county_code,
+    )
+
+    return vaccine_unit_report_paginated(
+        db=db,
+        vaccine_type=vaccine_type,
+        province_code=province_code,
+        county_code=county_code,
+        page=page,
+        page_size=page_size,
+    )
+
+
+# =========================================================
+# County detail
+#
+# IMPORTANT:
+# This endpoint uses county_code, e.g. 2103,
+# not gis_counties.id (3).
+# =========================================================
+
+
+@router.get("/county/{county_code}/units")
+def vaccination_county_units(
+    county_code: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    _authorize_county_code(
+        db,
+        current_user,
+        county_code,
+    )
+
+    county_row = (
+        db.execute(
+            text("""
+            SELECT id
+            FROM gis_counties
+            WHERE county_code = :county_code
+            LIMIT 1
+            """),
+            {
+                "county_code": county_code,
+            },
+        )
+        .mappings()
+        .first()
+    )
+
+    if not county_row:
+        raise HTTPException(
+            status_code=404,
+            detail="County not found.",
+        )
+
+    # Existing service expects the internal GIS county id.
+    return county_units_report(
+        db=db,
+        county_id=int(county_row["id"]),
+    )

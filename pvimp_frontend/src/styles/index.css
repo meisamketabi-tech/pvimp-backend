@@ -1,0 +1,526 @@
+﻿@import "../theme/index.css";
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    direction: rtl;
+    font-family: var(--font-family);
+    background: var(--page-bg);
+}
+
+body {
+    margin: 0;
+
+    min-width: 320px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(34, 211, 238, 0.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(59, 130, 246, 0.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #071426 0%,
+            #091a30 48%,
+            #071426 100%
+        );
+
+    color: var(--text-primary);
+
+    font-family: var(--font-family);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: rgba(34, 211, 238, 0.25);
+    color: #ffffff;
+}
+
+#root {
+    isolation: isolate;
+}
+
+/* ============================================================
+   DARK FORM CONTROLS
+   ============================================================ */
+
+input,
+select,
+textarea {
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-md);
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #64748b;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--border-strong);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--brand-500);
+
+    box-shadow:
+        0 0 0 3px rgba(34, 211, 238, 0.12);
+
+    outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline:
+        3px solid rgba(34, 211, 238, 0.20);
+
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   DARK TABLE
+   ============================================================ */
+
+table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow-sm);
+}
+
+thead th {
+    background: var(--surface-soft);
+
+    color: #cbd5e1;
+
+    font-weight: 700;
+
+    border-bottom:
+        1px solid var(--border-color);
+}
+
+th,
+td {
+    padding: 12px 14px;
+
+    text-align: right;
+
+    border-bottom:
+        1px solid #173451;
+
+    color: var(--text-secondary);
+}
+
+tbody tr {
+    background: transparent;
+
+    transition:
+        background var(--transition-fast);
+}
+
+tbody tr:hover {
+    background: rgba(34, 211, 238, 0.055);
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* ============================================================
+   COMMON DARK SURFACES
+   ============================================================ */
+
+.card,
+.panel,
+.dashboard-card,
+.stat-card,
+.chart-card,
+.table-card,
+.widget,
+.section-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 37, 66, 0.98),
+            rgba(10, 29, 52, 0.98)
+        );
+
+    border-color: #1d3b5d;
+    color: #f8fafc;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.20);
+}
+
+/* ============================================================
+   SCROLLBARS
+   ============================================================ */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #285071 #071426;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #071426;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #285071;
+    border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #356887;
+}
+
+
+/* ============================================================
+   PVIMP VISUAL CONTRAST FIX - DARK NAVY
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Main dashboard surfaces
+   ------------------------------------------------------------ */
+
+.card,
+.panel,
+.dashboard-card,
+.stat-card,
+.chart-card,
+.table-card,
+.widget,
+.section-card,
+.dashboard-panel,
+.dashboard-section,
+.stat-box,
+.info-card,
+.summary-card,
+.report-card,
+.data-card {
+    background:
+        linear-gradient(
+            145deg,
+            #102542 0%,
+            #0d1d36 100%
+        ) !important;
+
+    color: #f8fafc !important;
+
+    border: 1px solid #1d3b5d !important;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.24) !important;
+}
+
+/* ------------------------------------------------------------
+   Dashboard headings
+   ------------------------------------------------------------ */
+
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6,
+.panel h1,
+.panel h2,
+.panel h3,
+.panel h4,
+.panel h5,
+.panel h6,
+.dashboard-card h1,
+.dashboard-card h2,
+.dashboard-card h3,
+.dashboard-card h4,
+.dashboard-card h5,
+.dashboard-card h6,
+.stat-card h1,
+.stat-card h2,
+.stat-card h3,
+.stat-card h4,
+.stat-card h5,
+.stat-card h6,
+.section-card h1,
+.section-card h2,
+.section-card h3,
+.section-card h4,
+.section-card h5,
+.section-card h6 {
+    color: #f8fafc !important;
+}
+
+/* ------------------------------------------------------------
+   Dashboard text
+   ------------------------------------------------------------ */
+
+.card p,
+.card span,
+.card label,
+.card strong,
+.card small,
+.panel p,
+.panel span,
+.panel label,
+.panel strong,
+.panel small,
+.dashboard-card p,
+.dashboard-card span,
+.dashboard-card label,
+.dashboard-card strong,
+.dashboard-card small,
+.stat-card p,
+.stat-card span,
+.stat-card label,
+.stat-card strong,
+.stat-card small,
+.section-card p,
+.section-card span,
+.section-card label,
+.section-card strong,
+.section-card small {
+    color: #cbd5e1;
+}
+
+/* ------------------------------------------------------------
+   Primary dashboard values
+   ------------------------------------------------------------ */
+
+.stat-card .value,
+.stat-card .number,
+.stat-card .count,
+.dashboard-card .value,
+.dashboard-card .number,
+.dashboard-card .count,
+.stat-box .value,
+.stat-box .number,
+.stat-box .count {
+    color: #f8fafc !important;
+    font-weight: 800;
+}
+
+/* ------------------------------------------------------------
+   Dashboard muted text
+   ------------------------------------------------------------ */
+
+.card .muted,
+.card .text-muted,
+.panel .muted,
+.panel .text-muted,
+.dashboard-card .muted,
+.dashboard-card .text-muted,
+.stat-card .muted,
+.stat-card .text-muted {
+    color: #94a3b8 !important;
+}
+
+/* ------------------------------------------------------------
+   White surfaces accidentally introduced by old theme CSS
+   ------------------------------------------------------------ */
+
+.dashboard-card[style*="background"],
+.stat-card[style*="background"],
+.card[style*="background"],
+.panel[style*="background"] {
+    color: #f8fafc !important;
+}
+
+/* ------------------------------------------------------------
+   Dashboard links
+   ------------------------------------------------------------ */
+
+.card a,
+.panel a,
+.dashboard-card a,
+.stat-card a,
+.section-card a {
+    color: #38bdf8 !important;
+}
+
+.card a:hover,
+.panel a:hover,
+.dashboard-card a:hover,
+.stat-card a:hover,
+.section-card a:hover {
+    color: #67e8f9 !important;
+}
+
+/* ------------------------------------------------------------
+   Dashboard table
+   ------------------------------------------------------------ */
+
+.card table,
+.panel table,
+.dashboard-card table,
+.table-card table,
+.section-card table {
+    background: #0d1d36 !important;
+
+    color: #f8fafc !important;
+
+    border-color: #1d3b5d !important;
+}
+
+.card thead th,
+.panel thead th,
+.dashboard-card thead th,
+.table-card thead th,
+.section-card thead th {
+    background: #102542 !important;
+
+    color: #f8fafc !important;
+
+    border-color: #2a4e73 !important;
+}
+
+.card td,
+.card th,
+.panel td,
+.panel th,
+.dashboard-card td,
+.dashboard-card th,
+.table-card td,
+.table-card th,
+.section-card td,
+.section-card th {
+    color: #cbd5e1 !important;
+
+    border-color: #1d3b5d !important;
+}
+
+.card tbody tr:hover,
+.panel tbody tr:hover,
+.dashboard-card tbody tr:hover,
+.table-card tbody tr:hover,
+.section-card tbody tr:hover {
+    background: rgba(34, 211, 238, 0.07) !important;
+}
+
+/* ------------------------------------------------------------
+   Alert / warning panels
+   ------------------------------------------------------------ */
+
+.alert,
+.warning,
+.error,
+.notice {
+    color: #f8fafc !important;
+}
+
+/* ------------------------------------------------------------
+   Forms inside dark surfaces
+   ------------------------------------------------------------ */
+
+.card input,
+.card select,
+.card textarea,
+.panel input,
+.panel select,
+.panel textarea,
+.dashboard-card input,
+.dashboard-card select,
+.dashboard-card textarea {
+    background: #091a30 !important;
+
+    color: #f8fafc !important;
+
+    border-color: #2a4e73 !important;
+}
+
+.card input::placeholder,
+.card textarea::placeholder,
+.panel input::placeholder,
+.panel textarea::placeholder,
+.dashboard-card input::placeholder,
+.dashboard-card textarea::placeholder {
+    color: #64748b !important;
+}
+
+/* ------------------------------------------------------------
+   Mobile
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+
+    .card,
+    .panel,
+    .dashboard-card,
+    .stat-card,
+    .chart-card,
+    .table-card,
+    .widget,
+    .section-card {
+        border-radius: 14px !important;
+    }
+}
+
+/* ============================================================
+   END PVIMP VISUAL CONTRAST FIX
+   ============================================================ */
+

@@ -1,0 +1,74 @@
+
+:root {
+
+/* COLORS */
+--color-bg:#081a2b;
+--color-bg-secondary:#0d2238;
+--color-surface:#132847;
+--color-surface-2:#17304f;
+
+--color-primary:#27d3cf;
+--color-primary-dark:#14b8b4;
+--color-secondary:#3aa0ff;
+
+--color-success:#22c55e;
+--color-warning:#f6c343;
+--color-danger:#ff5f7a;
+
+--color-text:#ffffff;
+--color-text-muted:#b8c7da;
+
+--color-border:#28496f;
+
+--color-sidebar:#0b1d33;
+--color-sidebar-hover:#123152;
+
+--color-card:#132847;
+
+/* RADIUS */
+
+--radius-xs:6px;
+--radius-sm:10px;
+--radius-md:16px;
+--radius-lg:22px;
+--radius-xl:30px;
+
+/* SHADOW */
+
+--shadow-sm:0 2px 8px rgba(0,0,0,.08);
+--shadow-md:0 8px 20px rgba(0,0,0,.15);
+--shadow-lg:0 15px 35px rgba(0,0,0,.22);
+--shadow-glow:0 0 18px rgba(39,211,207,.20);
+
+/* SPACING */
+
+--space-xs:6px;
+--space-sm:10px;
+--space-md:16px;
+--space-lg:24px;
+--space-xl:32px;
+
+/* FONT */
+
+--font-family:"Vazirmatn",Tahoma,sans-serif;
+
+--font-xs:12px;
+--font-sm:14px;
+--font-md:16px;
+--font-lg:20px;
+--font-xl:28px;
+--font-xxl:42px;
+
+/* TRANSITION */
+
+--transition-fast:.18s;
+--transition:.30s ease;
+
+/* Z */
+
+--z-sidebar:1000;
+--z-header:900;
+--z-modal:3000;
+--z-toast:5000;
+
+}

@@ -1,0 +1,123 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 270px;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #063b4a;
+    color: #ffffff;
+    direction: rtl;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: -4px 0 15px rgba(0,0,0,.18);
+}
+
+.sidebar-header {
+    width: 100%;
+    padding: 22px 15px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #042f3a;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Vazirmatn", Tahoma, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+.sidebar-header p {
+    margin: 8px 0 0;
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+.tree-menu {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.tree-title {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    margin: 0 0 6px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+.tree-title:hover {
+    background: #0b5264;
+}
+
+.tree-title span:first-child {
+    flex: 0 0 18px;
+    width: 18px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.tree-child {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #dbeafe;
+    background: rgba(255,255,255,.04);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.tree-child:hover {
+    background: #0b5264;
+    color: #ffffff;
+}
+
+.county-menu {
+    background: #07556a;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.county-menu:hover {
+    background: #0d6b82;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #0b5264;
+    border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: min(270px, 88vw);
+        transform: translateX(100%);
+        transition: transform .25s ease;
+    }
+}

@@ -1,0 +1,990 @@
+[
+  {
+    "file": "src\\pages\\SupervisionDashboard.tsx",
+    "text": "تکمیل شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionDashboard.tsx",
+    "text": "پیش نویس"
+  },
+  {
+    "file": "src\\pages\\SupervisionDashboard.tsx",
+    "text": "دارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionDashboard.tsx",
+    "text": "ندارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionDashboard.tsx",
+    "text": "جستجو در شماره، واحد یا بازرس"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارگاه قطعه‌بندی و بسته‌بندی"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مراکز عرضه فرآورده‌های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانجات لبنیات"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "سردخانه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانجات خوراک دام، طیور و آبزیان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارگاه قطعه‌بندی و بسته‌بندی"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مستقل"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "وابسته به کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "وابسته به مرکز عرضه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مراکز عرضه فرآورده‌های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مرکز عرضه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "قصابی"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "فروشگاه زنجیره‌ای"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانجات لبنیات"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانه لبنیات"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "سردخانه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "سردخانه نگهداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانجات خوراک دام، طیور و آبزیان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانه خوراک دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانه خوراک طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کارخانه خوراک آبزیان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "زنجان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه صنعتی طیور زنجان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مدیرعامل کشتارگاه صنعتی طیور زنجان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مسئول فنی کشتارگاه صنعتی طیور زنجان"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه صنعتی صباغ مرغ"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مدیرعامل صباغ مرغ"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مسئول فنی صباغ مرغ"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "سلطانیه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه صنعتی آندیا"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مدیرعامل آندیا"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مسئول فنی آندیا"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "خرمدره"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه صنعتی طیور زرین طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مدیرعامل زرین طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مسئول فنی زرین طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "کشتارگاه صنعتی طیور پرطلایی هیدج"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مدیرعامل پرطلایی هیدج"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مسئول فنی پرطلایی هیدج"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "بازدید ثبت شد"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nانتخاب کنید\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nمطلوب\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nنامطلوب\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nنیاز به اصلاح\n</option>\n\n\n</select>\n\n\n</td>\n\n\n\n\n<td\n\nstyle={{\nborder:"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "توضیحات بازرس"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nانتخاب کنید\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nخفیف\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nمتوسط\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nانتخاب کنید\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nگوشت\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nشیر\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nآب\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": ">\nخوراک\n</option>\n\n<option value="
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "در انتظار نتیجه"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "مطلوب"
+  },
+  {
+    "file": "src\\pages\\SupervisionForm.tsx",
+    "text": "نامطلوب"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید و نظارت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه و مراکز وابسته"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مراکز عرضه فرآورده های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واحدهای تولیدی و پرورش دام و طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "قرنطینه دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "نمونه برداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "آزمایشگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل بیماری های واگیر دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واحدهای خدمات دامپزشکی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید و نظارت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید دوره ای"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید موردی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه و مراکز وابسته"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز بسته بندی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز عرضه گوشت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مراکز عرضه فرآورده های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "قصابی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرغ فروشی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "فروشگاه فرآورده های دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "سردخانه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واحدهای تولیدی و پرورش دام و طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "دامداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرغداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "پرورش آبزیان"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "قرنطینه دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازرسی قرنطینه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "نمونه برداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "نمونه برداری رسمی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "آزمایشگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ارسال نمونه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل بیماری های واگیر دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مراقبت بیماری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واکسیناسیون"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واحدهای خدمات دامپزشکی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "داروخانه دامپزشکی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "درمانگاه دامپزشکی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز مایه کوبی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "اداره کل دامپزشکی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "شبکه دامپزشکی شهرستان"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز بهداشت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "آزمایشگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "دانشگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بخش خصوصی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "شهرداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "فرمانداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "سایر"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "رعایت الزامات بهداشتی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی مجوز و پروانه فعالیت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل شرایط نگهداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی تجهیزات و امکانات"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل سوابق فعالیت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی شرایط قرنطینه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل مستندات"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی وضعیت کارکنان"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت گزارش بازدید"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی نواقص مشاهده شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ارائه توصیه های اصلاحی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت اقدامات انجام شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی وضعیت ایمنی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل شرایط محیطی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی تجهیزات حفاظتی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل فرآیند کاری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی برنامه های آموزشی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت تخلفات احتمالی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ارزیابی عملکرد"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "تکمیل فرم نظارت"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید دوره ای"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل وضعیت عمومی واحد"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی تجهیزات موجود"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل بهداشت محیط"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی شرایط نگهداری دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی سوابق واکسیناسیون"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل بیماری های مشاهده شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی اقدامات اصلاحی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل کارکنان"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی ایمنی محیط"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت گزارش نهایی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید موردی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی علت بازدید"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل وضعیت اضطراری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت موارد مشاهده شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی اقدامات انجام شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ارائه گزارش تخصصی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "ثبت نتیجه بازدید"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرغداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی تراکم سالن"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل تهویه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی برنامه واکسیناسیون"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل خوراک و آب"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی تلفات"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل امنیت زیستی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "دامداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل وضعیت دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی جایگاه دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل تغذیه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی بیماری ها"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل سوابق درمانی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی خط کشتار"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل شرایط بهداشتی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی CIP"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کنترل تجهیزات"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بررسی کارکنان"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید دوره ای"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازدید موردی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "دامداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرغداری"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "واکسیناسیون"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "فرم با موفقیت ثبت شد"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "کشتارگاه و مراکز وابسته"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز بسته بندی"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "مرکز عرضه"
+  },
+  {
+    "file": "src\\pages\\SupervisionFormBuilder.tsx",
+    "text": "بازرسی مشترک"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش بازدید مراکز عرضه فرآورده خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش بازدید رستوران‌ها و مراکز طبخ"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش بازدید کشتارگاه‌ها"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش بازدید سردخانه‌ها"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش تخلفات بهداشتی"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش اقدامات اصلاحی"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش نمونه‌برداری و نتایج آزمایشگاهی"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "گزارش شکایات مردمی"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "کامل"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "ناقص"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "انتخاب شده"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "دریافت نشده"
+  },
+  {
+    "file": "src\\pages\\SupervisionImport.tsx",
+    "text": "فایلی انتخاب نشده"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "صمت"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "تعزیرات حکومتی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "جهاد کشاورزی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "راه و شهرسازی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "شبکه بهداشت"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "محیط زیست"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "نیروی انتظامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "سایر"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "فروشگاه عرضه فرآورده‌های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "مراکز طبخ و رستوران"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "هتل"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کارخانه فرآوری"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "مرکز بسته بندی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "سردخانه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "خودرو حمل"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "انبار"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "سایر"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "قصابی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "مرغ فروشی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "ماهی فروشی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "فروشگاه بزرگ"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کارگاه قطعه بندی مستقل"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کارگاه قطعه بندی وابسته به کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کارگاه قطعه بندی وابسته به مراکز عرضه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "رستوران"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "فست فود"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "مرکز طبخ"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "بازدید مشترک"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه دام"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه طیور"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "فروشگاه عرضه فرآورده‌های خام دامی"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "مراکز طبخ و رستوران"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionCreate.tsx",
+    "text": "کشتارگاه"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionDetail.tsx",
+    "text": "دارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionDetail.tsx",
+    "text": "ندارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionDetail.tsx",
+    "text": "دارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionInspectionDetail.tsx",
+    "text": "ندارد"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "اداره کل"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "حوزه مدیریت"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "معاونت"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "اداره"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "اداره شهرستان"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "ادارات شهرستان"
+  },
+  {
+    "file": "src\\pages\\SupervisionOrganizationChart.tsx",
+    "text": "واحد"
+  }
+]

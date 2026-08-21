@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pvimp-backend"
+version = "0.3.0"
+description = "Provincial Veterinary Intelligent Management Platform backend"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "SQLAlchemy>=2.0.25",
+    "alembic>=1.13.1",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.1",
+    "email-validator>=2.2.0",
+    "python-dotenv>=1.0.1",
+    "psycopg2-binary>=2.9.9",
+    "python-jose[cryptography]>=3.3.0",
+    "bcrypt>=4.1.0",
+    "python-multipart>=0.0.9",
+]
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["alembic*", "tests*", "docs*", "scripts*"]

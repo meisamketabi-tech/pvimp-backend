@@ -1,0 +1,594 @@
+﻿.dashboard-page {
+    --db-bg: #061525;
+    --db-bg-2: #081b2e;
+
+    --db-card: #0a2035;
+    --db-card-2: #0d2942;
+
+    --db-border: rgba(31, 185, 236, 0.28);
+    --db-border-strong: rgba(31, 205, 255, 0.55);
+
+    --db-text: #e8f7ff;
+    --db-muted: #8ca9bd;
+
+    --db-primary: #19d3ff;
+    --db-cyan: #00c8ff;
+    --db-blue: #268cff;
+
+    --db-success: #19d37b;
+    --db-warning: #ffc72c;
+    --db-danger: #ff4164;
+    --db-purple: #a855f7;
+
+    direction: rtl;
+
+    min-height: 100%;
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 18px;
+
+    color: var(--db-text);
+
+    background:
+        radial-gradient(
+            circle at 75% 8%,
+            rgba(0, 196, 255, 0.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 20% 82%,
+            rgba(20, 110, 220, 0.07),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #061525 0%,
+            #07192a 45%,
+            #061423 100%
+        );
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.dashboard-page::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(21, 181, 235, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(21, 181, 235, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 42px 42px;
+
+    pointer-events: none;
+
+    opacity: 0.55;
+}
+
+.dashboard-page > * {
+    position: relative;
+
+    z-index: 1;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.dashboard-page .dashboard-header {
+    position: relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8, 38, 62, 0.98),
+            rgba(7, 48, 76, 0.96)
+        );
+
+    color: var(--db-text);
+
+    border:
+        1px solid
+        var(--db-border);
+
+    border-radius: 14px;
+
+    padding: 20px 24px;
+
+    margin-bottom: 16px;
+
+    box-shadow:
+        0 0 0 1px rgba(0, 180, 255, 0.025),
+        0 12px 35px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.dashboard-page .dashboard-header::before {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--db-cyan),
+            var(--db-blue),
+            var(--db-purple)
+        );
+
+    border-radius: 0 14px 14px 0;
+}
+
+.dashboard-page .dashboard-header h1 {
+    margin: 0;
+
+    color: #f1fbff;
+
+    font-size: 25px;
+
+    line-height: 1.5;
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 18px rgba(0, 200, 255, 0.12);
+}
+
+.dashboard-page .dashboard-header p {
+    margin: 7px 0 0;
+
+    color: var(--db-muted);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.dashboard-page .dashboard-box > div[style] {
+    background:
+        rgba(86, 65, 10, 0.20) !important;
+
+    border:
+        1px solid
+        rgba(255, 191, 0, 0.32) !important;
+
+    color:
+        #f5d66d !important;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.18);
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+/* =========================================================
+   MAIN GRID / KPI CARDS
+   ========================================================= */
+
+.dashboard-page .dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+/* =========================================================
+   ALL BOXES
+   ========================================================= */
+
+.dashboard-page .dashboard-box {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9, 35, 56, 0.98),
+            rgba(6, 26, 43, 0.98)
+        );
+
+    border:
+        1px solid
+        rgba(24, 180, 230, 0.24);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.27),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    padding: 17px;
+
+    color: var(--db-text);
+}
+
+.dashboard-page .dashboard-box::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 210, 255, 0.35),
+            transparent
+        );
+}
+
+.dashboard-page .dashboard-grid .dashboard-box {
+    min-height: 125px;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+.dashboard-page .dashboard-grid .dashboard-box:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(27, 209, 255, 0.60);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        0 0 18px rgba(0, 190, 255, 0.08);
+}
+
+/* KPI accent bars */
+
+.dashboard-page .dashboard-grid .dashboard-box::before {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--db-primary),
+            var(--db-blue)
+        );
+}
+
+.dashboard-page .dashboard-grid .dashboard-box:nth-child(2)::before {
+    background:
+        linear-gradient(
+            180deg,
+            var(--db-success),
+            #00a86b
+        );
+}
+
+.dashboard-page .dashboard-grid .dashboard-box:nth-child(3)::before {
+    background:
+        linear-gradient(
+            180deg,
+            var(--db-warning),
+            #ff9f00
+        );
+}
+
+.dashboard-page .dashboard-grid .dashboard-box:nth-child(4)::before {
+    background:
+        linear-gradient(
+            180deg,
+            var(--db-danger),
+            #ff1744
+        );
+}
+
+/* =========================================================
+   KPI TYPOGRAPHY
+   ========================================================= */
+
+.dashboard-page .dashboard-grid .dashboard-box h3 {
+    margin: 0;
+
+    color: #8eafc3;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    font-weight: 700;
+}
+
+.dashboard-page .dashboard-grid .dashboard-box strong {
+    display: block;
+
+    margin-top: 12px;
+
+    color: #bdefff;
+
+    font-size: 31px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: .2px;
+
+    text-shadow:
+        0 0 12px rgba(0, 205, 255, 0.12);
+}
+
+.dashboard-page .dashboard-grid .dashboard-box p {
+    margin: 9px 0 0;
+
+    color: #66899e;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   SECTION BOXES
+   ========================================================= */
+
+.dashboard-page > .dashboard-box:not(.dashboard-grid .dashboard-box) {
+    margin-bottom: 14px;
+}
+
+.dashboard-page .dashboard-box h2 {
+    margin: 0 0 14px;
+
+    padding-bottom: 9px;
+
+    color: #d9f5ff;
+
+    font-size: 17px;
+
+    line-height: 1.5;
+
+    font-weight: 800;
+
+    border-bottom:
+        1px solid
+        rgba(28, 180, 225, 0.15);
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.dashboard-page table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    overflow: hidden;
+
+    color: #d8edf7;
+
+    border:
+        1px solid
+        rgba(24, 180, 230, 0.14);
+
+    border-radius: 9px;
+}
+
+.dashboard-page thead th {
+    background:
+        rgba(11, 58, 83, 0.75);
+
+    color: #78c9e8;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    padding: 11px 10px;
+
+    border-bottom:
+        1px solid
+        rgba(24, 180, 230, 0.20);
+
+    white-space: nowrap;
+}
+
+.dashboard-page tbody td {
+    padding: 11px 10px;
+
+    color: #b8d2df;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    border-bottom:
+        1px solid
+        rgba(73, 123, 145, 0.12);
+}
+
+.dashboard-page tbody tr {
+    transition:
+        background .16s ease;
+}
+
+.dashboard-page tbody tr:hover {
+    background:
+        rgba(0, 194, 255, 0.055);
+}
+
+.dashboard-page tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* =========================================================
+   GIS STATUS
+   ========================================================= */
+
+.dashboard-page .chart-placeholder {
+    min-height: 150px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    border:
+        1px dashed
+        rgba(27, 191, 240, 0.30);
+
+    border-radius: 10px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 190, 255, 0.08),
+            transparent 65%
+        ),
+        rgba(5, 29, 46, 0.60);
+}
+
+.dashboard-page .chart-placeholder strong {
+    display: block;
+
+    color: #55dcff;
+
+    font-size: 36px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 18px rgba(0, 205, 255, 0.18);
+}
+
+.dashboard-page .chart-placeholder p {
+    margin: 10px 0 0;
+
+    color: #789caf;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+.dashboard-page * {
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(0, 190, 240, 0.45)
+        rgba(4, 24, 39, 0.75);
+}
+
+.dashboard-page *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.dashboard-page *::-webkit-scrollbar-track {
+    background:
+        rgba(4, 24, 39, 0.75);
+}
+
+.dashboard-page *::-webkit-scrollbar-thumb {
+    background:
+        rgba(0, 190, 240, 0.40);
+
+    border-radius: 999px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1250px) {
+    .dashboard-page .dashboard-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1000px) {
+    .dashboard-page .dashboard-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .dashboard-page {
+        padding: 10px;
+    }
+
+    .dashboard-page .dashboard-header {
+        padding: 15px;
+    }
+
+    .dashboard-page .dashboard-header h1 {
+        font-size: 19px;
+    }
+
+    .dashboard-page .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page .dashboard-grid .dashboard-box strong {
+        font-size: 26px;
+    }
+
+    .dashboard-page .dashboard-box {
+        padding: 13px;
+    }
+
+    .dashboard-page table {
+        display: block;
+        overflow-x: auto;
+    }
+}

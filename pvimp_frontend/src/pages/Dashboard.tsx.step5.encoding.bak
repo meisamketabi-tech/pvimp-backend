@@ -1,0 +1,196 @@
+﻿import React, { useEffect, useState } from "react";
+import "./Dashboard.css";
+import api from "../services/api";
+
+interface DashboardStats {
+    total_units: number;
+    total_users: number;
+    total_positions: number;
+    filled_positions: number;
+    empty_positions: number;
+}
+
+interface GISPoint {
+    type: string;
+    title: unknown;
+    province?: unknown;
+    county?: unknown;
+    latitude?: number;
+    longitude?: number;
+    unit_type?: unknown;
+    is_active?: boolean;
+}
+
+function displayValue(value: unknown, fallback = "-"): string {
+    if (value === null || value === undefined) return fallback;
+    if (typeof value === "string") {
+        const text = value.trim();
+        return text === "" ? fallback : text;
+    }
+    if (typeof value === "number" || typeof value === "boolean") return String(value);
+    if (typeof value === "object") {
+        try { return JSON.stringify(value); } catch { return fallback; }
+    }
+    return String(value);
+}
+
+function displayNumber(value: unknown, fallback = 0): number {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+export default function Dashboard() {
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [gisPoints, setGisPoints] = useState<GISPoint[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+        let mounted = true;
+
+        const loadDashboard = async () => {
+            try {
+                setLoading(true);
+                setErrorMessage(null);
+
+                const [statsResponse, gisResponse] = await Promise.all([
+                    api.get<DashboardStats>("/organization/dashboard"),
+                    api.get<GISPoint[]>("/gis-dashboard/map-points"),
+                ]);
+
+                if (!mounted) return;
+
+                setStats(statsResponse.data ?? null);
+                setGisPoints(Array.isArray(gisResponse.data) ? gisResponse.data : []);
+            } catch (error: unknown) {
+                console.error("Dashboard loading error:", error);
+                if (!mounted) return;
+
+                setErrorMessage("Ø¯Ø±ÛŒØ§ÙØª Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø¯Ø§Ø´Ø¨ÙˆØ±Ø¯ Ø¨Ø§ Ø®Ø·Ø§ Ù…ÙˆØ§Ø¬Ù‡ Ø´Ø¯.");
+                setStats(null);
+                setGisPoints([]);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        };
+
+        loadDashboard();
+        return () => { mounted = false; };
+    }, []);
+
+    const cards = [
+        { title: "ÙˆØ§Ø­Ø¯Ù‡Ø§ÛŒ Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ ÙØ¹Ø§Ù„", value: displayNumber(stats?.total_units), desc: "ÙˆØ§Ø­Ø¯Ù‡Ø§ÛŒ ÙØ¹Ø§Ù„ Ø¯Ø± Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ" },
+        { title: "Ú©Ø§Ø±Ø¨Ø±Ø§Ù† ÙØ¹Ø§Ù„", value: displayNumber(stats?.total_users), desc: "Ú©Ø§Ø±Ø¨Ø±Ø§Ù† Ø¯Ø§Ø±Ø§ÛŒ Ø§Ù†ØªØ³Ø§Ø¨ ÙØ¹Ø§Ù„" },
+        { title: "Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ", value: displayNumber(stats?.total_positions), desc: "Ù…Ø¬Ù…ÙˆØ¹ Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ ÙØ¹Ø§Ù„ Ø³Ø§Ø²Ù…Ø§Ù†" },
+        { title: "Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø®Ø§Ù„ÛŒ", value: displayNumber(stats?.empty_positions), desc: "Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ ÙØ¹Ø§Ù„ Ø¨Ø¯ÙˆÙ† Ø§Ù†ØªØ³Ø§Ø¨" },
+    ];
+
+    return (
+        <div className="dashboard-page dashboard-command-center" dir="rtl">
+            <div className="dashboard-header dashboard-command-header">
+                <h1>Ø¯Ø§Ø´Ø¨ÙˆØ±Ø¯ Ù…Ø¯ÛŒØ±ÛŒØªÛŒ Ø³Ø§Ù…Ø§Ù†Ù‡ Ø¯Ø§Ù…Ù¾Ø²Ø´Ú©ÛŒ</h1>
+                <p>Ù†Ù…Ø§ÛŒ Ú©Ù„ÛŒ ÙˆØ¶Ø¹ÛŒØª Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§Ø²Ù…Ø§Ù†ÛŒØŒ Ø¹Ù…Ù„Ú©Ø±Ø¯ Ùˆ Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ù…Ú©Ø§Ù†ÛŒ</p>
+            </div>
+
+            {errorMessage && (
+                <div className="dashboard-box dashboard-alert-panel">
+                    <div className="dashboard-alert">{errorMessage}</div>
+                </div>
+            )}
+
+            <div className="dashboard-grid dashboard-kpi-grid">
+                {cards.map((item, index) => (
+                    <div className="dashboard-box dashboard-stat-card" key={index}>
+                        <h3>{item.title}</h3>
+                        <strong>{loading ? "..." : item.value}</strong>
+                        <p>{item.desc}</p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="dashboard-box dashboard-section-panel">
+                <div className="dashboard-section-header">
+                    <div>
+                        <h2>ÙˆØ¶Ø¹ÛŒØª Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ</h2>
+                        <p>Ù†Ù…Ø§ÛŒ Ú©Ù„ÛŒ ÙˆØ¶Ø¹ÛŒØª ÙˆØ§Ø­Ø¯Ù‡Ø§ØŒ Ú©Ø§Ø±Ø¨Ø±Ø§Ù† Ùˆ Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ</p>
+                    </div>
+                </div>
+
+                <div className="dashboard-table-wrapper">
+                    <table className="dashboard-table">
+                        <thead>
+                            <tr><th>Ø´Ø§Ø®Øµ</th><th>ØªØ¹Ø¯Ø§Ø¯</th><th>ÙˆØ¶Ø¹ÛŒØª</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>ÙˆØ§Ø­Ø¯Ù‡Ø§ÛŒ Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ ÙØ¹Ø§Ù„</td><td>{loading ? "..." : displayNumber(stats?.total_units)}</td><td>ÙØ¹Ø§Ù„</td></tr>
+                            <tr><td>Ú©Ø§Ø±Ø¨Ø±Ø§Ù† ÙØ¹Ø§Ù„</td><td>{loading ? "..." : displayNumber(stats?.total_users)}</td><td>ÙØ¹Ø§Ù„</td></tr>
+                            <tr><td>Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø³Ø§Ø²Ù…Ø§Ù†ÛŒ</td><td>{loading ? "..." : displayNumber(stats?.total_positions)}</td><td>Ø«Ø¨Øªâ€ŒØ´Ø¯Ù‡</td></tr>
+                            <tr><td>Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø¯Ø§Ø±Ø§ÛŒ Ù…Ø³Ø¦ÙˆÙ„</td><td>{loading ? "..." : displayNumber(stats?.filled_positions)}</td><td>ØªÚ©Ù…ÛŒÙ„â€ŒØ´Ø¯Ù‡</td></tr>
+                            <tr><td>Ù¾Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø®Ø§Ù„ÛŒ</td><td>{loading ? "..." : displayNumber(stats?.empty_positions)}</td><td>Ù†ÛŒØ§Ø²Ù…Ù†Ø¯ ØªØ¹ÛŒÛŒÙ† Ù…Ø³Ø¦ÙˆÙ„</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div className="dashboard-box dashboard-section-panel">
+                <div className="dashboard-section-header">
+                    <div>
+                        <h2>Ù…Ø±Ø§Ú©Ø² Ø«Ø¨Øªâ€ŒØ´Ø¯Ù‡ Ø¯Ø± GIS</h2>
+                        <p>Ø¢Ø®Ø±ÛŒÙ† Ù…Ø±Ø§Ú©Ø² Ø¯Ø§Ø±Ø§ÛŒ Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ù…Ú©Ø§Ù†ÛŒ Ø¯Ø± Ø³Ø§Ù…Ø§Ù†Ù‡</p>
+                    </div>
+                    <span className="dashboard-section-count">{loading ? "..." : gisPoints.length}</span>
+                </div>
+
+                <div className="dashboard-table-wrapper">
+                    <table className="dashboard-table">
+                        <thead>
+                            <tr><th>Ù†Ø§Ù… Ù…Ø±Ú©Ø²</th><th>Ø´Ù‡Ø±Ø³ØªØ§Ù†</th><th>Ù†ÙˆØ¹ Ù…Ø±Ú©Ø²</th><th>Ø§Ø³ØªØ§Ù†</th><th>ÙˆØ¶Ø¹ÛŒØª</th></tr>
+                        </thead>
+                        <tbody>
+                            {gisPoints.length === 0 ? (
+                                <tr><td colSpan={5}>{loading ? "Ø¯Ø± Ø­Ø§Ù„ Ø¯Ø±ÛŒØ§ÙØª Ø§Ø·Ù„Ø§Ø¹Ø§Øª..." : "Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ù…Ú©Ø§Ù†ÛŒ Ø«Ø¨Øª Ù†Ø´Ø¯Ù‡ Ø§Ø³Øª"}</td></tr>
+                            ) : (
+                                gisPoints.slice(0, 10).map((point, index) => (
+                                    <tr key={`${displayValue(point.title, "point")}-${index}`}>
+                                        <td>{displayValue(point.title)}</td>
+                                        <td>{displayValue(point.county)}</td>
+                                        <td>{displayValue(point.unit_type)}</td>
+                                        <td>{displayValue(point.province)}</td>
+                                        <td>
+                                            <span className={point.is_active ? "dashboard-status dashboard-status-success" : "dashboard-status dashboard-status-danger"}>
+                                                {point.is_active ? "ÙØ¹Ø§Ù„" : "ØºÛŒØ±ÙØ¹Ø§Ù„"}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {gisPoints.length > 10 && (
+                    <div className="dashboard-table-footer">
+                        Ù†Ù…Ø§ÛŒØ´ Û±Û° Ù…Ø±Ú©Ø² Ø§Ø² Ù…Ø¬Ù…ÙˆØ¹ {gisPoints.length} Ù…Ø±Ú©Ø²
+                    </div>
+                )}
+            </div>
+
+            <div className="dashboard-box dashboard-section-panel">
+                <div className="dashboard-section-header">
+                    <div>
+                        <h2>ÙˆØ¶Ø¹ÛŒØª GIS</h2>
+                        <p>ØªØ¹Ø¯Ø§Ø¯ Ù…Ø±Ø§Ú©Ø² Ø¯Ø§Ø±Ø§ÛŒ Ù…Ø®ØªØµØ§Øª Ù…Ú©Ø§Ù†ÛŒ Ø«Ø¨Øªâ€ŒØ´Ø¯Ù‡</p>
+                    </div>
+                </div>
+
+                <div className="chart-placeholder dashboard-gis-status">
+                    <div className="dashboard-gis-status-value">
+                        <strong>{loading ? "..." : gisPoints.length}</strong>
+                        <p>Ù…Ø±Ú©Ø² Ø¯Ø§Ø±Ø§ÛŒ Ù…Ø®ØªØµØ§Øª Ù…Ú©Ø§Ù†ÛŒ Ø¯Ø± Ø³Ø§Ù…Ø§Ù†Ù‡ GIS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

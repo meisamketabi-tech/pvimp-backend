@@ -1,0 +1,148 @@
+﻿.main-layout {
+    width: 100%;
+    min-height: 100vh;
+
+    direction: rtl;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(34, 211, 238, 0.06),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #071426 0%,
+            #091a30 50%,
+            #071426 100%
+        );
+}
+
+.main-layout__content {
+    width: calc(100% - var(--sidebar-width));
+
+    min-height: 100vh;
+
+    margin-right: var(--sidebar-width);
+
+    box-sizing: border-box;
+
+    background: transparent;
+
+    transition:
+        width 0.25s ease,
+        margin-right 0.25s ease;
+}
+
+.main-layout__page {
+    width: 100%;
+
+    min-height:
+        calc(100vh - var(--header-height));
+
+    max-width: 1800px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: transparent;
+}
+
+.mobile-menu-button {
+    display: none;
+
+    position: fixed;
+
+    top: 10px;
+    right: 10px;
+
+    z-index: 1100;
+
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    border: 1px solid #294967;
+    border-radius: 12px;
+
+    background:
+        rgba(10, 29, 52, 0.97);
+
+    color: #f8fafc;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.30);
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    cursor: pointer;
+}
+
+.mobile-menu-button span {
+    display: block;
+
+    width: 21px;
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: #22d3ee;
+}
+
+@media (max-width: 1100px) {
+
+    .main-layout__content {
+        width: calc(100% - 250px);
+
+        margin-right: 250px;
+    }
+
+    .main-layout__page {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .main-layout__content {
+        width: 100%;
+
+        margin-right: 0;
+    }
+
+    .main-layout__page {
+        width: 100%;
+
+        min-height:
+            calc(100vh - 62px);
+
+        padding:
+            14px 14px 24px;
+    }
+
+    .mobile-menu-button {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .main-layout__page {
+        padding:
+            10px 10px 20px;
+    }
+
+    .mobile-menu-button {
+        width: 42px;
+        height: 42px;
+    }
+}

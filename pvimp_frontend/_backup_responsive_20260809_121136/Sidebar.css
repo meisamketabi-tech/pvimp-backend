@@ -1,0 +1,407 @@
+﻿.sidebar {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 1200;
+
+    width: var(--sidebar-width, 300px);
+    max-width: 88vw;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
+
+    border-left: 1px solid var(--border-color, #e2e8f0);
+
+    box-shadow:
+        -8px 0 30px rgba(15, 23, 42, 0.08);
+
+    overflow: hidden;
+
+    transform: translateX(0);
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease;
+
+    overscroll-behavior: contain;
+}
+
+.sidebar-header {
+    min-height: 82px;
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    flex: 0 0 auto;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid var(--gray-100, #f1f5f9);
+}
+
+.sidebar-brand {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.sidebar-logo {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--brand-600, #2563eb),
+            var(--brand-800, #1e40af)
+        );
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.20);
+}
+
+.sidebar-title {
+    min-width: 0;
+}
+
+.sidebar-title strong {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: var(--text-primary, #0f172a);
+    font-size: 13px;
+    line-height: 1.7;
+    font-weight: 800;
+}
+
+.sidebar-title span {
+    display: block;
+
+    margin-top: 1px;
+
+    color: var(--text-muted, #64748b);
+    font-size: 11px;
+}
+
+.sidebar-mobile-close {
+    display: none;
+
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #f1f5f9;
+    color: #334155;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.sidebar-mobile-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.sidebar-mobile-close:active {
+    transform: scale(0.94);
+}
+
+.tree-menu {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    padding: 12px 10px 24px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.tree-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tree-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tree-menu::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.tree-group {
+    margin-bottom: 5px;
+}
+
+.tree-node {
+    min-width: 0;
+}
+
+.tree-title,
+.tree-child {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    border: 0;
+
+    text-align: right;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tree-title {
+    min-height: 44px;
+
+    padding: 8px 10px;
+
+    gap: 8px;
+
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--text-secondary, #475569);
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    transition:
+        background 150ms ease,
+        color 150ms ease;
+}
+
+.tree-title:hover {
+    background: var(--gray-100, #f1f5f9);
+    color: var(--brand-700, #1d4ed8);
+}
+
+.tree-title.is-open {
+    background: #eff6ff;
+    color: var(--brand-700, #1d4ed8);
+    font-weight: 700;
+}
+
+.tree-main-title {
+    min-height: 48px;
+
+    background: #f8fafc;
+
+    border: 1px solid #eef2f7;
+
+    font-weight: 700;
+}
+
+.tree-main-title:hover,
+.tree-main-title.is-open {
+    background: #eff6ff;
+    border-color: #dbeafe;
+}
+
+.tree-toggle {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 6px;
+
+    color: currentColor;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.tree-label {
+    min-width: 0;
+    flex: 1;
+
+    overflow-wrap: anywhere;
+}
+
+.tree-children {
+    margin-right: 11px;
+    padding: 4px 7px 5px 0;
+
+    border-right: 1px solid #e2e8f0;
+}
+
+.tree-main-children {
+    margin-top: 3px;
+}
+
+.tree-child {
+    min-height: 42px;
+
+    padding: 8px 10px;
+
+    gap: 8px;
+
+    border-radius: 9px;
+
+    background: transparent;
+    color: var(--text-secondary, #475569);
+
+    font-size: 12.5px;
+    line-height: 1.8;
+
+    transition:
+        background 150ms ease,
+        color 150ms ease,
+        transform 150ms ease;
+}
+
+.tree-child:hover {
+    background: #f1f5f9;
+    color: var(--brand-700, #1d4ed8);
+}
+
+.tree-child:active {
+    transform: scale(0.99);
+}
+
+.tree-bullet {
+    width: 18px;
+    flex: 0 0 18px;
+
+    color: #94a3b8;
+
+    text-align: center;
+}
+
+.county-menu {
+    font-size: 12.5px;
+}
+
+.sidebar button:focus-visible {
+    outline: 2px solid var(--brand-500, #3b82f6);
+    outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 270px;
+    }
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: min(320px, 88vw);
+
+        transform: translateX(105%);
+
+        box-shadow:
+            -16px 0 45px rgba(15, 23, 42, 0.20);
+    }
+
+    .sidebar.sidebar-mobile-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-mobile-close {
+        display: flex;
+    }
+
+    .tree-menu {
+        padding: 10px 9px 28px;
+    }
+
+    .tree-title {
+        min-height: 46px;
+    }
+
+    .tree-child {
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: min(340px, 92vw);
+    }
+
+    .sidebar-header {
+        min-height: 72px;
+        padding: 12px 14px;
+    }
+
+    .sidebar-logo {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        border-radius: 10px;
+    }
+
+    .sidebar-title strong {
+        font-size: 12px;
+    }
+
+    .sidebar-title span {
+        font-size: 10px;
+    }
+
+    .tree-title {
+        font-size: 12.5px;
+    }
+
+    .tree-child {
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .tree-title,
+    .tree-child,
+    .sidebar-mobile-close {
+        transition: none;
+    }
+}

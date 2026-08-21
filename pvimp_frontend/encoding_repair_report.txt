@@ -1,0 +1,1068 @@
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\components\dashboard\AIInsight.tsx
+BROKEN BLOCKS:
+26
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\components\dashboard\AlertPanel.tsx
+BROKEN BLOCKS:
+20
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\components\dashboard\DepartmentCard.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\components\dashboard\KpiCard.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\DiagnosisExpertDashboard.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISCountyDashboard.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISCountyDetailDashboard.tsx
+BROKEN BLOCKS:
+49
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISDashboard.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISDepartmentDetail.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISDepartmentList.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\GISDepartmentUpload.tsx
+BROKEN BLOCKS:
+226
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\InspectionDashboard.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\KPIAnalysis.tsx
+BROKEN BLOCKS:
+152
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\KpiDetail.tsx
+BROKEN BLOCKS:
+83
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\LabExpertDashboard.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\PoultryExpertDashboard.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\QuarantineExpertDashboard.tsx
+BROKEN BLOCKS:
+12
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAdvancedDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAdvancedSearch.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAIAnalysis.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAIChat.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAlertManagement.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAlerts.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAnalytics.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAnalyticsCenter.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAnnualReport.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionApprovals.tsx
+BROKEN BLOCKS:
+3
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionApprovalWorkflow.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionArchive.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionArchiveSearch.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAudit.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionAuditTrail.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionBackup.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCalendar.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCaseManagement.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCenters.tsx
+BROKEN BLOCKS:
+3
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionChangeHistory.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCommandCenter.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCommandDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionComplaints.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCompliance.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionConfiguration.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionControlRoom.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionCountyView.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDailyOperations.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDashboardAdvanced.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDashboardCharts.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDashboardMenu.tsx
+BROKEN BLOCKS:
+13
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDashboardSummary.tsx
+BROKEN BLOCKS:
+17
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataAnalysis.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataDashboard.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataExportCenter.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataImport.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataQuality.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDataQualityDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDecisionReports.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDecisionSupport.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionDocumentManagement.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionElectronicForms.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionEscalation.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionExecutiveReports.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionExecutiveSummary.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionExport.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionExternalReports.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionFieldOperations.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionFollowUp.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionFormBuilder.tsx
+BROKEN BLOCKS:
+484
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionFutureDevelopment.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionGeoAnalytics.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionGISDashboard.tsx
+BROKEN BLOCKS:
+1
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionGISImport.tsx
+BROKEN BLOCKS:
+3
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionHeatMap.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionHelp.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionHistory.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionAI.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionApproval.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionArchiveAdvanced.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionCalendar.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionEdit.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionHistory.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionList.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionManager.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionMapAdvanced.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionPlanning.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionQueue.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionStatistics.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionTemplates.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionTypes.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectionWorkflow.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectorAttendance.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectorMobileTasks.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectorPerformance.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionInspectors.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionIntegration.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionIntegrationCenter.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionIntegrationStatus.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionKnowledgeBase.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionKPIManagement.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionKPIs.tsx
+BROKEN BLOCKS:
+14
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLaboratoryResults.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLegal.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLegalCases.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLegalTracking.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLiveMonitoring.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionLogs.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionManagement.tsx
+BROKEN BLOCKS:
+3
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionManagerPanel.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMapLayers.tsx
+BROKEN BLOCKS:
+12
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMasterReports.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMessageCenter.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMobileDashboard.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMobileSync.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionModuleDashboard.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionMonthlyReport.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionNationalDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionNationalKPIs.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionNotifications.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionNotificationsCenter.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionOfflineData.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionOperationalAlerts.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionOperationalDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionPerformance.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionPerformanceAnalysis.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionPerformanceDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionPortal.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionPredictiveRisk.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionProducts.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionProvinceView.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRegionalComparison.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionReportBuilder.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionReportCenter.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionReportManagement.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionReports.tsx
+BROKEN BLOCKS:
+13
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionResourceManagement.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRiskAssessment.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRiskDashboard.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRiskMatrix.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRiskPrediction.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRoleManagement.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionRoles.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSamples.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSamplingCenter.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSamplingDashboard.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSamplingLab.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSamplingWorkflow.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSchedules.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSecurity.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSettings.tsx
+BROKEN BLOCKS:
+11
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSettingsCenter.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSmartAlerts.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSmartSearch.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionStatistics.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSystemDashboard.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSystemHealth.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSystemSettings.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionSystemStatus.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionTaskManagement.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionTasks.tsx
+BROKEN BLOCKS:
+9
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionTraining.tsx
+BROKEN BLOCKS:
+5
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionTrendAnalysis.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionUnitMonitoring.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionUnits.tsx
+BROKEN BLOCKS:
+8
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionUserManagement.tsx
+BROKEN BLOCKS:
+4
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionUsers.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionVehicleTracking.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationAnalysis.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationAnalytics.tsx
+BROKEN BLOCKS:
+10
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationDatabase.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolations.tsx
+BROKEN BLOCKS:
+14
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationsRules.tsx
+BROKEN BLOCKS:
+2
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationTracking.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionViolationWorkflow.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionWorkflow.tsx
+BROKEN BLOCKS:
+13
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionWorkflowDesigner.tsx
+BROKEN BLOCKS:
+7
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\SupervisionWorkflowMonitor.tsx
+BROKEN BLOCKS:
+6
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\VaccinationKpiDrilldown.tsx
+BROKEN BLOCKS:
+93
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\pages\VaccinationVaccineReport.tsx
+BROKEN BLOCKS:
+170
+--------------------
+
+FILE:
+D:\pvimp_backend\pvimp_frontend\src\types\SupervisionInspection.ts
+BROKEN BLOCKS:
+1
+--------------------

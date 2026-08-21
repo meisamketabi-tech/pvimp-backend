@@ -1,0 +1,152 @@
+﻿.main-layout {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    direction: rtl;
+
+    background:
+        var(--page-bg, #f8fafc);
+}
+
+.main-layout__content {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 100vh;
+
+    margin-right:
+        var(--sidebar-width, 280px);
+
+    transition:
+        margin-right 0.25s ease;
+}
+
+.main-layout__page {
+    width: 100%;
+
+    max-width: 1800px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+}
+
+.mobile-menu-button {
+    display: none;
+
+    position: fixed;
+
+    top: 14px;
+    right: 14px;
+
+    z-index: 950;
+
+    width: 46px;
+    height: 46px;
+
+    padding: 0;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    box-shadow:
+        0 8px 24px rgba(15, 23, 42, 0.12);
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+}
+
+.mobile-menu-button span {
+    display: block;
+
+    width: 21px;
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: #334155;
+}
+
+
+/* ============================================================
+   Tablet
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+    .main-layout__content {
+        margin-right: 250px;
+    }
+
+    .main-layout__page {
+        padding: 18px;
+    }
+
+}
+
+
+/* ============================================================
+   Mobile
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .main-layout {
+        display: block;
+    }
+
+    .main-layout__content {
+        width: 100%;
+
+        min-height: 100vh;
+
+        margin-right: 0;
+    }
+
+    .main-layout__page {
+        width: 100%;
+
+        padding: 68px 14px 18px;
+    }
+
+    .mobile-menu-button {
+        display: flex;
+    }
+
+}
+
+
+/* ============================================================
+   Small phones
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+    .main-layout__page {
+        padding:
+            66px 10px 14px;
+    }
+
+    .mobile-menu-button {
+        top: 10px;
+        right: 10px;
+
+        width: 42px;
+        height: 42px;
+    }
+
+}

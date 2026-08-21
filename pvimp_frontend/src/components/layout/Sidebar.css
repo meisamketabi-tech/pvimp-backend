@@ -1,0 +1,599 @@
+﻿.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    width: var(--sidebar-width, 280px);
+    max-width: 88vw;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
+
+    border-left: 1px solid var(--border-color);
+
+    box-shadow:
+        -8px 0 30px rgba(15, 23, 42, 0.08);
+
+    overflow: hidden;
+}
+
+.sidebar-header {
+    min-height: 82px;
+
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    border-bottom: 1px solid
+        var(--gray-100, #f1f5f9);
+
+    background: rgba(13, 29, 54, 0.96);
+}
+
+.sidebar-brand {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.sidebar-logo {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--brand-600, #2563eb),
+            var(--brand-800, #1e40af)
+        );
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.20);
+}
+
+.sidebar-title {
+    min-width: 0;
+}
+
+.sidebar-title strong {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color:
+        var(--text-primary, #0f172a);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    line-height: 1.6;
+}
+
+.sidebar-title span {
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--text-muted, #64748b);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.sidebar-mobile-close {
+    display: none;
+
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #102542;
+    color: var(--text-secondary);
+
+    font-size: 26px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.sidebar-mobile-close:hover {
+    background: #173451;
+    color: #ffffff;
+}
+
+.tree-menu {
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 12px 10px 24px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+}
+
+.tree-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tree-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tree-menu::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.tree-group {
+    margin-bottom: 5px;
+}
+
+.tree-title,
+.tree-child {
+    width: 100%;
+
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 11px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color:
+        var(--text-secondary, #475569);
+
+    font-family: inherit;
+
+    text-align: right;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.tree-title:hover,
+.tree-child:hover {
+    background: #102542;
+
+    color:
+        var(--brand-700, #1d4ed8);
+}
+
+.tree-main-title {
+    min-height: 48px;
+
+    font-weight: 800;
+
+    background: rgba(16, 37, 66, 0.72);
+}
+
+.tree-main-title:hover {
+    background: rgba(34, 211, 238, 0.10);
+}
+
+.tree-title-nested {
+    font-weight: 600;
+}
+
+.tree-toggle {
+    width: 22px;
+    height: 22px;
+
+    flex: 0 0 22px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 6px;
+
+    color:
+        var(--brand-600, #2563eb);
+
+    background: rgba(34, 211, 238, 0.08);
+
+    font-size: 16px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.tree-text {
+    min-width: 0;
+    flex: 1;
+
+    overflow-wrap: anywhere;
+}
+
+.tree-children {
+    margin-right: 13px;
+
+    padding-right: 9px;
+
+    border-right:
+        1px solid #e2e8f0;
+}
+
+.tree-main-children {
+    margin-top: 3px;
+}
+
+.tree-child {
+    min-height: 42px;
+
+    padding-right: 14px;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+.tree-child::before {
+    content: "•";
+
+    flex: 0 0 auto;
+
+    color:
+        var(--brand-500, #3b82f6);
+
+    font-size: 15px;
+}
+
+.county-menu {
+    font-size: 12px;
+}
+
+.sidebar-mobile-backdrop {
+    display: none;
+}
+
+
+/* ============================================================
+   Tablet
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+        width: 250px;
+    }
+
+    .tree-title,
+    .tree-child {
+        font-size: 12px;
+    }
+
+}
+
+
+/* ============================================================
+   Mobile
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: min(310px, 88vw);
+
+        transform: translateX(110%);
+
+        transition:
+            transform 0.25s ease;
+
+        box-shadow:
+            -12px 0 40px rgba(15, 23, 42, 0.18);
+    }
+
+    .sidebar.sidebar-mobile-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-mobile-close {
+        display: flex;
+    }
+
+    .sidebar-mobile-backdrop {
+        display: block;
+
+        position: fixed;
+        inset: 0;
+
+        z-index: 999;
+
+        background:
+            rgba(15, 23, 42, 0.42);
+
+        backdrop-filter: blur(2px);
+    }
+
+    .sidebar-header {
+        min-height: 72px;
+
+        padding: 12px 14px;
+    }
+
+    .sidebar-logo {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .sidebar-title strong {
+        font-size: 12px;
+    }
+
+    .tree-menu {
+        padding: 10px 8px 28px;
+    }
+
+    .tree-title,
+    .tree-child {
+        min-height: 46px;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .tree-text {
+        font-size: 13px;
+    }
+
+}
+
+
+/* ============================================================
+   Small phones
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+    .sidebar {
+        width: 92vw;
+        max-width: 340px;
+    }
+
+    .sidebar-title strong {
+        font-size: 11px;
+    }
+
+    .tree-text {
+        font-size: 12px;
+    }
+
+    .tree-child {
+        padding-right: 10px;
+    }
+
+}
+
+/* ============================================================
+   PVIMP SIDEBAR CONTRAST OVERRIDE
+
+   Purpose:
+   - readable text on dark sidebar headers
+   - readable text on white submenu areas
+   - clear hover/expanded states
+   - preserve RTL and existing menu structure
+   ============================================================ */
+
+.sidebar-header {
+    background: #0d1d36 !important;
+    color: #ffffff !important;
+}
+
+.sidebar-title strong {
+    color: #ffffff !important;
+}
+
+.sidebar-title span {
+    color: #cbd5e1 !important;
+}
+
+.sidebar-mobile-close {
+    background: #102542 !important;
+    color: #ffffff !important;
+}
+
+.sidebar-mobile-close:hover {
+    background: #173451 !important;
+    color: #ffffff !important;
+}
+
+
+/* ============================================================
+   Main menu groups
+   ============================================================ */
+
+.sidebar .tree-main-title {
+    background: #102542 !important;
+    color: #f8fafc !important;
+    font-weight: 800;
+}
+
+.sidebar .tree-main-title .tree-text {
+    color: #f8fafc !important;
+}
+
+.sidebar .tree-main-title .tree-toggle {
+    color: #22d3ee !important;
+    background: rgba(34, 211, 238, 0.14) !important;
+}
+
+.sidebar .tree-main-title:hover,
+.sidebar .tree-main-title[aria-expanded="true"] {
+    background: #173451 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .tree-main-title:hover .tree-text,
+.sidebar .tree-main-title[aria-expanded="true"] .tree-text {
+    color: #ffffff !important;
+}
+
+
+/* ============================================================
+   Nested menu buttons
+   ============================================================ */
+
+.sidebar .tree-title-nested {
+    background: transparent !important;
+    color: #334155 !important;
+}
+
+.sidebar .tree-title-nested .tree-text {
+    color: #334155 !important;
+}
+
+.sidebar .tree-title-nested .tree-toggle {
+    color: #0891b2 !important;
+    background: rgba(8, 145, 178, 0.10) !important;
+}
+
+.sidebar .tree-title-nested:hover,
+.sidebar .tree-title-nested[aria-expanded="true"] {
+    background: #e8f4f7 !important;
+    color: #07566a !important;
+}
+
+.sidebar .tree-title-nested:hover .tree-text,
+.sidebar .tree-title-nested[aria-expanded="true"] .tree-text {
+    color: #07566a !important;
+}
+
+
+/* ============================================================
+   Leaf menu items
+   ============================================================ */
+
+.sidebar .tree-child {
+    background: transparent !important;
+    color: #334155 !important;
+}
+
+.sidebar .tree-child .tree-child-text {
+    color: #334155 !important;
+}
+
+.sidebar .tree-child::before {
+    color: #0891b2 !important;
+}
+
+.sidebar .tree-child:hover {
+    background: #e8f4f7 !important;
+    color: #07566a !important;
+}
+
+.sidebar .tree-child:hover .tree-child-text {
+    color: #07566a !important;
+}
+
+
+/* ============================================================
+   County menu
+   ============================================================ */
+
+.sidebar .county-menu {
+    color: #334155 !important;
+}
+
+.sidebar .county-menu .tree-text {
+    color: #334155 !important;
+}
+
+.sidebar .county-menu:hover,
+.sidebar .county-menu[aria-expanded="true"] {
+    background: #e8f4f7 !important;
+    color: #07566a !important;
+}
+
+.sidebar .county-menu:hover .tree-text,
+.sidebar .county-menu[aria-expanded="true"] .tree-text {
+    color: #07566a !important;
+}
+
+
+/* ============================================================
+   Nested indentation
+   ============================================================ */
+
+.sidebar .tree-children {
+    border-right-color: #cbd5e1 !important;
+}
+
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+
+.sidebar .tree-menu::-webkit-scrollbar-thumb {
+    background: #94a3b8 !important;
+}
+
+.sidebar .tree-menu {
+    scrollbar-color: #94a3b8 transparent;
+}
+
+

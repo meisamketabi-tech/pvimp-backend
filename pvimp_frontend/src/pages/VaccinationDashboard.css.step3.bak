@@ -1,0 +1,780 @@
+﻿/* ============================================================
+   PVIMP - VACCINATION COMMAND CENTER
+   STEP 3 VISUAL THEME
+   ============================================================ */
+
+.vaccination-command-center {
+  --vc-bg: #061426;
+  --vc-bg-2: #081b31;
+  --vc-card: #0b2038;
+  --vc-card-2: #0d2742;
+  --vc-border: rgba(26, 190, 236, 0.34);
+  --vc-border-soft: rgba(80, 190, 230, 0.18);
+
+  --vc-text: #f4fbff;
+  --vc-muted: #8ca8bd;
+  --vc-cyan: #18d7ff;
+  --vc-cyan-2: #00a9d4;
+  --vc-green: #35df91;
+  --vc-yellow: #ffd34e;
+  --vc-orange: #ff8b2c;
+  --vc-danger: #ff3f63;
+  --vc-purple: #b75cff;
+
+  direction: rtl;
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 22px;
+  color: var(--vc-text);
+
+  background:
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(0, 180, 255, 0.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 15% 80%,
+      rgba(0, 125, 255, 0.07),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #04101f 0%,
+      #06172b 48%,
+      #07182a 100%
+    );
+
+  font-family:
+    "Vazirmatn",
+    "IRANSans",
+    "Tahoma",
+    sans-serif;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.vaccination-command-center .dashboard-header,
+.vaccination-command-center .page-header {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  min-height: 82px;
+
+  margin-bottom: 18px;
+  padding: 18px 22px;
+
+  color: var(--vc-text);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 39, 66, 0.97),
+      rgba(5, 24, 45, 0.97)
+    );
+
+  border: 1px solid var(--vc-border);
+  border-radius: 14px;
+
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.04),
+    0 12px 35px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.vaccination-command-center .dashboard-header::before,
+.vaccination-command-center .page-header::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 218, 255, 0.06),
+      transparent
+    );
+}
+
+.vaccination-command-center .dashboard-header h1,
+.vaccination-command-center .page-header h1 {
+  margin: 0;
+
+  color: #f3fbff;
+
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.4;
+
+  text-shadow:
+    0 0 16px rgba(22, 213, 255, 0.16);
+}
+
+.vaccination-command-center .dashboard-header p,
+.vaccination-command-center .page-header p {
+  margin: 7px 0 0;
+
+  color: #91b3c9;
+
+  font-size: 13px;
+}
+
+.vaccination-command-center .dashboard-header button,
+.vaccination-command-center .page-header button {
+  min-height: 38px;
+
+  padding: 8px 15px;
+
+  color: #dff8ff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(10, 69, 99, 0.92),
+      rgba(7, 39, 65, 0.92)
+    );
+
+  border: 1px solid rgba(26, 205, 255, 0.42);
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.vaccination-command-center .dashboard-header button:hover,
+.vaccination-command-center .page-header button:hover {
+  transform: translateY(-1px);
+
+  border-color: var(--vc-cyan);
+
+  box-shadow:
+    0 0 18px rgba(24, 215, 255, 0.18);
+}
+
+/* ============================================================
+   KPI GRID
+   ============================================================ */
+
+.vaccination-command-center .kpi-grid,
+.vaccination-command-center .kpi-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   KPI CARD
+   ============================================================ */
+
+.vaccination-command-center .kpi-card,
+.vaccination-command-center .metric-card {
+  position: relative;
+
+  min-height: 118px;
+
+  overflow: hidden;
+
+  padding: 17px 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 40, 67, 0.98),
+      rgba(7, 28, 49, 0.98)
+    );
+
+  border: 1px solid var(--vc-border);
+  border-radius: 12px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 8px 25px rgba(0,0,0,.22);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.vaccination-command-center .kpi-card:hover,
+.vaccination-command-center .metric-card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(42, 220, 255, 0.65);
+
+  box-shadow:
+    0 0 22px rgba(0, 185, 255, 0.12),
+    0 12px 30px rgba(0,0,0,.28);
+}
+
+.vaccination-command-center .kpi-card::before,
+.vaccination-command-center .metric-card::before {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: var(--vc-cyan);
+
+  box-shadow:
+    0 0 12px rgba(24, 215, 255, 0.55);
+}
+
+.vaccination-command-center .kpi-card:nth-child(2)::before,
+.vaccination-command-center .metric-card:nth-child(2)::before {
+  background: var(--vc-green);
+  box-shadow: 0 0 12px rgba(53, 223, 145, .45);
+}
+
+.vaccination-command-center .kpi-card:nth-child(3)::before,
+.vaccination-command-center .metric-card:nth-child(3)::before {
+  background: var(--vc-yellow);
+  box-shadow: 0 0 12px rgba(255, 211, 78, .40);
+}
+
+.vaccination-command-center .kpi-card:nth-child(4)::before,
+.vaccination-command-center .metric-card:nth-child(4)::before {
+  background: var(--vc-danger);
+  box-shadow: 0 0 12px rgba(255, 63, 99, .45);
+}
+
+.vaccination-command-center .kpi-title,
+.vaccination-command-center .metric-title {
+  color: #8fb1c7;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  line-height: 1.5;
+}
+
+.vaccination-command-center .kpi-value,
+.vaccination-command-center .metric-value {
+  margin-top: 11px;
+
+  color: #dff8ff;
+
+  font-size: 29px;
+  font-weight: 900;
+
+  line-height: 1;
+
+  text-shadow:
+    0 0 14px rgba(24, 215, 255, .16);
+}
+
+.vaccination-command-center .kpi-subtitle,
+.vaccination-command-center .metric-subtitle {
+  margin-top: 8px;
+
+  color: #65879d;
+
+  font-size: 10px;
+}
+
+/* ============================================================
+   MAIN GRID
+   ============================================================ */
+
+.vaccination-command-center .dashboard-grid,
+.vaccination-command-center .charts-grid,
+.vaccination-command-center .content-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(300px, 1fr);
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+
+.vaccination-command-center .dashboard-card,
+.vaccination-command-center .chart-card,
+.vaccination-command-center .panel,
+.vaccination-command-center .table-card,
+.vaccination-command-center .dashboard-panel {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 17px;
+
+  color: var(--vc-text);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(8, 32, 55, .98),
+      rgba(5, 23, 41, .98)
+    );
+
+  border: 1px solid var(--vc-border-soft);
+  border-radius: 12px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 8px 26px rgba(0,0,0,.24);
+}
+
+.vaccination-command-center .dashboard-card::after,
+.vaccination-command-center .chart-card::after,
+.vaccination-command-center .dashboard-panel::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(27, 190, 235, .035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(27, 190, 235, .035) 1px,
+      transparent 1px
+    );
+
+  background-size: 26px 26px;
+
+  opacity: .35;
+}
+
+/* ============================================================
+   PANEL HEADERS
+   ============================================================ */
+
+.vaccination-command-center .card-header,
+.vaccination-command-center .chart-header,
+.vaccination-command-center .panel-header {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 13px;
+
+  padding-bottom: 10px;
+
+  border-bottom:
+    1px solid rgba(39, 196, 236, .13);
+}
+
+.vaccination-command-center .card-header h2,
+.vaccination-command-center .chart-header h2,
+.vaccination-command-center .panel-header h2 {
+  margin: 0;
+
+  color: #e9f9ff;
+
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.vaccination-command-center .chart-card {
+  min-height: 300px;
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.vaccination-command-center table {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+
+  color: #d9edf6;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  overflow: hidden;
+}
+
+.vaccination-command-center th {
+  padding: 11px 10px;
+
+  color: #82abc0;
+
+  background:
+    rgba(8, 52, 78, .65);
+
+  border-bottom:
+    1px solid rgba(32, 192, 232, .16);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.vaccination-command-center td {
+  padding: 11px 10px;
+
+  color: #c4dce8;
+
+  background: rgba(3, 19, 34, .18);
+
+  border-bottom:
+    1px solid rgba(87, 143, 169, .10);
+
+  font-size: 12px;
+}
+
+.vaccination-command-center tr:hover td {
+  background:
+    rgba(15, 102, 136, .12);
+}
+
+.vaccination-command-center tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+
+.vaccination-command-center .status-badge,
+.vaccination-command-center .badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  min-width: 55px;
+
+  padding: 4px 9px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.vaccination-command-center .success,
+.vaccination-command-center .status-success {
+  color: #4ff0a4;
+
+  background:
+    rgba(21, 154, 94, .13);
+
+  border:
+    1px solid rgba(53, 223, 145, .26);
+}
+
+.vaccination-command-center .warning,
+.vaccination-command-center .status-warning {
+  color: #ffd85e;
+
+  background:
+    rgba(245, 179, 20, .12);
+
+  border:
+    1px solid rgba(255, 211, 78, .25);
+}
+
+.vaccination-command-center .danger,
+.vaccination-command-center .status-danger {
+  color: #ff5575;
+
+  background:
+    rgba(220, 38, 70, .13);
+
+  border:
+    1px solid rgba(255, 63, 99, .28);
+}
+
+.vaccination-command-center .info,
+.vaccination-command-center .status-info {
+  color: #54dcff;
+
+  background:
+    rgba(0, 161, 211, .12);
+
+  border:
+    1px solid rgba(24, 215, 255, .25);
+}
+
+/* ============================================================
+   PROGRESS
+   ============================================================ */
+
+.vaccination-command-center .progress {
+  height: 7px;
+
+  overflow: hidden;
+
+  background:
+    rgba(111, 155, 180, .13);
+
+  border-radius: 999px;
+}
+
+.vaccination-command-center .progress-bar {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00a9d4,
+      #19d8ff
+    );
+
+  box-shadow:
+    0 0 12px rgba(24, 215, 255, .42);
+}
+
+/* ============================================================
+   ALERT PANEL
+   ============================================================ */
+
+.vaccination-command-center .alert-panel {
+  position: relative;
+  z-index: 1;
+
+  padding: 14px;
+
+  color: #ffe8ed;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(103, 22, 42, .28),
+      rgba(50, 13, 29, .24)
+    );
+
+  border:
+    1px solid rgba(255, 63, 99, .28);
+
+  border-radius: 11px;
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 42, 80, .025);
+}
+
+/* ============================================================
+   PRIORITY LIST
+   ============================================================ */
+
+.vaccination-command-center .priority-list {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.vaccination-command-center .priority-item {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 10px 12px;
+
+  color: #cce3ee;
+
+  background:
+    rgba(8, 39, 61, .66);
+
+  border:
+    1px solid rgba(63, 149, 183, .15);
+
+  border-radius: 9px;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.vaccination-command-center .priority-item:hover {
+  background:
+    rgba(12, 66, 91, .62);
+
+  border-color:
+    rgba(24, 215, 255, .30);
+}
+
+/* ============================================================
+   CANVAS / SVG / CHART CONTAINERS
+   ============================================================ */
+
+.vaccination-command-center canvas,
+.vaccination-command-center svg {
+  max-width: 100%;
+}
+
+.vaccination-command-center .recharts-cartesian-axis-tick-value {
+  fill: #7195aa;
+}
+
+.vaccination-command-center .recharts-text {
+  fill: #83a8bc;
+}
+
+.vaccination-command-center .recharts-cartesian-grid-horizontal line,
+.vaccination-command-center .recharts-cartesian-grid-vertical line {
+  stroke: rgba(93, 157, 184, .10);
+}
+
+/* ============================================================
+   DARK FORM CONTROLS
+   ============================================================ */
+
+.vaccination-command-center select,
+.vaccination-command-center input,
+.vaccination-command-center textarea {
+  color: #dff7ff;
+
+  background:
+    #081d32;
+
+  border:
+    1px solid rgba(38, 181, 222, .25);
+
+  border-radius: 8px;
+
+  font-family: inherit;
+}
+
+.vaccination-command-center select:focus,
+.vaccination-command-center input:focus,
+.vaccination-command-center textarea:focus {
+  outline: none;
+
+  border-color:
+    rgba(24, 215, 255, .62);
+
+  box-shadow:
+    0 0 0 3px rgba(24, 215, 255, .08);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+.vaccination-command-center ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.vaccination-command-center ::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.025);
+}
+
+.vaccination-command-center ::-webkit-scrollbar-thumb {
+  background:
+    rgba(39, 174, 217, .35);
+
+  border-radius: 999px;
+}
+
+.vaccination-command-center ::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(39, 174, 217, .58);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1200px) {
+  .vaccination-command-center .kpi-grid,
+  .vaccination-command-center .kpi-cards {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .vaccination-command-center .kpi-grid,
+  .vaccination-command-center .kpi-cards {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .vaccination-command-center .dashboard-grid,
+  .vaccination-command-center .charts-grid,
+  .vaccination-command-center .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .vaccination-command-center {
+    padding: 10px;
+  }
+
+  .vaccination-command-center .kpi-grid,
+  .vaccination-command-center .kpi-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .vaccination-command-center .dashboard-header,
+  .vaccination-command-center .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vaccination-command-center .dashboard-header h1,
+  .vaccination-command-center .page-header h1 {
+    font-size: 19px;
+  }
+}

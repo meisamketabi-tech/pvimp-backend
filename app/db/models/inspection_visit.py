@@ -1,0 +1,36 @@
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+
+from app.db.base_class import Base
+
+
+class InspectionVisit(Base):
+
+    __tablename__ = "inspection_visits"
+
+
+    id = Column(
+        Integer,
+        primary_key=True
+    )
+
+
+    inspection_id = Column(
+        Integer
+    )
+
+
+    visitor = Column(
+        String(200)
+    )
+
+
+    visit_time = Column(
+        DateTime
+    )
+
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow
+    )

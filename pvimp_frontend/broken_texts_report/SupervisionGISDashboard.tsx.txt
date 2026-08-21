@@ -1,0 +1,13 @@
+﻿
+==============================
+FILE:
+\src\pages\SupervisionGISDashboard.tsx
+
+LINES:
+4
+
+TEXT:
+    return <div>GIS ?????</div>;
+
+==============================
+

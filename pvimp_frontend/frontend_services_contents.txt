@@ -1,0 +1,1049 @@
+
+============================================================
+FILE: src\services\attachmentService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/attachments";
+
+
+
+export const uploadAttachment=(
+
+entity:string,
+
+id:number,
+
+file:File,
+
+description:string=""
+
+)=>{
+
+
+const form=new FormData();
+
+
+form.append(
+"entity_type",
+entity
+);
+
+
+form.append(
+"entity_id",
+id.toString()
+);
+
+
+form.append(
+"description",
+description
+);
+
+
+form.append(
+"file",
+file
+);
+
+
+
+return axios.post(
+API,
+form,
+{
+headers:{
+"Content-Type":"multipart/form-data"
+}
+}
+);
+
+
+};
+
+
+
+export const getAttachments=(
+
+entity:string,
+
+id:number
+
+)=>
+
+axios.get(
+`${API}/${entity}/${id}`
+);
+
+
+
+============================================================
+FILE: src\services\auditService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/audit";
+
+
+
+export const getAuditLogs=()=>
+axios.get(API);
+
+
+
+============================================================
+FILE: src\services\auth.service.ts
+============================================================
+
+import api from "./api";
+import type {LoginRequest, LoginResponse, User} from "../types/auth";
+
+
+export async function login(data: LoginRequest){
+
+ const formData = new URLSearchParams();
+
+ formData.append(
+  "username",
+  data.username
+ );
+
+ formData.append(
+  "password",
+  data.password
+ );
+
+
+ const response =
+ await api.post<LoginResponse>(
+  "/auth/login",
+  formData,
+  {
+   headers:{
+    "Content-Type":
+    "application/x-www-form-urlencoded"
+   }
+  }
+ );
+
+
+ return response.data;
+
+}
+
+
+export async function getCurrentUser(){
+
+ const response =
+ await api.get<User>(
+  "/auth/me"
+ );
+
+ return response.data;
+
+}
+
+
+============================================================
+FILE: src\services\checklistService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/checklists";
+
+
+
+export const getChecklists=()=>
+axios.get(API);
+
+
+
+export const getChecklistItems=(id:number)=>
+axios.get(
+`${API}/${id}/items`
+);
+
+
+
+============================================================
+FILE: src\services\coldChainService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/cold-chain";
+
+
+
+export const getColdChainLogs=()=>
+axios.get(API);
+
+
+
+export const getColdChainAlerts=()=>
+axios.get(
+`${API}/alerts`
+);
+
+
+
+============================================================
+FILE: src\services\complaintPublicService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/complaints";
+
+
+
+export const submitComplaint=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\complaintService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/complaints";
+
+
+
+export const getComplaints=()=>
+axios.get(API);
+
+
+
+export const updateComplaint=(
+id:number,
+status:string
+)=>
+axios.put(
+`${API}/${id}?status=${status}`
+);
+
+
+============================================================
+FILE: src\services\epidemiologyImportService.ts
+============================================================
+
+import axios from "axios";
+
+const API_URL = "http://127.0.0.1:8000/api/v1";
+
+export async function importEpidemiologyUnits(file: File) {
+  const formData = new FormData();
+
+  formData.append("file", file);
+
+  const response = await axios.post(
+    `${API_URL}/gis/import/disease-control/epidemiology-units/import`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data;
+}
+
+============================================================
+FILE: src\services\GISImportPage.tsx
+============================================================
+
+
+============================================================
+FILE: src\services\gisService.ts
+============================================================
+
+import api from "./api";
+
+
+export interface GISUnit {
+
+    id: number;
+
+    unit_name: string;
+
+    unit_code: string;
+
+    unit_type_id: number;
+
+    province_id: number | null;
+
+    county_id: number | null;
+
+    latitude: number | null;
+
+    longitude: number | null;
+
+    cattle_count: number;
+
+    sheep_count: number;
+
+    goat_count: number;
+
+    horse_count: number;
+
+    dog_count: number;
+
+    camel_count: number;
+
+    buffalo_count: number;
+
+    is_active: boolean;
+
+}
+
+
+
+export const gisService = {
+
+
+    getUnits() {
+
+        return api.get<GISUnit[]>(
+            "/gis/epidemiology-units/"
+        );
+
+    },
+
+
+
+    createUnit(data: any) {
+
+        return api.post(
+            "/gis/epidemiology-units/",
+            data
+        );
+
+    },
+
+
+
+    updateUnit(
+        id: number,
+        data: any
+    ) {
+
+        return api.put(
+            `/gis/epidemiology-units/${id}`,
+            data
+        );
+
+    },
+
+
+
+    deleteUnit(
+        id: number
+    ) {
+
+        return api.delete(
+            `/gis/epidemiology-units/${id}`
+        );
+
+    },
+
+
+
+    getUploadedFiles() {
+
+        return api.get(
+            "/gis/import/disease-control/files"
+        );
+
+    }
+
+
+};
+
+============================================================
+FILE: src\services\healthAlertService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/alerts";
+
+
+
+export const getHealthAlerts=()=>
+axios.get(API);
+
+
+
+export const updateHealthAlert=(
+id:number,
+status:string
+)=>
+axios.put(
+`${API}/${id}?status=${status}`
+);
+
+
+
+============================================================
+FILE: src\services\healthUnitService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/health-units";
+
+
+
+export const getHealthUnits=()=>
+axios.get(API);
+
+
+
+export const createHealthUnit=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\inspectionResultService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/inspection-results";
+
+
+
+export const getInspectionResults=(id:number)=>
+axios.get(
+`${API}/${id}`
+);
+
+
+
+export const createInspectionResult=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\inspectionScheduleService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/inspection-schedules";
+
+
+
+export const getInspectionSchedule=(officer:number)=>
+axios.get(
+`${API}/${officer}`
+);
+
+
+
+export const completeInspectionSchedule=(id:number)=>
+axios.put(
+`${API}/${id}/complete`
+);
+
+
+
+============================================================
+FILE: src\services\inspectionService.ts
+============================================================
+
+import axios from "axios";
+
+const API = "http://localhost:8000/inspections";
+
+export interface Inspection {
+    id: number;
+    inspection_number?: string;
+    inspection_date?: string;
+    status?: string;
+    result?: string;
+}
+
+export const getInspections = () =>
+    axios.get<Inspection[]>(API);
+
+export const getOfficerInspections = (id: number) =>
+    axios.get<Inspection[]>(`${API}/officer/${id}`);
+
+export const createInspection = (data: any) =>
+    axios.post(API, data);
+
+
+============================================================
+FILE: src\services\notificationService.ts
+============================================================
+
+import axios from "axios";
+
+const API = "http://localhost:8000/notifications";
+
+export const getNotifications = (id: number) =>
+    axios.get(`${API}/${id}`);
+
+export const markNotificationRead = (id: number) =>
+    axios.put(`${API}/${id}/read`);
+
+export const markRead = (id: number) =>
+    markNotificationRead(id);
+
+
+============================================================
+FILE: src\services\permitService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/permits";
+
+
+
+export const getPermits=()=>
+axios.get(API);
+
+
+
+export const getUnitPermits=(id:number)=>
+axios.get(
+`${API}/unit/${id}`
+);
+
+
+
+============================================================
+FILE: src\services\personnelService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/personnel";
+
+
+
+export const getPersonnel=()=>
+axios.get(API);
+
+
+
+export const createPersonnel=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\reminderService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/reminders";
+
+
+
+export const getReminders=()=>
+axios.get(API);
+
+
+
+export const completeReminder=(id:number)=>
+axios.put(
+`${API}/${id}/complete`
+);
+
+
+
+============================================================
+FILE: src\services\reportService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/reports";
+
+
+
+export const getReports=()=>
+axios.get(API);
+
+
+
+export const createReport=(data:any)=>
+axios.post(
+`${API}/create`,
+data
+);
+
+
+
+============================================================
+FILE: src\services\responsibleHealthService.ts
+============================================================
+
+import axios from "axios";
+
+const API = "http://localhost:8000/responsible-health";
+
+export const getStatistics = () =>
+    axios.get(`${API}/statistics`);
+
+export const getComplianceScore = (id: number) =>
+    axios.get(`${API}/compliance-score/${id}`);
+
+export const getOfficerSummary = (id: number) =>
+    axios.get(`${API}/officer/${id}/summary`);
+
+export const getOfficerDashboard = (id: number) =>
+    axios.get(`${API}/officer/${id}/dashboard`);
+
+export const createOfficer = (data: any) =>
+    axios.post(`${API}/officers`, data);
+
+export const createInspection = (data: any) =>
+    axios.post(`${API}/inspections`, data);
+
+export const createNonConformity = (data: any) =>
+    axios.post(`${API}/non-conformities`, data);
+
+export const createSample = (data: any) =>
+    axios.post(`${API}/samples`, data);
+
+export const createColdChain = (data: any) =>
+    axios.post(`${API}/cold-chain`, data);
+
+export const getInspections = () =>
+    axios.get(`${API}/inspections`);
+
+export const getNonConformities = () =>
+    axios.get(`${API}/non-conformities`);
+
+export const getSamples = () =>
+    axios.get(`${API}/samples`);
+
+export const getColdChain = () =>
+    axios.get(`${API}/cold-chain`);
+
+
+============================================================
+FILE: src\services\riskService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/risk";
+
+
+
+export const getRisks=()=>
+axios.get(API);
+
+
+
+export const getHighRisks=()=>
+axios.get(
+`${API}/high`
+);
+
+
+
+export const createRisk=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+============================================================
+FILE: src\services\samplingService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/sampling";
+
+
+
+export const getSamples=()=>
+axios.get(API);
+
+
+
+export const createSample=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\scheduleService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/schedule";
+
+
+
+export const createSchedule=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+export const getSchedule=(id:number)=>
+axios.get(
+`${API}/${id}`
+);
+
+
+
+export const completeSchedule=(id:number)=>
+axios.put(
+`${API}/${id}/complete`
+);
+
+
+
+============================================================
+FILE: src\services\scoreService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/scores";
+
+
+
+export const getScores=()=>
+axios.get(API);
+
+
+
+export const getUnitScore=(id:number)=>
+axios.get(
+`${API}/${id}`
+);
+
+
+
+============================================================
+FILE: src\services\supervisionService.ts
+============================================================
+
+const API_URL =
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:8000/api/v1";
+
+
+export async function getSupervisionInspections(){
+
+    const response = await fetch(
+        `${API_URL}/inspections`
+    );
+
+
+    if(!response.ok){
+        throw new Error(
+            "خطا در دریافت اطلاعات بازرسی"
+        );
+    }
+
+
+    return await response.json();
+
+}
+
+
+
+export async function createSupervisionInspection(
+    data:any
+){
+
+    const payload = {
+
+        inspection_type_id:3,
+
+        organization_unit_id:18,
+
+        veterinary_unit_id:1,
+
+        inspector_id:7,
+
+        inspection_date:
+            data.inspectionDate ||
+            new Date().toISOString(),
+
+        notes:
+            `
+نوع بازرسی: ${data.inspectionType || ""}
+نام واحد: ${data.unitName || ""}
+نوع واحد: ${data.unitType || ""}
+نام مالک: ${data.ownerName || ""}
+تلفن: ${data.phone || ""}
+شهرستان: ${data.city || ""}
+آدرس: ${data.address || ""}
+بازرس: ${data.inspectorName || ""}
+`
+    };
+
+
+    const response = await fetch(
+
+        `${API_URL}/inspections`,
+
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(payload)
+
+        }
+
+    );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            "خطا در ثبت بازرسی"
+        );
+
+    }
+
+
+    return await response.json();
+
+}
+
+============================================================
+FILE: src\services\trainingService.ts
+============================================================
+
+
+import axios from "axios";
+
+const API="http://localhost:8000/trainings";
+
+export const getTrainings=()=>
+axios.get(API);
+
+export const createTraining=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+============================================================
+FILE: src\services\userService.ts
+============================================================
+
+import api from "./api";
+
+
+export interface UserAssignment {
+    id: number;
+
+    organization_unit?: {
+        id: number;
+        name: string;
+        code: string;
+    } | null;
+
+    position?: {
+        id: number;
+    } | null;
+
+    role?: {
+        id: number;
+        name: string;
+    } | null;
+
+    is_primary: boolean;
+    is_active: boolean;
+    start_date: string;
+    end_date?: string | null;
+}
+
+
+export interface UserDetails {
+
+    id: number;
+    username: string;
+    full_name: string;
+    email: string | null;
+    mobile: string | null;
+    is_active: boolean;
+
+    assignments: UserAssignment[];
+}
+
+
+
+export async function getUserDetails(
+    userId: number
+): Promise<UserDetails>{
+
+    const response = await api.get(
+        `/users/${userId}/details`
+    );
+
+    return response.data;
+}
+
+============================================================
+FILE: src\services\violationFollowupService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/violation-followups";
+
+
+
+export const getViolationFollowups=(id:number)=>
+axios.get(
+`${API}/${id}`
+);
+
+
+
+export const createViolationFollowup=(data:any)=>
+axios.post(
+API,
+data
+);
+
+
+
+============================================================
+FILE: src\services\violationService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/violations";
+
+
+
+export const getViolations=()=>
+axios.get(API);
+
+
+
+export const getUnitViolations=(id:number)=>
+axios.get(
+`${API}/unit/${id}`
+);
+
+
+
+============================================================
+FILE: src\services\workflowService.ts
+============================================================
+
+
+import axios from "axios";
+
+
+const API="http://localhost:8000/workflow";
+
+
+
+export const createTask=(data:any)=>
+axios.post(
+`${API}/create`,
+data
+);
+
+
+
+export const updateTaskStatus=(
+id:number,
+status:string
+)=>
+axios.put(
+`${API}/${id}/status?status=${status}`
+);
+
+
+
+export const getTasks=()=>
+axios.get(
+`${API}/`
+);
+
+

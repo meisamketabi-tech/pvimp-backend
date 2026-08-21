@@ -1,0 +1,325 @@
+.pv-button {
+
+    min-height: 42px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    box-sizing: border-box;
+
+    padding: 0 18px;
+
+    border: 1px solid transparent;
+
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-family);
+
+    font-size: var(--font-sm);
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition),
+        opacity var(--transition);
+
+}
+
+.pv-button:hover:not(:disabled) {
+
+    transform: translateY(-1px);
+
+}
+
+.pv-button:active:not(:disabled) {
+
+    transform: translateY(0);
+
+}
+
+.pv-button:focus-visible {
+
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(39, 211, 207, .14),
+        var(--shadow-glow);
+
+}
+
+.pv-button:disabled {
+
+    opacity: .55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* PRIMARY */
+
+.pv-button-primary {
+
+    background: var(--color-primary);
+
+    border-color: var(--color-primary);
+
+    color: #062f36;
+
+    box-shadow:
+        0 6px 18px rgba(39, 211, 207, .16);
+
+}
+
+.pv-button-primary:hover:not(:disabled) {
+
+    background: var(--color-primary-light);
+
+    border-color: var(--color-primary-light);
+
+}
+
+
+/* SECONDARY */
+
+.pv-button-secondary {
+
+    background: var(--color-surface-light);
+
+    border-color: var(--color-border);
+
+    color: var(--color-text);
+
+}
+
+.pv-button-secondary:hover:not(:disabled) {
+
+    background: var(--color-surface-hover);
+
+    border-color: var(--color-primary-dark);
+
+}
+
+
+/* SUCCESS */
+
+.pv-button-success {
+
+    background: var(--color-success);
+
+    border-color: var(--color-success);
+
+    color: #062f24;
+
+}
+
+.pv-button-success:hover:not(:disabled) {
+
+    filter: brightness(1.08);
+
+}
+
+
+/* WARNING */
+
+.pv-button-warning {
+
+    background: var(--color-warning);
+
+    border-color: var(--color-warning);
+
+    color: #332200;
+
+}
+
+.pv-button-warning:hover:not(:disabled) {
+
+    filter: brightness(1.08);
+
+}
+
+
+/* DANGER */
+
+.pv-button-danger {
+
+    background: var(--color-danger);
+
+    border-color: var(--color-danger);
+
+    color: #320811;
+
+}
+
+.pv-button-danger:hover:not(:disabled) {
+
+    filter: brightness(1.08);
+
+}
+
+
+/* GHOST */
+
+.pv-button-ghost {
+
+    background: transparent;
+
+    border-color: var(--color-border);
+
+    color: var(--color-text-muted);
+
+}
+
+.pv-button-ghost:hover:not(:disabled) {
+
+    background: rgba(39, 211, 207, .06);
+
+    border-color: var(--color-primary-dark);
+
+    color: var(--color-primary);
+
+}
+
+
+/* SIZES */
+
+.pv-button-sm {
+
+    min-height: 34px;
+
+    padding: 0 13px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+}
+
+.pv-button-md {
+
+    min-height: 42px;
+
+}
+
+.pv-button-lg {
+
+    min-height: 48px;
+
+    padding: 0 22px;
+
+    border-radius: 14px;
+
+    font-size: 15px;
+
+}
+
+.pv-button-full {
+
+    width: 100%;
+
+}
+
+.pv-button-icon {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+
+}
+
+.pv-button-spinner {
+
+    width: 16px;
+
+    height: 16px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.pv-button-spinner span {
+
+    width: 14px;
+
+    height: 14px;
+
+    display: block;
+
+    border: 2px solid rgba(255,255,255,.3);
+
+    border-top-color: currentColor;
+
+    border-radius: 50%;
+
+    animation: pv-button-spin .7s linear infinite;
+
+}
+
+.pv-button-primary .pv-button-spinner span {
+
+    border-color: rgba(6,47,54,.25);
+
+    border-top-color: #062f36;
+
+}
+
+.pv-button-loading .pv-button-label {
+
+    opacity: .9;
+
+}
+
+@keyframes pv-button-spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .pv-button {
+
+        min-height: 40px;
+
+        padding: 0 14px;
+
+        font-size: 13px;
+
+    }
+
+    .pv-button-lg {
+
+        min-height: 44px;
+
+        padding: 0 17px;
+
+    }
+
+}

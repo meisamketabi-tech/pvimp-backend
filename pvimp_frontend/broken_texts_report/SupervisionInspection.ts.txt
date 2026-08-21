@@ -1,0 +1,13 @@
+﻿
+==============================
+FILE:
+\src\types\SupervisionInspection.ts
+
+LINES:
+59
+
+TEXT:
+    province: "?????",
+
+==============================
+

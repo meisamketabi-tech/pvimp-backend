@@ -1,0 +1,13 @@
+﻿
+==============================
+FILE:
+\src\pages\SupervisionGISImport.tsx
+
+LINES:
+4
+
+TEXT:
+    return <div>???? ??????? GIS ?????</div>;
+
+==============================
+

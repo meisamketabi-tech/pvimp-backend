@@ -1,0 +1,166 @@
+﻿.dashboard-page {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+}
+
+.dashboard-header {
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 28px;
+    background: #07566a;
+    color: #ffffff !important;
+    border-radius: 16px;
+}
+
+.dashboard-header h1,
+.dashboard-header p {
+    color: #ffffff !important;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.dashboard-header p {
+    margin: 8px 0 0;
+}
+
+.dashboard-grid {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 20px;
+}
+
+.dashboard-grid > .dashboard-box {
+    min-width: 0;
+}
+
+/*
+ * Dashboard cards
+ * Explicit dark text is required because the application
+ * global dark-theme text color can otherwise become nearly
+ * invisible on the white card background.
+ */
+.dashboard-grid > .dashboard-box {
+    background: #ffffff;
+    color: #172033 !important;
+}
+
+.dashboard-grid > .dashboard-box h3,
+.dashboard-grid > .dashboard-box strong,
+.dashboard-grid > .dashboard-box p {
+    color: #172033 !important;
+}
+
+.dashboard-grid > .dashboard-box h3 {
+    margin-top: 0;
+}
+
+.dashboard-grid > .dashboard-box strong {
+    display: block;
+    font-size: 30px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.dashboard-grid > .dashboard-box p {
+    margin-bottom: 0;
+    color: #475569 !important;
+}
+
+/*
+ * General dashboard sections.
+ * Keep table styling independent because tables already
+ * have their own dark-theme presentation.
+ */
+.dashboard-box {
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 20px;
+    padding: 20px;
+    background: #ffffff;
+    color: #172033 !important;
+    border: 1px solid #dce5e7;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.06);
+    overflow: hidden;
+}
+
+.dashboard-box > h2,
+.dashboard-box > h3 {
+    color: #07566a !important;
+    margin-top: 0;
+}
+
+.dashboard-box > p {
+    color: #334155 !important;
+}
+
+/*
+ * Preserve table readability and do not force the card text
+ * color onto table cells.
+ */
+.dashboard-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard-box th,
+.dashboard-box td {
+    padding: 12px;
+    text-align: right;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.chart-placeholder {
+    width: 100%;
+    min-height: 220px;
+    color: #172033 !important;
+}
+
+.chart-placeholder strong {
+    color: #07566a !important;
+}
+
+.chart-placeholder p {
+    color: #475569 !important;
+}
+
+@media (max-width: 1100px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 850px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        padding: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 21px;
+    }
+
+    .dashboard-box {
+        padding: 15px;
+        overflow-x: auto;
+    }
+}

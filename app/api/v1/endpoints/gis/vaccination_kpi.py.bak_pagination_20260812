@@ -1,0 +1,142 @@
+﻿from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
+
+from app.db.session import get_db
+from app.services.gis.vaccination_kpi_service import (
+    alerts,
+    counties,
+    dashboard,
+    effectiveness,
+    vaccine_county_report,
+    vaccine_management_report,
+    vaccine_unit_report,
+    unit_detail,
+    units,
+    vaccines,
+)
+
+router = APIRouter(
+    prefix="/gis/kpi/vaccination",
+    tags=["GIS Vaccination KPI"],
+)
+
+
+@router.get("/dashboard")
+def vaccination_dashboard(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return dashboard(db, province_code, county_code, vaccine_type)
+
+
+@router.get("/counties")
+def vaccination_counties(
+    province_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return counties(db, province_code, vaccine_type)
+
+
+@router.get("/vaccines")
+def vaccination_vaccines(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return vaccines(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+        unit_code,
+    )
+
+
+@router.get("/units")
+def vaccination_units(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return units(
+        db,
+        province_code,
+        county_code,
+        vaccine_type,
+        unit_code,
+    )
+
+
+@router.get("/alerts")
+def vaccination_alerts(
+    province_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return alerts(db, province_code)
+
+
+@router.get("/effectiveness")
+def vaccination_effectiveness(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return effectiveness(db, province_code, county_code, vaccine_type)
+
+
+@router.get("/unit/{unit_code}")
+def vaccination_unit_detail(
+    unit_code: str,
+    db: Session = Depends(get_db),
+):
+    return unit_detail(db, unit_code)
+
+@router.get("/vaccine-management-report/{vaccine_type}")
+def vaccination_vaccine_management_report(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return vaccine_management_report(
+        db,
+        vaccine_type,
+        province_code,
+        county_code,
+    )
+
+
+@router.get("/vaccine/{vaccine_type}/counties")
+def vaccination_vaccine_counties(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return vaccine_county_report(
+        db,
+        vaccine_type,
+        province_code,
+    )
+
+
+@router.get("/vaccine/{vaccine_type}/units")
+def vaccination_vaccine_units(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    return vaccine_unit_report(
+        db,
+        vaccine_type,
+        province_code,
+        county_code,
+    )

@@ -1,0 +1,13 @@
+﻿
+==============================
+FILE:
+\src\pages\SupervisionProducts.tsx
+
+LINES:
+4
+
+TEXT:
+return <div className="dashboard-container" dir="rtl"><h1>?????? ??????? ??? ?????</h1></div>
+
+==============================
+
