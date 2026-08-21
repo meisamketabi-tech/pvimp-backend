@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
+import LoginV2 from "../pages/LoginV2";
 import MainLayout from "../layouts/MainLayout";
 import Dashboard from "../pages/Dashboard";
 import AuthGuard from "../components/auth/AuthGuard";
@@ -52,7 +52,7 @@ import ResponsibleHealthDashboard from "../pages/ResponsibleHealthDashboard";
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginV2 />} />
             <Route element={<AuthGuard />}>
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<Dashboard />} />
