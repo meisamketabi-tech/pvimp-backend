@@ -1,0 +1,5 @@
+.auth-loading { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#06111f,#0a1b31,#071426);color:#e2e8f0; }
+.auth-loading__spinner { width:42px;height:42px;border:3px solid #1d3b5d;border-top-color:#22d3ee;border-radius:50%;animation:auth-spin .8s linear infinite; }
+.auth-loading strong { font-size:13px; }
+.auth-loading span { color:#7f9bb6;font-size:11px; }
+@keyframes auth-spin { to { transform:rotate(360deg); } }
