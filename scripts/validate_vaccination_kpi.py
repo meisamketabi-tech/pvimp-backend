@@ -1,27 +1,7 @@
 from __future__ import annotations
 
-import os
-from collections import defaultdict
-from sqlalchemy import create_engine, text
-
-
-def db_url() -> str:
-    for key in ("DATABASE_URL", "SQLALCHEMY_DATABASE_URI", "POSTGRES_URL"):
-        value = os.getenv(key)
-        if value:
-            return value
-    try:
-        from app.core.config import settings
-        for key in ("DATABASE_URL", "SQLALCHEMY_DATABASE_URI", "POSTGRES_URL"):
-            value = getattr(settings, key, None)
-            if value:
-                return value
-        value = getattr(settings, "database_url", None)
-        if value:
-            return value
-    except Exception:
-        pass
-    raise RuntimeError("Database URL was not found in environment or app.core.config.settings")
+from sqlalchemy import text
+from app.db.session import SessionLocal
 
 
 def rows(db, sql, params=None):
@@ -29,8 +9,9 @@ def rows(db, sql, params=None):
 
 
 def main() -> None:
-    engine = create_engine(db_url())
-    with engine.connect() as db:
+    # Use the exact database configuration/session used by the application.
+    db = SessionLocal()
+    try:
         print("=== DATABASE ===")
         print("connected: OK")
 
@@ -43,8 +24,7 @@ def main() -> None:
         GROUP BY vaccine_type
         ORDER BY records DESC, vaccine_type
         """
-        raw = rows(db, q)
-        for r in raw:
+        for r in rows(db, q):
             print(f"{r['vaccine_type']} | records={r['records']} | vaccinated={r['vaccinated_animals']}")
 
         print("\n=== CLASSIFICATION FROM VIEW ===")
@@ -133,6 +113,8 @@ def main() -> None:
                 print(f"{r['raw_animal_type']} | records={r['records']} | vaccinated={r['vaccinated_animals']}")
 
         print("\n=== DONE: READ ONLY / NO DATA MODIFIED ===")
+    finally:
+        db.close()
 
 
 if __name__ == "__main__":
