@@ -42,6 +42,7 @@ from app.api.v1.endpoints.gis import (
     laboratory_result,
     spraying,
     vaccination_kpi,
+    vaccination_overview,
 )
 
 # Authentication
@@ -79,7 +80,6 @@ from app.api.v1 import supervision
 
 api_router = APIRouter()
 
-
 ROUTERS = [
     # Health
     health.router,
@@ -103,6 +103,7 @@ ROUTERS = [
     # GIS
     geography.router,
     organization_geography.router,
+    vaccination_overview.router,
     vaccination_kpi.router,
     epidemiology_units.router,
     import_files.router,
@@ -132,11 +133,8 @@ ROUTERS = [
     supervision.router,
 ]
 
-
 for router in ROUTERS:
-
     api_router.include_router(router)
-
 
 # GIS base routes
 api_router.include_router(gis_base.router)
