@@ -3,10 +3,8 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_allowed_county_ids, get_current_user
 from app.db.session import get_db
-from app.services.gis.vaccination_overview_service import (
-    DEFAULT_NEAR_EXPIRY_DAYS,
-    overview,
-)
+from app.services.gis.vaccination_overview_scope import overview
+from app.services.gis.vaccination_overview_service import DEFAULT_NEAR_EXPIRY_DAYS
 from app.api.v1.endpoints.gis.vaccination_kpi import _get_allowed_county_codes, _resolve_county_scope
 
 router = APIRouter(prefix="/gis/kpi/vaccination", tags=["GIS Vaccination KPI"])
