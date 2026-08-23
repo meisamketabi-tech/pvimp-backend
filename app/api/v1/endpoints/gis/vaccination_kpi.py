@@ -70,13 +70,26 @@ def _authorize_unit_county(db: Session, current_user, unit_code: str) -> None:
 
 
 @router.get("/dashboard")
-def vaccination_dashboard(province_code: str | None = Query(None), county_code: str | None = Query(None), vaccine_type: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    return dashboard(db, province_code, _resolve_county_scope(db, current_user, county_code), vaccine_type)
+def vaccination_dashboard(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    return dashboard(db, province_code, _resolve_county_scope(db, current_user, county_code), vaccine_type, animal_group)
 
 
 @router.get("/counties")
-def vaccination_counties(province_code: str | None = Query(None), vaccine_type: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    result = counties(db, province_code, vaccine_type)
+def vaccination_counties(
+    province_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    result = counties(db, province_code, vaccine_type, animal_group)
     allowed = get_allowed_county_ids(db, current_user)
     if allowed is None:
         return result
@@ -85,24 +98,46 @@ def vaccination_counties(province_code: str | None = Query(None), vaccine_type: 
 
 
 @router.get("/vaccines")
-def vaccination_vaccines(province_code: str | None = Query(None), county_code: str | None = Query(None), vaccine_type: str | None = Query(None), unit_code: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_vaccines(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
     if unit_code:
         _authorize_unit_county(db, current_user, unit_code)
-    return vaccines(db, province_code, county_code, vaccine_type, unit_code)
+    return vaccines(db, province_code, county_code, vaccine_type, animal_group, unit_code)
 
 
 @router.get("/units")
-def vaccination_units(province_code: str | None = Query(None), county_code: str | None = Query(None), vaccine_type: str | None = Query(None), unit_code: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_units(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
     if unit_code:
         _authorize_unit_county(db, current_user, unit_code)
-    return units(db, province_code, county_code, vaccine_type, unit_code)
+    return units(db, province_code, county_code, vaccine_type, animal_group, unit_code)
 
 
 @router.get("/alerts")
-def vaccination_alerts(province_code: str | None = Query(None), vaccine_type: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    result = alerts(db, province_code, vaccine_type)
+def vaccination_alerts(
+    province_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    result = alerts(db, province_code, vaccine_type, animal_group)
     allowed = get_allowed_county_ids(db, current_user)
     if allowed is None:
         return result
@@ -111,11 +146,19 @@ def vaccination_alerts(province_code: str | None = Query(None), vaccine_type: st
 
 
 @router.get("/effectiveness")
-def vaccination_effectiveness(province_code: str | None = Query(None), county_code: str | None = Query(None), vaccine_type: str | None = Query(None), unit_code: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_effectiveness(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    unit_code: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
     if unit_code:
         _authorize_unit_county(db, current_user, unit_code)
-    return effectiveness(db, province_code, county_code, vaccine_type, unit_code)
+    return effectiveness(db, province_code, county_code, vaccine_type, animal_group, unit_code)
 
 
 @router.get("/unit/{unit_code}")
@@ -125,8 +168,14 @@ def vaccination_unit_detail(unit_code: str, db: Session = Depends(get_db), curre
 
 
 @router.get("/vaccine/{vaccine_type}/counties")
-def vaccination_vaccine_counties(vaccine_type: str, province_code: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    result = vaccine_county_report(db, vaccine_type, province_code)
+def vaccination_vaccine_counties(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    result = vaccine_county_report(db, vaccine_type, province_code, animal_group)
     allowed = get_allowed_county_ids(db, current_user)
     if allowed is None:
         return result
@@ -135,15 +184,31 @@ def vaccination_vaccine_counties(vaccine_type: str, province_code: str | None = 
 
 
 @router.get("/vaccine/{vaccine_type}/units")
-def vaccination_vaccine_units(vaccine_type: str, province_code: str | None = Query(None), county_code: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_vaccine_units(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
-    return vaccine_unit_report(db, vaccine_type, province_code, county_code)
+    return vaccine_unit_report(db, vaccine_type, province_code, county_code, animal_group)
 
 
 @router.get("/vaccine/{vaccine_type}/units-paginated")
-def vaccination_vaccine_units_paginated(vaccine_type: str, province_code: str | None = Query(None), county_code: str | None = Query(None), page: int = Query(1, ge=1), page_size: int = Query(50, ge=1, le=100), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_vaccine_units_paginated(
+    vaccine_type: str,
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
-    return vaccine_unit_report_paginated(db, vaccine_type, province_code, county_code, page, page_size)
+    return vaccine_unit_report_paginated(db, vaccine_type, province_code, county_code, page, page_size, animal_group)
 
 
 @router.get("/county/{county_code}/units")
@@ -168,6 +233,13 @@ def vaccination_unit_history(unit_code: str, db: Session = Depends(get_db), curr
 
 
 @router.get("/management-report")
-def vaccination_management_report(province_code: str | None = Query(None), county_code: str | None = Query(None), vaccine_type: str | None = Query(None), db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def vaccination_management_report(
+    province_code: str | None = Query(None),
+    county_code: str | None = Query(None),
+    vaccine_type: str | None = Query(None),
+    animal_group: str | None = Query(None),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     county_code = _resolve_county_scope(db, current_user, county_code)
-    return vaccine_management_report(db=db, province_code=province_code, county_code=county_code, vaccine_type=vaccine_type)
+    return vaccine_management_report(db=db, province_code=province_code, county_code=county_code, vaccine_type=vaccine_type, animal_group=animal_group)
