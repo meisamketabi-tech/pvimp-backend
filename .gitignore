@@ -34,3 +34,6 @@ Thumbs.db
 # Frontend
 pvimp_frontend/node_modules/
 pvimp_frontend/dist/
+
+# TypeScript build info
+pvimp_frontend/tsconfig.tsbuildinfo
