@@ -21,7 +21,7 @@ def _get_overview_scope(db: Session, user_id: int, requested_county: str | None)
         FROM user_assignments ua
         JOIN roles r ON r.id = ua.role_id
         JOIN organization_units ou ON ou.id = ua.organization_unit_id
-        LEFT JOIN gis_counties c ON c.id = ou.county_id AND c.is_active = TRUE
+        LEFT JOIN gis_counties c ON c.id = ou.county_id
         WHERE ua.user_id = :user_id
           AND ua.is_active = TRUE
           AND r.is_active = TRUE
