@@ -10,7 +10,7 @@ from alembic import op
 
 
 revision = "perf_vaccination_kpi_materialized"
-down_revision = "vaccination_performance_complete"
+down_revision = "ad5e1a4c8998"
 branch_labels = None
 depends_on = None
 
