@@ -6,7 +6,12 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from app.services.gis.vaccination_kpi_service import ANIMAL_GROUP_LABELS, _filters, _pct, _coverage_status, _target_expr
+from app.services.gis.vaccination_kpi_service import (
+    _filters,
+    _pct,
+    _coverage_status,
+    _target_expr,
+)
 from app.services.gis.vaccination_overview_service import (
     BOOSTER_ALERT_DAYS,
     DEFAULT_IMMUNITY_DAYS,
@@ -30,74 +35,62 @@ def _metric_rows_fast(
     where, params = _filters(province_code, county_code, None, None)
     where, params = _apply_scope(where, params, allowed_county_codes)
 
-    # The optimized PostgreSQL view is fast when read once, but wrapping it in
-    # the large window/grouping CTE caused PostgreSQL to repeatedly expand the
-    # view and pushed the API metric query above 17 seconds. Materialize only
-    # the columns needed by the KPI calculation once per request, then aggregate
-    # the small temp relation.
-    db.execute(text("DROP TABLE IF EXISTS pg_temp.vaccination_metric_source"))
-    db.execute(text(f"""
-        CREATE TEMP TABLE vaccination_metric_source ON COMMIT DROP AS
-        SELECT
-            v.epidemiology_unit_code,
-            v.epidemiology_unit_name,
-            v.province_code,
-            v.province_name,
-            v.county_code,
-            v.county_name,
-            v.vaccine_type,
-            v.disease_name,
-            v.animal_group,
-            v.vaccine_brand,
-            v.is_composite_animal,
-            v.total_animals,
-            v.vaccinated_animals,
-            v.shock_count,
-            v.death_count,
-            v.abortion_count,
-            v.hypersensitivity_count,
-            v.local_complication_count,
-            v.vaccination_date
-        FROM gis_vaccination_kpi v
-        WHERE {where}
-    """), params)
-    db.execute(text("ANALYZE vaccination_metric_source"))
-
+    # Project only the columns needed by the KPI. The full 48-column view is
+    # deliberately not selected here because several columns are computed.
     rows = db.execute(text(f"""
-        WITH scoped AS (
-            SELECT v.*,
-                   MAX(CASE WHEN v.is_composite_animal = TRUE THEN 1 ELSE 0 END)
+        WITH scoped AS MATERIALIZED (
+            SELECT
+                v.epidemiology_unit_code,
+                v.epidemiology_unit_name,
+                v.province_code,
+                v.province_name,
+                v.county_code,
+                v.county_name,
+                v.vaccine_type,
+                v.disease_name,
+                v.animal_group,
+                v.vaccine_brand,
+                v.is_composite_animal,
+                v.total_animals,
+                v.vaccinated_animals,
+                v.shock_count,
+                v.death_count,
+                v.abortion_count,
+                v.hypersensitivity_count,
+                v.local_complication_count,
+                v.vaccination_date
+            FROM gis_vaccination_kpi v
+            WHERE {where}
+        ), flagged AS MATERIALIZED (
+            SELECT s.*,
+                   MAX(CASE WHEN s.is_composite_animal = TRUE THEN 1 ELSE 0 END)
                      OVER (
-                         PARTITION BY v.epidemiology_unit_code, v.vaccine_type, v.animal_group
+                         PARTITION BY s.epidemiology_unit_code, s.vaccine_type, s.animal_group
                      ) AS has_composite
-            FROM vaccination_metric_source v
-        ), deduped AS (
-            SELECT s.*
             FROM scoped s
-            WHERE s.is_composite_animal = TRUE OR s.has_composite = 0
         ), unit_metrics AS (
             SELECT
-                d.epidemiology_unit_code AS unit_code,
-                MAX(d.epidemiology_unit_name) AS unit_name,
-                MAX(d.province_code) AS province_code,
-                MAX(d.province_name) AS province_name,
-                MAX(d.county_code) AS county_code,
-                MAX(d.county_name) AS county_name,
-                d.vaccine_type,
-                MAX(d.disease_name) AS disease_name,
-                d.animal_group,
-                MAX(d.vaccine_brand) AS vaccine_brand,
-                COUNT(*) AS records,
-                COALESCE(SUM(d.total_animals), 0) AS recorded_total_animals,
-                COALESCE(SUM(d.vaccinated_animals), 0) AS vaccinated_animals,
-                COALESCE(SUM(d.shock_count), 0)
-                  + COALESCE(SUM(d.death_count), 0)
-                  + COALESCE(SUM(d.abortion_count), 0)
-                  + COALESCE(SUM(d.hypersensitivity_count), 0)
-                  + COALESCE(SUM(d.local_complication_count), 0) AS adverse_events,
-                MAX(d.vaccination_date) AS last_vaccination_date
-            FROM deduped d
-            GROUP BY d.epidemiology_unit_code, d.vaccine_type, d.animal_group
+                f.epidemiology_unit_code AS unit_code,
+                MAX(f.epidemiology_unit_name) AS unit_name,
+                MAX(f.province_code) AS province_code,
+                MAX(f.province_name) AS province_name,
+                MAX(f.county_code) AS county_code,
+                MAX(f.county_name) AS county_name,
+                f.vaccine_type,
+                MAX(f.disease_name) AS disease_name,
+                f.animal_group,
+                MAX(f.vaccine_brand) AS vaccine_brand,
+                COUNT(*) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0) AS records,
+                COALESCE(SUM(f.total_animals) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0) AS recorded_total_animals,
+                COALESCE(SUM(f.vaccinated_animals) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0) AS vaccinated_animals,
+                COALESCE(SUM(f.shock_count) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0)
+                  + COALESCE(SUM(f.death_count) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0)
+                  + COALESCE(SUM(f.abortion_count) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0)
+                  + COALESCE(SUM(f.hypersensitivity_count) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0)
+                  + COALESCE(SUM(f.local_complication_count) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0), 0) AS adverse_events,
+                MAX(f.vaccination_date) FILTER (WHERE f.is_composite_animal = TRUE OR f.has_composite = 0) AS last_vaccination_date
+            FROM flagged f
+            GROUP BY f.epidemiology_unit_code, f.vaccine_type, f.animal_group
         ), with_target AS (
             SELECT m.*, COALESCE(({_target_expr()}), 0) AS target_population
             FROM unit_metrics m
@@ -123,7 +116,7 @@ def _metric_rows_fast(
         FROM with_target
         GROUP BY unit_code, vaccine_type, animal_group
         ORDER BY county_name NULLS LAST, unit_name NULLS LAST, vaccine_type NULLS LAST
-    """)).mappings().all()
+    """), params).mappings().all()
     return [dict(r) for r in rows]
 
 
