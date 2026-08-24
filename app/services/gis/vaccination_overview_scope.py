@@ -6,7 +6,7 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from app.services.gis.vaccination_overview_service import overview as _base_overview
+from app.services.gis.vaccination_overview_fast import overview as _base_overview
 
 
 def _scoped_inventory(db: Session, province_code: str | None, county_code: str | None, allowed_county_codes: set[str] | None, near_expiry_days: int) -> dict[str, Any]:
