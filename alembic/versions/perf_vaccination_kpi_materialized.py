@@ -9,7 +9,9 @@ the source vaccination-performance data changes.
 from alembic import op
 
 
-revision = "perf_vaccination_kpi_materialized"
+# Alembic's default alembic_version.version_num column is VARCHAR(32).
+# Keep this revision identifier within that limit.
+revision = "perf_vaccination_kpi_mv"
 down_revision = "ad5e1a4c8998"
 branch_labels = None
 depends_on = None
