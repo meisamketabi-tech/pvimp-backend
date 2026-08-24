@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, Query
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_allowed_county_ids, get_current_user
@@ -18,6 +19,9 @@ def vaccination_overview(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    db.execute(text("SET LOCAL work_mem = '64MB'"))
+    db.execute(text("SET LOCAL jit = off"))
+
     requested_scope = _resolve_county_scope(db, current_user, county_code)
     allowed = get_allowed_county_ids(db, current_user)
     allowed_codes = _get_allowed_county_codes(db, allowed) if allowed is not None else None
