@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
 from app.db.session import get_db
-from app.services.gis.vaccination_overview_scope import overview
 from app.services.gis.vaccination_overview_fast import overview as vaccination_overview
 from app.services.gis.vaccination_overview_service import DEFAULT_NEAR_EXPIRY_DAYS
 
