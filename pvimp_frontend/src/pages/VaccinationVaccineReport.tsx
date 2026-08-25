@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import api from "../services/api";
 import "./VaccinationDashboard.css";
 
@@ -8,10 +8,10 @@ type County = { county_code: string | number; county_name: string; units: number
 type Unit = { unit_code: string; unit_name: string; county_name: string | null; animal_group: string; animal_group_name: string; target_population: number; vaccinated_animals: number; remaining_animals: number; coverage_percent: number; status: string; vaccine_brand: string | null; records: number; last_vaccination_date: string | null };
 type Vaccine = { vaccine_type: string; disease_name: string | null; animal_group: string; animal_group_name: string; vaccine_brand: string | null; target_population: number; vaccinated_animals: number; remaining_animals: number; coverage_percent: number };
 type Report = { dashboard: { target_population: number; vaccinated_animals: number; remaining_animals: number; coverage_percent: number; coverage_is_valid: boolean }; counties: County[]; vaccines: Vaccine[]; units: Unit[] };
-
-function fmt(value: number) { return new Intl.NumberFormat("fa-IR").format(Number(value || 0)); }
-function pct(value: number) { return `${Number(value || 0).toFixed(1)}%`; }
-function color(status: string) { if (status === "NO_TARGET" || status === "NO_COVERAGE" || status === "CRITICAL") return "#dc2626"; if (status === "WARNING") return "#f59e0b"; if (status === "ON_TRACK") return "#2563eb"; return "#16a34a"; }
+const fmt = (v: number) => new Intl.NumberFormat("fa-IR").format(Number(v || 0));
+const pct = (v: number) => `${Number(v || 0).toFixed(1)}%`;
+const statusText = (s: string) => ({ EXCELLENT: "عالی", ON_TRACK: "در مسیر", WARNING: "نیازمند توجه", CRITICAL: "بحرانی", NO_TARGET: "بدون هدف", NO_COVERAGE: "بدون پوشش" } as Record<string, string>)[s] || s || "-";
+const statusClass = (s: string) => s === "CRITICAL" || s === "NO_COVERAGE" ? "danger" : s === "WARNING" ? "warning" : s === "ON_TRACK" ? "info" : "success";
 
 export default function VaccinationVaccineReport() {
   const { vaccineType = "" } = useParams();
@@ -26,76 +26,41 @@ export default function VaccinationVaccineReport() {
   useEffect(() => {
     if (!vaccineType) return;
     const controller = new AbortController();
-    async function load() {
-      try {
-        setLoading(true); setError("");
-        const response = await api.get("/api/v1/gis/kpi/vaccination/management-report", {
-          params: { vaccine_type: vaccineType, animal_group: animalGroup || undefined, county_code: countyCode || undefined }, signal: controller.signal,
-        });
-        setReport(response.data);
-      } catch (err: any) {
-        if (err?.code !== "ERR_CANCELED" && err?.name !== "CanceledError") setError("خطا در دریافت گزارش واکسن");
-      } finally { if (!controller.signal.aborted) setLoading(false); }
-    }
-    load(); return () => controller.abort();
+    api.get("/api/v1/gis/kpi/vaccination/management-report", { params: { vaccine_type: vaccineType, animal_group: animalGroup || undefined, county_code: countyCode || undefined }, signal: controller.signal })
+      .then(r => setReport(r.data))
+      .catch((err: any) => { if (err?.code !== "ERR_CANCELED" && err?.name !== "CanceledError") setError("خطا در دریافت گزارش واکسن"); })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
   }, [vaccineType, animalGroup, countyCode]);
 
-  const selectedCounty = useMemo(() => report?.counties.find((c) => String(c.county_code) === countyCode) || null, [report, countyCode]);
-  const visibleUnits = useMemo(() => report?.units || [], [report]);
-  const chart = useMemo(() => (report?.counties || []).map((c) => ({ ...c, label: c.county_name, coverage: c.coverage_percent })), [report]);
+  const selectedCounty = useMemo(() => report?.counties.find(c => String(c.county_code) === countyCode) || null, [report, countyCode]);
+  const v = useMemo(() => report?.vaccines.find(x => x.vaccine_type === vaccineType && (!animalGroup || x.animal_group === animalGroup)) || report?.vaccines[0], [report, vaccineType, animalGroup]);
+  const coverage = Number(v?.coverage_percent ?? report?.dashboard.coverage_percent ?? 0);
+  const status = coverage >= 90 ? "EXCELLENT" : coverage >= 75 ? "ON_TRACK" : coverage >= 50 ? "WARNING" : coverage > 0 ? "CRITICAL" : "NO_COVERAGE";
+  const chart = useMemo(() => (report?.counties || []).map(c => ({ ...c, label: c.county_name, coverage: Number(c.coverage_percent || 0) })), [report]);
+  const split = useMemo(() => [{ name: "واکسینه‌شده", value: Number(v?.vaccinated_animals || report?.dashboard.vaccinated_animals || 0) }, { name: "باقی‌مانده", value: Number(v?.remaining_animals || report?.dashboard.remaining_animals || 0) }].filter(x => x.value > 0), [v, report]);
+  const visibleUnits = report?.units || [];
   function selectCounty(code: string | number) { const next = new URLSearchParams(searchParams); next.set("county_code", String(code)); setSearchParams(next); }
 
-  if (loading) return <div className="dashboard-page" dir="rtl"><div className="panel"><h2>در حال دریافت گزارش...</h2></div></div>;
-  if (error || !report) return <div className="dashboard-page" dir="rtl"><div className="panel"><h2>{error || "گزارش پیدا نشد"}</h2><button onClick={() => navigate("/gis/kpi/vaccination")}>بازگشت</button></div></div>;
+  if (loading) return <div className="dashboard-page" dir="rtl"><div className="detail-loading"><div className="loader" /><h2>در حال آماده‌سازی گزارش تحلیلی…</h2><p>اطلاعات شهرستان‌ها و واحدها در حال بارگذاری است.</p></div></div>;
+  if (error || !report) return <div className="dashboard-page" dir="rtl"><div className="detail-error"><h2>{error || "گزارش پیدا نشد"}</h2><button onClick={() => navigate("/gis/kpi/vaccination")}>بازگشت به داشبورد</button></div></div>;
 
-  const v = report.vaccines.find((x) => x.vaccine_type === vaccineType && (!animalGroup || x.animal_group === animalGroup)) || report.vaccines[0];
-  const coverage = Number(v?.coverage_percent ?? report.dashboard.coverage_percent ?? 0);
-  const status = coverage >= 90 ? "EXCELLENT" : coverage >= 75 ? "ON_TRACK" : coverage >= 50 ? "WARNING" : "CRITICAL";
+  return <div className="dashboard-page" dir="rtl">
+    <header className="dashboard-header">
+      <button className="back-button" onClick={() => navigate("/gis/kpi/vaccination")}>← بازگشت به مرکز KPI</button>
+      <div className="detail-title"><span className="detail-eyebrow">گزارش تحلیلی واکسن</span><h1>{v?.disease_name || vaccineType}</h1><p>{v?.animal_group_name || animalGroup || "گروه دام"} · {v?.vaccine_brand || "برند ثبت‌شده نامشخص"}</p></div>
+      <div className="detail-status"><span>وضعیت فعلی</span><strong className={statusClass(status)}>{statusText(status)}</strong><b>{pct(coverage)}</b></div>
+    </header>
 
-  return (
-    <div className="dashboard-page" dir="rtl">
-      <div className="dashboard-header">
-        <button onClick={() => navigate("/gis/kpi/vaccination")}>بازگشت به KPI واکسیناسیون</button>
-        <h1>{v?.disease_name || vaccineType} — {v?.animal_group_name || animalGroup}</h1>
-        <p>واکسن استاندارد: {vaccineType} | برند ثبت‌شده: {v?.vaccine_brand || "-"}</p>
-      </div>
+    <section className="kpi-grid"><div className="kpi-card"><span>جمعیت هدف</span><strong>{fmt(v?.target_population || report.dashboard.target_population)}</strong><small>دام هدف‌گذاری‌شده</small></div><div className="kpi-card positive"><span>واکسینه‌شده</span><strong>{fmt(v?.vaccinated_animals || report.dashboard.vaccinated_animals)}</strong><small>عملیات ثبت‌شده</small></div><div className="kpi-card warning-card"><span>باقی‌مانده</span><strong>{fmt(v?.remaining_animals || report.dashboard.remaining_animals)}</strong><small>نیازمند اقدام</small></div><div className="kpi-card focus"><span>پوشش</span><strong>{pct(coverage)}</strong><div className="detail-progress"><i style={{ width: `${Math.min(100, Math.max(0, coverage))}%` }} /></div></div></section>
 
-      <div className="kpi-grid">
-        <div className="kpi-card"><div className="kpi-title">جمعیت هدف</div><div className="kpi-value">{fmt(v?.target_population || report.dashboard.target_population)}</div></div>
-        <div className="kpi-card"><div className="kpi-title">واکسینه شده</div><div className="kpi-value">{fmt(v?.vaccinated_animals || report.dashboard.vaccinated_animals)}</div></div>
-        <div className="kpi-card"><div className="kpi-title">باقی‌مانده</div><div className="kpi-value">{fmt(v?.remaining_animals || report.dashboard.remaining_animals)}</div></div>
-        <div className="kpi-card"><div className="kpi-title">پوشش</div><div className="kpi-value" style={{ color: color(status) }}>{pct(coverage)}</div></div>
-      </div>
+    <section className="detail-chart-grid"><div className="dashboard-panel chart-panel"><div className="panel-heading"><div><h2>مقایسه پوشش شهرستان‌ها</h2><p>کلیک روی هر ستون، واحدهای همان شهرستان را در پایین صفحه نمایش می‌دهد.</p></div><span>{chart.length} شهرستان</span></div><div className="detail-bar-chart"><ResponsiveContainer width="100%" height="100%"><BarChart data={chart} layout="vertical" margin={{ top: 8, right: 18, left: 20, bottom: 8 }} barCategoryGap="18%"><CartesianGrid strokeDasharray="3 3" horizontal={false} /><XAxis type="number" domain={[0, 100]} tickFormatter={x => `${x}%`} /><YAxis type="category" dataKey="label" width={100} tickLine={false} axisLine={false} /><Tooltip formatter={x => pct(Number(x || 0))} /><Bar dataKey="coverage" name="پوشش" fill="#22d3ee" radius={[0, 7, 7, 0]} onClick={(entry: any) => entry?.payload?.county_code != null && selectCounty(entry.payload.county_code)} /></BarChart></ResponsiveContainer></div></div>
+      <div className="dashboard-panel distribution-panel"><div className="panel-heading"><div><h2>ترکیب جمعیت</h2><p>نسبت دام واکسینه‌شده به باقی‌مانده.</p></div></div><div className="detail-donut"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={split} dataKey="value" nameKey="name" innerRadius="64%" outerRadius="84%" paddingAngle={4} stroke="none">{split.map((_, i) => <Cell key={i} fill={i === 0 ? "#22d3ee" : "#334b60"} />)}</Pie><Tooltip formatter={x => fmt(Number(x || 0))} /></PieChart></ResponsiveContainer><div className="detail-donut-center"><strong>{pct(coverage)}</strong><span>پوشش</span></div></div><div className="distribution-legend"><span><i className="dot vaccinated" />واکسینه‌شده <b>{fmt(v?.vaccinated_animals || report.dashboard.vaccinated_animals)}</b></span><span><i className="dot remaining" />باقی‌مانده <b>{fmt(v?.remaining_animals || report.dashboard.remaining_animals)}</b></span></div></div></section>
 
-      <div className="dashboard-panel" style={{ marginTop: 24 }}>
-        <h2>پوشش واکسیناسیون به تفکیک شهرستان</h2>
-        <div style={{ width: "100%", height: 360 }}>
-          <ResponsiveContainer>
-            <BarChart data={chart} margin={{ top: 20, right: 20, left: 20, bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="label" angle={-35} textAnchor="end" interval={0} height={90} />
-              <YAxis domain={[0, 100]} tickFormatter={(x) => `${x}%`} /><Tooltip formatter={(x) => pct(Number(x || 0))} />
-              <Bar dataKey="coverage" name="پوشش" fill="#2563eb" onClick={(data: any) => { const row = data?.payload; if (row) selectCounty(row.county_code); }} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+    <section className="dashboard-panel county-panel"><div className="panel-heading"><div><h2>{selectedCounty ? `واحدهای شهرستان ${selectedCounty.county_name}` : "جدول عملکرد شهرستان‌ها"}</h2><p>{selectedCounty ? "برای مشاهده همه شهرستان‌ها فیلتر را ببندید." : "شهرستان‌ها را برای Drill-down انتخاب کنید."}</p></div>{selectedCounty && <button className="ghost-button" onClick={() => { const next = new URLSearchParams(searchParams); next.delete("county_code"); setSearchParams(next); }}>نمایش همه شهرستان‌ها</button>}</div><div className="detail-table-wrap"><table><thead><tr><th>شهرستان</th><th>واحد</th><th>هدف</th><th>واکسینه</th><th>باقی‌مانده</th><th>پوشش</th><th>وضعیت</th></tr></thead><tbody>{report.counties.map(c => <tr key={String(c.county_code)} className={String(c.county_code) === countyCode ? "active-row" : ""} onClick={() => selectCounty(c.county_code)}><td><b>{c.county_name}</b></td><td>{fmt(c.units)}</td><td>{fmt(c.target_population)}</td><td>{fmt(c.vaccinated_animals)}</td><td>{fmt(c.remaining_animals)}</td><td><strong className={statusClass(c.status)}>{pct(c.coverage_percent)}</strong></td><td><span className={`status-pill ${statusClass(c.status)}`}>{statusText(c.status)}</span></td></tr>)}</tbody></table></div></section>
 
-      <div className="dashboard-panel" style={{ marginTop: 24, overflowX: "auto" }}>
-        <h2>{selectedCounty ? `واحدهای شهرستان ${selectedCounty.county_name}` : "وضعیت شهرستان‌ها"}</h2>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead><tr><th>شهرستان</th><th>واحد</th><th>جمعیت هدف</th><th>واکسینه</th><th>باقی‌مانده</th><th>پوشش</th><th>وضعیت</th></tr></thead>
-          <tbody>{(report.counties || []).map((c) => <tr key={String(c.county_code)} onClick={() => selectCounty(c.county_code)} style={{ cursor: "pointer" }}><td>{c.county_name}</td><td>{fmt(c.units)}</td><td>{fmt(c.target_population)}</td><td>{fmt(c.vaccinated_animals)}</td><td>{fmt(c.remaining_animals)}</td><td>{pct(c.coverage_percent)}</td><td style={{ color: color(c.status), fontWeight: 800 }}>{c.status}</td></tr>)}</tbody>
-        </table>
-      </div>
+    {selectedCounty && <section className="dashboard-panel units-panel"><div className="panel-heading"><div><h2>واحدهای عملیاتی · {selectedCounty.county_name}</h2><p>هر واحد برای مشاهده گزارش جزئی‌تر قابل انتخاب است.</p></div><span>{visibleUnits.length} واحد</span></div><div className="unit-grid">{visibleUnits.map(u => <button key={`${u.unit_code}-${u.animal_group}`} className="unit-card" onClick={() => navigate(`/gis/kpi/vaccination/unit/${encodeURIComponent(u.unit_code)}`)}><div className="unit-card-top"><b>{u.unit_name || u.unit_code}</b><span className={`status-pill ${statusClass(u.status)}`}>{statusText(u.status)}</span></div><small>{u.animal_group_name} · {u.vaccine_brand || "برند نامشخص"}</small><strong>{pct(u.coverage_percent)}</strong><div className="unit-progress"><i style={{ width: `${Math.min(100, Math.max(0, Number(u.coverage_percent || 0)))}%` }} /></div><div className="unit-meta"><span>هدف {fmt(u.target_population)}</span><span>واکسینه {fmt(u.vaccinated_animals)}</span><span>{u.last_vaccination_date || "بدون تاریخ"}</span></div></button>)}{!visibleUnits.length && <div className="empty-state">برای این شهرستان و واکسن، رکورد عملیاتی ثبت نشده است.</div>}</div></section>}
 
-      {selectedCounty && <div className="dashboard-panel" style={{ marginTop: 24, overflowX: "auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><h2>واحدهای تحت پوشش/بدون پوشش — {selectedCounty.county_name}</h2><button onClick={() => { const next = new URLSearchParams(searchParams); next.delete("county_code"); setSearchParams(next); }}>بازگشت به همه شهرستان‌ها</button></div>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead><tr><th>واحد</th><th>گروه دام</th><th>هدف</th><th>واکسینه</th><th>باقی‌مانده</th><th>پوشش</th><th>آخرین عملیات</th><th>برند</th></tr></thead>
-          <tbody>{visibleUnits.map((u) => <tr key={`${u.unit_code}-${u.animal_group}`} onClick={() => navigate(`/gis/kpi/vaccination/unit/${encodeURIComponent(u.unit_code)}`)} style={{ cursor: "pointer" }}><td>{u.unit_name || u.unit_code}</td><td>{u.animal_group_name}</td><td>{fmt(u.target_population)}</td><td>{fmt(u.vaccinated_animals)}</td><td>{fmt(u.remaining_animals)}</td><td style={{ color: color(u.status), fontWeight: 800 }}>{pct(u.coverage_percent)}</td><td>{u.last_vaccination_date || "-"}</td><td>{u.vaccine_brand || "-"}</td></tr>)}</tbody>
-        </table>
-        {!visibleUnits.length && <p>برای این شهرستان و این واکسن رکورد عملیاتی ثبت نشده است.</p>}
-      </div>}
-    </div>
-  );
+    <footer className="detail-footer"><span>پوشش معتبر: {report.dashboard.coverage_is_valid ? "بله" : "خیر"}</span><span>واکسیناسیون: {vaccineType}</span><span>گروه دام: {animalGroup || "همه"}</span></footer>
+  </div>;
 }
